@@ -8,8 +8,8 @@ public class Board : MonoBehaviour
     public Piece activePiece { get; private set; }
 
     public TetrominoData[] tetrominoes;
-    public Vector2Int boardSize = new Vector2Int(10, 20);
-    public Vector3Int spawnPosition = new Vector3Int(-1, 8, 0);
+    public Vector2Int boardSize = new(10, 20);
+    public Vector3Int spawnPosition = new(-1, 8, 0);
 
     public RectInt Bounds
     {
@@ -53,7 +53,7 @@ public class Board : MonoBehaviour
     {
         tilemap.ClearAllTiles();
 
-        // Do anything else you want on game over here..
+        // Do anything
     }
 
     public void Set(Piece piece)
@@ -108,7 +108,7 @@ public class Board : MonoBehaviour
             // Only advance to the next row if the current is not cleared
             // because the tiles above will fall down when a row is cleared
             if (IsLineFull(row)) {
-                LineClear(row);
+                ClearLine(row);
             } else {
                 row++;
             }
@@ -132,7 +132,7 @@ public class Board : MonoBehaviour
         return true;
     }
 
-    public void LineClear(int row)
+    public void ClearLine(int row)
     {
         RectInt bounds = Bounds;
 
