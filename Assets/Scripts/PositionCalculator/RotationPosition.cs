@@ -8,7 +8,7 @@ namespace PositionCalculator
         private readonly float _sin = Mathf.Sin(Mathf.PI / 2f);
         
         protected readonly Vector2Int[] CurrentPiecePosition;
-        protected RotationDirection RotationDirection;
+        protected readonly RotationDirection RotationDirection;
 
         protected RotationPositionCalculator(Vector2Int[] currentPiecePosition, RotationDirection rotationDirection)
         {

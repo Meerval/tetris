@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 namespace PositionCalculator
 {
@@ -10,23 +11,17 @@ namespace PositionCalculator
         {
             _currentPiecePosition = currentPiecePosition;
         }
-        
+
         protected Vector2Int[] GetNewPositionOf(Vector2Int translation)
         {
-            var newPosition = new Vector2Int[_currentPiecePosition.Length];
-
-            for (var i = 0; i < _currentPiecePosition.Length; i++)
-            {
-                Vector2Int cell = _currentPiecePosition[i];
-                cell.x += translation.x;
-                cell.y += translation.y;
-                newPosition[i] = new Vector2Int(translation.x, translation.y);
-            }
-
-            return newPosition;
+            return _currentPiecePosition.Select(cell =>
+                {
+                    cell += translation;
+                    return cell;
+                }
+            ).ToArray();
         }
-        
-        public abstract Vector2Int[] GetNewPiecePosition();
 
+        public abstract Vector2Int[] GetNewPiecePosition();
     }
 }

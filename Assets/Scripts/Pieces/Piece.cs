@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 
 namespace Pieces
 {
-    public abstract class Piece : IPiece
+    public abstract class Piece : MonoBehaviour, IPiece
     {
-        private readonly TileBase _tile;
+        [SerializeField] private TileBase tile;
         private readonly Vector2Int[,] _wallKicks =
         {
             { new(0, 0), new(-1, 0), new(-1, 1), new(0, -2), new(-1, -2) },
@@ -20,11 +20,9 @@ namespace Pieces
             { new(0, 0), new(1, 0), new(1, 1), new(0, -2), new(1, -2) }
         };
 
-        private readonly RotationType _rotationType = PositionCalculator.RotationType.A;
-
         public TileBase Tile()
         {
-            return _tile;
+            return tile;
         }
 
         public virtual Vector2Int[,] WallKicksMap()
@@ -39,11 +37,16 @@ namespace Pieces
             return Wrapper.Wrap(wallKickIndex, 0, WallKicksMap().GetLength(0));
         }
 
-        public virtual RotationType RotationType()
+        public virtual IPositionCalculator RotationCalculator(Vector2Int[] piecePosition, RotationDirection direction)
         {
-            return _rotationType;
+            return new RotationPositionCalculatorJLSTZ(piecePosition, direction);
         }
 
         public abstract Vector2Int[] ShapeMap();
+
+        public override string ToString()
+        {
+            return GetType().Name.Replace("Piece", "Piece ");
+        }
     }
 }

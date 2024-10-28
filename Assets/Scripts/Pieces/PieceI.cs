@@ -5,7 +5,6 @@ namespace Pieces
 {
     public class PieceI : Piece
     {
-        private readonly RotationType _rotationType = PositionCalculator.RotationType.B;
         private readonly Vector2Int[] _shape = { new(-1, 1), new(0, 1), new(1, 1), new(2, 1) };
 
         private readonly Vector2Int[,] _wallKicks =
@@ -30,9 +29,10 @@ namespace Pieces
             return _wallKicks;
         }
 
-        public override RotationType RotationType()
+        public override IPositionCalculator RotationCalculator(Vector2Int[] piecePosition, RotationDirection direction)
         {
-            return _rotationType;
+            return new RotationPositionCalculatorIO(piecePosition, direction);
         }
+        
     }
 }

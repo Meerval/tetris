@@ -6,9 +6,9 @@ namespace PositionCalculator
     {
         private int _value;
 
-        public RotationDirection(int value)
+        public RotationDirection(Rotation rotation)
         {
-            _value = value;
+            _value =  (int) rotation;
         }
 
         public RotationDirection()
@@ -40,5 +40,10 @@ namespace PositionCalculator
         {
             _value -= rotationDirection._value;
         }
+    }
+
+    public enum Rotation
+    {
+        Left = -1, Right = 1
     }
 }

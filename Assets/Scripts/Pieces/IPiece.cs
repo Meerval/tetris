@@ -10,6 +10,6 @@ namespace Pieces
         public Vector2Int[] ShapeMap();
         public Vector2Int[,] WallKicksMap();
         public int GetWallKickIndex(RotationDirection rotationDirection);
-        public RotationType RotationType();
+        public IPositionCalculator RotationCalculator(Vector2Int[] piecePosition, RotationDirection direction);
     }
 }
