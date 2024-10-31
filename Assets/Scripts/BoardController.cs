@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Timer;
+﻿using Timer;
 using UnityEngine;
 
 public class BoardController : MonoBehaviour, IBoardController
@@ -10,14 +8,15 @@ public class BoardController : MonoBehaviour, IBoardController
 
     private ITimer _stepTimer;
     private ITimer _moveTimer;
-    private ITimer _lockTimer;
-
-    [SerializeField] private float stepTimerCoef;
 
     private void Awake()
     {
         Debug.Log("BoardController is awake");
-        _controllable = FindObjectOfType<BoardAction>();
+        _controllable = GetComponent<BoardAction>();
+    }
+
+    private void Start()
+    {
         InitNewGame();
     }
 
@@ -33,7 +32,7 @@ public class BoardController : MonoBehaviour, IBoardController
             isMoved = _controllable.PieceRotateRight();
         }
 
-        return ResetTimersIf(isMoved, new[] { _moveTimer, _lockTimer });
+        return ResetTimersIf(isMoved, _moveTimer);
     }
 
     public bool DetectAndExecutePieceShift()
@@ -53,13 +52,13 @@ public class BoardController : MonoBehaviour, IBoardController
             isMoved = _controllable.PieceShiftRight();
         }
 
-        return ResetTimersIf(isMoved, new[] { _moveTimer, _lockTimer });
+        return ResetTimersIf(isMoved, _moveTimer);
     }
 
     private static bool IsKeyDown(KeyCode keyCode)
     {
         if (!Input.GetKeyDown(keyCode)) return false;
-        Debug.Log($"A key was pressed on the keyboard: {keyCode}");
+        Debug.Log(string.Format("A key was pressed on the keyboard: {0}", keyCode));
         return true;
     }
 
@@ -71,13 +70,13 @@ public class BoardController : MonoBehaviour, IBoardController
             isMoved = _controllable.PieceHardDrop();
         }
 
-        return ResetTimersIf(isMoved, new[] { _moveTimer, _lockTimer });
+        return ResetTimersIf(isMoved, _moveTimer);
     }
 
-    private bool ResetTimersIf(bool isReason, IEnumerable<ITimer> timers)
+    private bool ResetTimersIf(bool isReason, ITimer timer)
     {
         if (!isReason) return false;
-        timers.ToList().ForEach(timer => timer.UpdateTimeout());
+        timer.UpdateTimeout();
         return true;
     }
 
@@ -86,7 +85,6 @@ public class BoardController : MonoBehaviour, IBoardController
         if (_stepTimer.IsInProgress()) return _gameInfo;
         if (!_controllable.PieceShiftDown()) return LevelUp();
         _stepTimer.UpdateTimeout();
-        _lockTimer.UpdateTimeout();
         Debug.Log("Step updated");
         return _gameInfo;
     }
@@ -98,13 +96,13 @@ public class BoardController : MonoBehaviour, IBoardController
         _gameInfo.UpdateScore(_controllable.ClearFullLines());
         if (_controllable.PieceSpawnRandom())
         {
-            _stepTimer.MultiplyDelay(stepTimerCoef);
+            _stepTimer.UpdateDelay(delay => delay - 0.0001f);
             _stepTimer.UpdateTimeout();
-            _gameInfo.LevelUp();
-            Debug.Log("Level updated");
+            _gameInfo.PieceCountUp();
             return _gameInfo;
         }
-        _gameInfo.GameOver();
+
+        _gameInfo.GameOver("There is no place to spawn new piece");
         return _gameInfo;
     }
 
@@ -119,7 +117,6 @@ public class BoardController : MonoBehaviour, IBoardController
         _gameInfo = new GameInfo();
         _stepTimer = new TetrisTimer(1f);
         _moveTimer = new TetrisTimer(0.5f);
-        _lockTimer = new TetrisTimer(0.1f);
         _controllable.PieceSpawnRandom();
     }
 }

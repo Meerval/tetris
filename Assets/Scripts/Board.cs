@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class Board : MonoBehaviour
@@ -17,6 +18,7 @@ public class Board : MonoBehaviour
         if (controller.DetectAndExecutePieceHardDrop())
         {
             DetectGameOver(controller.LevelUp());
+            return;
         }
         DetectGameOver(controller.StepUp());
     }
@@ -24,7 +26,6 @@ public class Board : MonoBehaviour
     private void DetectGameOver(GameInfo gameInfo)
     {
         if (gameInfo.IsGameGoingOn()) return;
-        Debug.Log($"Game Over !!!\nlvl: {gameInfo.Level()}\nscore: {gameInfo.Score()}");
         controller.CreateNewGame();
     }
 }

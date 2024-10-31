@@ -7,14 +7,14 @@ namespace Pieces
     {
         private readonly Vector2Int[] _shape = { new(0, 1), new(1, 1), new(0, 0), new(1, 0) };
 
-        public override Vector2Int[] ShapeMap()
+        protected override Vector2Int[] ShapeMap()
         {
             return _shape;
         }
 
-        public override IPositionCalculator RotationCalculator(Vector2Int[] piecePosition, RotationDirection direction)
+        protected override IShapeMapClc RotationCalculator()
         {
-            return new RotationPositionCalculatorIO(piecePosition, direction);
+            return new RotationClcIO(ShapeMap(), RotationAngle);
         }
     }
 }

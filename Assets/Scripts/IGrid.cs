@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using PositionCalculator;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public interface IGrid
 {
-    void SetTiles(IEnumerable<Vector2Int> positionList, TileBase tile);
-    void LockTiles(IEnumerable<Vector2Int> positionList, TileBase tile);
-    bool ShiftTiles(Vector2Int[] currentPosition, Vector2Int[] newPosition);
-    bool IsAvailablePosition(IEnumerable<Vector2Int> piecePosition);
-    int ClearFullLines();
-    void ClearAll();
+    bool SpawnNewPiece();
+    bool ShiftPiece(Func<Vector2Int, IPositionClc> newPositionFunc);
+    bool RotatePiece(Direction direction);
+    public void LockPiece();
+    public void ClearAll();
+    public int ClearFullLines();
+
 }

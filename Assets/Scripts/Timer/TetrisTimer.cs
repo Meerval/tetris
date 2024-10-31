@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using UnityEngine;
 
 namespace Timer
@@ -31,9 +32,9 @@ namespace Timer
             _timeout = Time.time + _delayTmp;
         }
 
-        public void MultiplyDelay(float coef)
+        public void UpdateDelay(Func<float, float> delayFunc)
         {
-            _delayTmp *= coef;
+            _delayTmp = delayFunc.Invoke(_delayTmp);
         }
     }
 }
