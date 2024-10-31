@@ -132,13 +132,10 @@ public class TetrisGrid : MonoBehaviour, IGrid
     public bool RotatePiece(Direction direction)
     {
         _activePiece.AddRotation(direction);
-        Debug.Log(
-            $"{_activePiece} rotation was settled to {new PrettyArray<Vector2Int>(_activePiece.CurrentShapeMap())}");
+        Debug.Log($"{_activePiece} rotated to {new PrettyArray<Vector2Int>(_activePiece.CurrentShapeMap())}");
         if (
-            // TODO: WallKicks take a lot of cells
-            // _activePiece.HasNoWallKick(translation => IsAvailablePosition(translation + _activePiecePosition))
-            // && 
-            IsAvailablePosition(_activePiecePosition)
+            _activePiece.HasNoWallKick(cell => lockedTilemap.IsFree(cell + _activePiecePosition))
+            && IsAvailablePosition(_activePiecePosition)
         )
         {
             activeTilemap.ClearAll();
@@ -148,8 +145,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
         }
 
         _activePiece.SubRotation(direction);
-        Debug.Log(
-            $"{_activePiece} rotation was returned to {new PrettyArray<Vector2Int>(_activePiece.CurrentShapeMap())}");
+        Debug.Log($"{_activePiece} rotation returned to {new PrettyArray<Vector2Int>(_activePiece.CurrentShapeMap())}");
         return false;
     }
 
@@ -221,7 +217,6 @@ public class TetrisGrid : MonoBehaviour, IGrid
             }
 
             y++;
-            Debug.Log($"y < yMax = {y < _bounds.yMax}; y == {y}; yMax = {_bounds.yMax}");
         }
     }
 
