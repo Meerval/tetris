@@ -1,10 +1,10 @@
-﻿public interface IBoardController
+﻿public interface IGameController
 {
     bool DetectAndExecutePieceRotation();
     bool DetectAndExecutePieceShift();
     bool DetectAndExecutePieceHardDrop();
-    GameInfo StepUp();
-    GameInfo LevelUp();
+    TetrisState StepUp();
+    TetrisState LevelUp();
     void CreateNewGame();
 }
 

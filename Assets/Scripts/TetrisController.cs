@@ -1,18 +1,18 @@
 ﻿using Timer;
 using UnityEngine;
 
-public class BoardController : MonoBehaviour, IBoardController
+public class TetrisController : MonoBehaviour, IGameController
 {
-    private IBoardAction _controllable;
-    private GameInfo _gameInfo;
+    private IGridControler _controllable;
+    private TetrisState _tetrisState;
 
     private ITimer _stepTimer;
     private ITimer _moveTimer;
 
     private void Awake()
     {
-        Debug.Log("BoardController is awake");
-        _controllable = GetComponent<BoardAction>();
+        _controllable = GetComponent<TetrisGridController>();
+        Debug.Log("TetrisController is awake");
     }
 
     private void Start()
@@ -80,30 +80,30 @@ public class BoardController : MonoBehaviour, IBoardController
         return true;
     }
 
-    public GameInfo StepUp()
+    public TetrisState StepUp()
     {
-        if (_stepTimer.IsInProgress()) return _gameInfo;
+        if (_stepTimer.IsInProgress()) return _tetrisState;
         if (!_controllable.PieceShiftDown()) return LevelUp();
         _stepTimer.UpdateTimeout();
         Debug.Log("Step updated");
-        return _gameInfo;
+        return _tetrisState;
     }
 
-    public GameInfo LevelUp()
+    public TetrisState LevelUp()
     {
-        if (_stepTimer.IsInProgress()) return _gameInfo;
+        if (_stepTimer.IsInProgress()) return _tetrisState;
         _controllable.PieceLock();
-        _gameInfo.UpdateScore(_controllable.ClearFullLines());
+        _tetrisState.UpdateScore(_controllable.ClearFullLines());
         if (_controllable.PieceSpawnRandom())
         {
             _stepTimer.UpdateDelay(delay => delay - 0.0001f);
             _stepTimer.UpdateTimeout();
-            _gameInfo.PieceCountUp();
-            return _gameInfo;
+            _tetrisState.PieceCountUp();
+            return _tetrisState;
         }
 
-        _gameInfo.GameOver("There is no place to spawn new piece");
-        return _gameInfo;
+        _tetrisState.GameOver("There is no place to spawn new piece");
+        return _tetrisState;
     }
 
     public void CreateNewGame()
@@ -114,7 +114,7 @@ public class BoardController : MonoBehaviour, IBoardController
 
     private void InitNewGame()
     {
-        _gameInfo = new GameInfo();
+        _tetrisState = new TetrisState();
         _stepTimer = new TetrisTimer(1f);
         _moveTimer = new TetrisTimer(0.5f);
         _controllable.PieceSpawnRandom();

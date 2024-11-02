@@ -1,7 +1,7 @@
 ﻿using PositionCalculator;
 using UnityEngine;
 
-public class BoardAction : MonoBehaviour, IBoardAction
+public class TetrisGridController : MonoBehaviour, IGridControler
 {
     private TetrisGrid _grid;
 

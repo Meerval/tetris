@@ -1,4 +1,4 @@
-﻿public interface IBoardAction
+﻿public interface IGridControler
 {
     bool PieceSpawnRandom();
     bool PieceRotateLeft();

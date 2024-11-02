@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-public class GameInfo
+public class TetrisState
 {
     private int _step;
     private int _score;
     private bool _isGameOver;
     private string _gameOverReason;
 
-    public GameInfo()
+    public TetrisState()
     {
         _step = 1;
         _score = 0;

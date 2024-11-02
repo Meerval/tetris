@@ -22,7 +22,9 @@ namespace Pieces
 
         public IPiece SpawnRandom()
         {
-            return Instantiate(piecePrefabs[Random.Range(0, piecePrefabs.Count)]);
+            Piece piece = Instantiate(piecePrefabs[Random.Range(0, piecePrefabs.Count)], gameObject.transform);
+            piece.name = piece.ToString();
+            return piece;
         }
     }
 }

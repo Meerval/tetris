@@ -351,9 +351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectionTile: {fileID: 11400000, guid: a10927dec698b7c49b1375f89e8db4d2, type: 2}
-  activeTilemap: {fileID: 2430315049351262204, guid: d800aa6e480c3b7408a5a79f192a2bf0, type: 3}
-  projectedTilemap: {fileID: 2430315049351262204, guid: d800aa6e480c3b7408a5a79f192a2bf0, type: 3}
-  lockedTilemap: {fileID: 2430315049351262204, guid: d800aa6e480c3b7408a5a79f192a2bf0, type: 3}
+  tilemapPrefab: {fileID: 2430315049351262204, guid: d800aa6e480c3b7408a5a79f192a2bf0, type: 3}
 --- !u!212 &1369799154
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -443,8 +441,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1887623654}
   - component: {fileID: 1887623656}
-  - component: {fileID: 1887623658}
   - component: {fileID: 1887623657}
+  - component: {fileID: 1887623658}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged

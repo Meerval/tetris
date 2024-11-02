@@ -11,9 +11,11 @@ public class TetrisGrid : MonoBehaviour, IGrid
 {
   
     [SerializeField] private TileBase projectionTile;
-    [SerializeField] private TilemapController activeTilemap;
-    [SerializeField] private TilemapController projectedTilemap;
-    [SerializeField] private TilemapController lockedTilemap;
+    [SerializeField] private TilemapController tilemapPrefab;
+    
+    private ITilemapController _activeTilemap;
+    private ITilemapController _projectedTilemap;
+    private ITilemapController _lockedTilemap;
 
     private RectInt _bounds;
     private IPiece _activePiece;
@@ -24,9 +26,14 @@ public class TetrisGrid : MonoBehaviour, IGrid
     {
         Vector2Int size = Vector2Int.RoundToInt(GetComponent<SpriteRenderer>().size);
         _bounds = new RectInt(new Vector2Int(-size.x / 2, -size.y / 2), size);
-        activeTilemap = Instantiate(activeTilemap);
-        projectedTilemap = Instantiate(projectedTilemap);
-        lockedTilemap = Instantiate(lockedTilemap);
+        
+        _activeTilemap = Instantiate(tilemapPrefab, gameObject.transform);
+        _projectedTilemap = Instantiate(tilemapPrefab, gameObject.transform);
+        _lockedTilemap = Instantiate(tilemapPrefab, gameObject.transform);
+        
+        ((TilemapController)_activeTilemap).gameObject.name = "ActiveTilemap";
+        ((TilemapController)_projectedTilemap).gameObject.name = "ProjectedTilemap";
+        ((TilemapController)_lockedTilemap).gameObject.name = "LockedTilemap";
 
         Debug.Log
         (
@@ -59,9 +66,9 @@ public class TetrisGrid : MonoBehaviour, IGrid
                     return false;
                 }
 
-                if (lockedTilemap.IsTaken(cell))
+                if (_lockedTilemap.IsTaken(cell))
                 {
-                    Debug.Log($"Tile {cell.ToString()} is taken by Tile {lockedTilemap.Get(cell)}");
+                    Debug.Log($"Tile {cell.ToString()} is taken by Tile {_lockedTilemap.Get(cell)}");
                     return false;
                 }
 
@@ -84,7 +91,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
         while (projection.All(cell =>
                    {
                        Vector2Int newCell = NewCell(cell);
-                       return _bounds.Contains(newCell) && lockedTilemap.IsFree(newCell);
+                       return _bounds.Contains(newCell) && _lockedTilemap.IsFree(newCell);
                    }
                ))
         {
@@ -100,8 +107,8 @@ public class TetrisGrid : MonoBehaviour, IGrid
         Vector2Int newPosition = newPositionFunc.Invoke(_activePiecePosition).GetNewPosition();
         if (IsAvailablePosition(newPosition))
         {
-            activeTilemap.ClearAll();
-            projectedTilemap.ClearAll();
+            _activeTilemap.ClearAll();
+            _projectedTilemap.ClearAll();
             SetPiece(newPosition);
             return true;
         }
@@ -120,14 +127,14 @@ public class TetrisGrid : MonoBehaviour, IGrid
     {
         foreach (Vector2Int tilePosition in CalculateTilesPosition(position))
         {
-            activeTilemap.Set(tilePosition, _activePiece.Tile());
+            _activeTilemap.Set(tilePosition, _activePiece.Tile());
         }
 
         _activePiecePosition = position;
 
         foreach (Vector2Int tilePosition in CalculateProjectedPosition(_activePiecePosition))
         {
-            if (activeTilemap.IsFree(tilePosition)) projectedTilemap.Set(tilePosition, projectionTile);
+            if (_activeTilemap.IsFree(tilePosition)) _projectedTilemap.Set(tilePosition, projectionTile);
         }
     }
 
@@ -136,12 +143,12 @@ public class TetrisGrid : MonoBehaviour, IGrid
         _activePiece.AddRotation(direction);
         Debug.Log($"{_activePiece} rotated to {new PrettyArray<Vector2Int>(_activePiece.CurrentShapeMap())}");
         if (
-            _activePiece.HasNoWallKick(cell => lockedTilemap.IsFree(cell + _activePiecePosition))
+            _activePiece.HasNoWallKick(cell => _lockedTilemap.IsFree(cell + _activePiecePosition))
             && IsAvailablePosition(_activePiecePosition)
         )
         {
-            activeTilemap.ClearAll();
-            projectedTilemap.ClearAll();
+            _activeTilemap.ClearAll();
+            _projectedTilemap.ClearAll();
             SetPiece(_activePiecePosition);
             return true;
         }
@@ -164,9 +171,9 @@ public class TetrisGrid : MonoBehaviour, IGrid
 
     public void ClearAll()
     {
-        activeTilemap.ClearAll();
-        projectedTilemap.ClearAll();
-        lockedTilemap.ClearAll();
+        _activeTilemap.ClearAll();
+        _projectedTilemap.ClearAll();
+        _lockedTilemap.ClearAll();
         Debug.Log("Whole grid cleared");
     }
 
@@ -200,22 +207,22 @@ public class TetrisGrid : MonoBehaviour, IGrid
     {
         return Enumerable
             .Range(_bounds.xMin, _bounds.width)
-            .All(x => lockedTilemap.IsTaken(new Vector2Int(x, y)));
+            .All(x => _lockedTilemap.IsTaken(new Vector2Int(x, y)));
     }
 
     private void ClearLine(int y)
     {
         for (int x = _bounds.xMin; x < _bounds.xMax; x++)
         {
-            lockedTilemap.Clear(new Vector2Int(x, y));
+            _lockedTilemap.Clear(new Vector2Int(x, y));
         }
 
         while (y < _bounds.yMax)
         {
             for (int x = _bounds.xMin; x < _bounds.xMax; x++)
             {
-                TileBase above = lockedTilemap.Get(new Vector2Int(x, y + 1));
-                lockedTilemap.Set(new Vector2Int(x, y), above);
+                TileBase above = _lockedTilemap.Get(new Vector2Int(x, y + 1));
+                _lockedTilemap.Set(new Vector2Int(x, y), above);
             }
 
             y++;
@@ -224,7 +231,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
 
     private void LockTile(Vector2Int position, TileBase tile)
     {
-        activeTilemap.Clear(position);
-        lockedTilemap.Set(position, tile);
+        _activeTilemap.Clear(position);
+        _lockedTilemap.Set(position, tile);
     }
 }
