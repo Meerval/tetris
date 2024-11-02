@@ -9,10 +9,10 @@ using UnityEngine.Tilemaps;
 
 public class TetrisGrid : MonoBehaviour, IGrid
 {
-    [SerializeField] private PieceSpawner pieceSpawner;
+  
+    [SerializeField] private TileBase projectionTile;
     [SerializeField] private TilemapController activeTilemap;
     [SerializeField] private TilemapController projectedTilemap;
-    [SerializeField] private TileBase projectionTile;
     [SerializeField] private TilemapController lockedTilemap;
 
     private RectInt _bounds;
@@ -24,6 +24,9 @@ public class TetrisGrid : MonoBehaviour, IGrid
     {
         Vector2Int size = Vector2Int.RoundToInt(GetComponent<SpriteRenderer>().size);
         _bounds = new RectInt(new Vector2Int(-size.x / 2, -size.y / 2), size);
+        activeTilemap = Instantiate(activeTilemap);
+        projectedTilemap = Instantiate(projectedTilemap);
+        lockedTilemap = Instantiate(lockedTilemap);
 
         Debug.Log
         (
@@ -34,9 +37,8 @@ public class TetrisGrid : MonoBehaviour, IGrid
 
     public bool SpawnNewPiece()
     {
-        if (_activePiece != null) _activePiece.Destroy();
-
-        _activePiece = pieceSpawner.SpawnRandom();
+        _activePiece?.Destroy();
+        _activePiece = gameObject.GetComponent<PieceSpawner>().SpawnRandom();
         if (IsAvailablePosition(_spawnPosition))
         {
             _activePiecePosition = _spawnPosition;

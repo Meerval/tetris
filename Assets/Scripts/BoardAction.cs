@@ -3,17 +3,17 @@ using UnityEngine;
 
 public class BoardAction : MonoBehaviour, IBoardAction
 {
-    [SerializeField] private TetrisGrid grid;
+    private TetrisGrid _grid;
 
     public void Awake()
     {
+        _grid = GetComponentInChildren<TetrisGrid>();
         Debug.Log("BoardAction is awake");
-        grid = FindObjectOfType<TetrisGrid>();
     }
 
     public bool PieceSpawnRandom()
     {
-        if (!grid.SpawnNewPiece()) return false;
+        if (!_grid.SpawnNewPiece()) return false;
         return true;
     }
 
@@ -33,26 +33,26 @@ public class BoardAction : MonoBehaviour, IBoardAction
 
     private bool Rotate(Direction direction)
     {
-        return grid.RotatePiece(direction);
+        return _grid.RotatePiece(direction);
     }
 
     public bool PieceShiftLeft()
     {
-        if (!grid.ShiftPiece(currentPosition => new ShiftClcLeft(currentPosition))) return false;
+        if (!_grid.ShiftPiece(currentPosition => new ShiftClcLeft(currentPosition))) return false;
         Debug.Log("Piece shifted left");
         return true;
     }
 
     public bool PieceShiftRight()
     {
-        if (!grid.ShiftPiece(currentPosition => new ShiftClcRight(currentPosition))) return false;
+        if (!_grid.ShiftPiece(currentPosition => new ShiftClcRight(currentPosition))) return false;
         Debug.Log("Piece shifted right");
         return true;
     }
 
     public bool PieceShiftDown()
     {
-        if (!grid.ShiftPiece(currentPosition => new ShiftClcDown(currentPosition))) return false;
+        if (!_grid.ShiftPiece(currentPosition => new ShiftClcDown(currentPosition))) return false;
         Debug.Log("Piece shifted down");
         return true;
     }
@@ -69,16 +69,16 @@ public class BoardAction : MonoBehaviour, IBoardAction
 
     public int ClearFullLines()
     {
-        return grid.ClearFullLines();
+        return _grid.ClearFullLines();
     }
 
     public void ClearAll()
     {
-        grid.ClearAll();
+        _grid.ClearAll();
     }
 
     public void PieceLock()
     {
-        grid.LockPiece();
+        _grid.LockPiece();
     }
 }
