@@ -1,12 +1,12 @@
-﻿using Timer;
+﻿using Progress;
+using Timer;
 using UnityEngine;
 
 public class TetrisController : MonoBehaviour, IGameController
 {
     private IGridControler _controllable;
-    private TetrisState _tetrisState;
 
-    private ITimer _stepTimer;
+    private ITimer _dropTimer;
     private ITimer _moveTimer;
 
     private void Awake()
@@ -40,7 +40,7 @@ public class TetrisController : MonoBehaviour, IGameController
         bool isMoved = false;
         if (IsKeyDown(KeyCode.S))
         {
-            if (_controllable.PieceShiftDown()) _stepTimer.UpdateTimeout();
+            if (_controllable.PieceShiftDown()) _dropTimer.UpdateTimeout();
         }
 
         if (IsKeyDown(KeyCode.A))
@@ -80,33 +80,37 @@ public class TetrisController : MonoBehaviour, IGameController
         return true;
     }
 
-    public TetrisState StepUp()
+    public void DetectTimeOutAndDropPiece()
     {
-        if (_stepTimer.IsInProgress()) return _tetrisState;
-        if (!_controllable.PieceShiftDown()) return LevelUp();
-        _stepTimer.UpdateTimeout();
-        Debug.Log("Step updated");
-        return _tetrisState;
-    }
-
-    public TetrisState LevelUp()
-    {
-        if (_stepTimer.IsInProgress()) return _tetrisState;
-        _controllable.PieceLock();
-        _tetrisState.UpdateScore(_controllable.ClearFullLines());
-        if (_controllable.PieceSpawnRandom())
+        if (_dropTimer.IsInProgress()) return;
+        if (!_controllable.PieceShiftDown())
         {
-            _stepTimer.UpdateDelay(delay => delay - 0.0001f);
-            _stepTimer.UpdateTimeout();
-            _tetrisState.PieceCountUp();
-            return _tetrisState;
+            StepUp();
+            return;
         }
 
-        _tetrisState.GameOver("There is no place to spawn new piece");
-        return _tetrisState;
+        _dropTimer.UpdateTimeout();
+        Debug.Log("Step updated");
     }
 
-    public void CreateNewGame()
+    public void StepUp()
+    {
+        if (_dropTimer.IsInProgress()) return;
+        _controllable.PieceLock();
+        
+        TetrisInfo.Instance.AddScore(new ScoreCalculator(_controllable.ClearFullLines()).Calculate());
+        if (_controllable.PieceSpawnRandom())
+        {
+            _dropTimer.UpdateDelay(delay => delay - 0.001f);
+            _dropTimer.UpdateTimeout();
+            return;
+        }
+
+        TetrisInfo.Instance.OverGame("There is no place to spawn new piece");
+    }
+    
+
+   public void CreateNewGame()
     {
         _controllable.ClearAll();
         InitNewGame();
@@ -114,8 +118,8 @@ public class TetrisController : MonoBehaviour, IGameController
 
     private void InitNewGame()
     {
-        _tetrisState = new TetrisState();
-        _stepTimer = new TetrisTimer(1f);
+        TetrisInfo.Instance.StartGame();
+        _dropTimer = new TetrisTimer(1f);
         _moveTimer = new TetrisTimer(0.5f);
         _controllable.PieceSpawnRandom();
     }

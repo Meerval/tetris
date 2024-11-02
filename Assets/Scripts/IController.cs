@@ -3,8 +3,8 @@
     bool DetectAndExecutePieceRotation();
     bool DetectAndExecutePieceShift();
     bool DetectAndExecutePieceHardDrop();
-    TetrisState StepUp();
-    TetrisState LevelUp();
+    void DetectTimeOutAndDropPiece();
+    void StepUp();
     void CreateNewGame();
 }
 

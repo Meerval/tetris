@@ -3,11 +3,11 @@ using UnityEngine;
 public class TetrisBoard : MonoBehaviour
 {
     private IGameController _gameController;
-
+    
     public void Start()
     {
         _gameController = GetComponent<TetrisController>();
-        _gameController.CreateNewGame();
+        _gameController?.CreateNewGame();
         Debug.Log("Game is started");
     }
 
@@ -17,15 +17,18 @@ public class TetrisBoard : MonoBehaviour
         _gameController.DetectAndExecutePieceShift();
         if (_gameController.DetectAndExecutePieceHardDrop())
         {
-            DetectGameOver(_gameController.LevelUp());
+            _gameController.StepUp();
+            DetectGameOver();
             return;
         }
-        DetectGameOver(_gameController.StepUp());
+
+        _gameController.DetectTimeOutAndDropPiece();
+        DetectGameOver();
     }
 
-    private void DetectGameOver(TetrisState tetrisState)
+    private void DetectGameOver()
     {
-        if (tetrisState.IsGameGoingOn()) return;
+        if (TetrisInfo.Instance.Status() != GameState.Over) return;
         _gameController.CreateNewGame();
     }
 }
