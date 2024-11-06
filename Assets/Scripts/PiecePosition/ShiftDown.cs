@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace PositionCalculator
+namespace PiecePosition
 {
-    public class ShiftClcDown : ShiftShapeMap
+    public class ShiftDown : Shift
     {
-        public ShiftClcDown(Vector2Int currentPiecePosition) : base(currentPiecePosition)
+        public ShiftDown(Vector2Int currentPiecePosition) : base(currentPiecePosition)
         {
         }
 

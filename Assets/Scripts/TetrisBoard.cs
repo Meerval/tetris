@@ -1,34 +1,33 @@
+using Progress;
 using UnityEngine;
 
 public class TetrisBoard : MonoBehaviour
 {
-    private IGameController _gameController;
+    private IController _controller;
     
     public void Start()
     {
-        _gameController = GetComponent<TetrisController>();
-        _gameController?.CreateNewGame();
-        Debug.Log("Game is started");
+        _controller = GetComponentInChildren<TetrisController>();
+        Debug.Log("TetrisBoard started");
     }
 
     public void Update()
     {
-        _gameController.DetectAndExecutePieceRotation();
-        _gameController.DetectAndExecutePieceShift();
-        if (_gameController.DetectAndExecutePieceHardDrop())
+        _controller.DetectAndExecutePieceRotation();
+        _controller.DetectAndExecutePieceShift();
+        if (_controller.DetectAndExecutePieceHardDrop())
         {
-            _gameController.StepUp();
+            _controller.StepUp();
             DetectGameOver();
             return;
         }
-
-        _gameController.DetectTimeOutAndDropPiece();
+        _controller.DetectTimeOutAndDropPiece();
         DetectGameOver();
     }
 
     private void DetectGameOver()
     {
-        if (TetrisInfo.Instance.Status() != GameState.Over) return;
-        _gameController.CreateNewGame();
+        if (TetrisProgressController.Instance.Status() != State.Over) return;
+        _controller.SetNewGame();
     }
 }

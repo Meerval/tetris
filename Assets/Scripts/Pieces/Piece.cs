@@ -1,5 +1,5 @@
 ﻿using System;
-using PositionCalculator;
+using PiecePosition;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -75,9 +75,9 @@ namespace Pieces
             Destroy(gameObject);
         }
 
-        protected virtual IShapeMapClc RotationCalculator()
+        protected virtual IShapeMap RotationCalculator()
         {
-            return new RotationClcJLSTZ(ShapeMap(), RotationAngle);
+            return new RotationJLSTZ(ShapeMap(), RotationAngle);
         }
 
         protected abstract Vector2Int[] ShapeMap();

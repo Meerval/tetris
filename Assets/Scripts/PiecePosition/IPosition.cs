@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace PositionCalculator
+namespace PiecePosition
 {
-    public interface IPositionClc
+    public interface IPosition
     {
         Vector2Int GetNewPosition();
     }

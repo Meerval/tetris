@@ -1,4 +1,4 @@
-﻿namespace Math
+﻿namespace Position.Math
 {
     public static class Wrapper
     {

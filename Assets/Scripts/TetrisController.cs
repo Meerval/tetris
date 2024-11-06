@@ -1,23 +1,30 @@
-﻿using Progress;
+﻿using System;
 using Timer;
 using UnityEngine;
 
-public class TetrisController : MonoBehaviour, IGameController
+public class TetrisController : MonoBehaviour, IController
 {
-    private IGridControler _controllable;
+    public static Action OnGameStart;
+    public static Action OnStepUp;
+    public static Action<string> OnGameOver;
+
+    private IGridController _tetrisGrid;
 
     private ITimer _dropTimer;
     private ITimer _moveTimer;
 
     private void Awake()
     {
-        _controllable = GetComponent<TetrisGridController>();
-        Debug.Log("TetrisController is awake");
+        _tetrisGrid = GetComponent<TetrisGridController>();
+        _dropTimer = GetComponent<PieceDropTimer>();
+        _moveTimer = GetComponent<PieceMoveTimer>();
+        Debug.Log("TetrisController awoke");
     }
 
     private void Start()
     {
-        InitNewGame();
+        SetNewGame();
+        Debug.Log("TetrisController started");
     }
 
     public bool DetectAndExecutePieceRotation()
@@ -25,11 +32,11 @@ public class TetrisController : MonoBehaviour, IGameController
         bool isMoved = false;
         if (IsKeyDown(KeyCode.Q))
         {
-            isMoved = _controllable.PieceRotateLeft();
+            isMoved = _tetrisGrid.PieceRotateLeft();
         }
         else if (IsKeyDown(KeyCode.E))
         {
-            isMoved = _controllable.PieceRotateRight();
+            isMoved = _tetrisGrid.PieceRotateRight();
         }
 
         return ResetTimersIf(isMoved, _moveTimer);
@@ -40,16 +47,16 @@ public class TetrisController : MonoBehaviour, IGameController
         bool isMoved = false;
         if (IsKeyDown(KeyCode.S))
         {
-            if (_controllable.PieceShiftDown()) _dropTimer.UpdateTimeout();
+            if (_tetrisGrid.PieceShiftDown()) _dropTimer.UpdateTimeout();
         }
 
         if (IsKeyDown(KeyCode.A))
         {
-            isMoved = _controllable.PieceShiftLeft();
+            isMoved = _tetrisGrid.PieceShiftLeft();
         }
         else if (IsKeyDown(KeyCode.D))
         {
-            isMoved = _controllable.PieceShiftRight();
+            isMoved = _tetrisGrid.PieceShiftRight();
         }
 
         return ResetTimersIf(isMoved, _moveTimer);
@@ -58,7 +65,7 @@ public class TetrisController : MonoBehaviour, IGameController
     private static bool IsKeyDown(KeyCode keyCode)
     {
         if (!Input.GetKeyDown(keyCode)) return false;
-        Debug.Log(string.Format("A key was pressed on the keyboard: {0}", keyCode));
+        Debug.Log($"A key was pressed on the keyboard: {keyCode}");
         return true;
     }
 
@@ -67,7 +74,7 @@ public class TetrisController : MonoBehaviour, IGameController
         bool isMoved = false;
         if (IsKeyDown(KeyCode.Space))
         {
-            isMoved = _controllable.PieceHardDrop();
+            isMoved = _tetrisGrid.PieceHardDrop();
         }
 
         return ResetTimersIf(isMoved, _moveTimer);
@@ -83,44 +90,37 @@ public class TetrisController : MonoBehaviour, IGameController
     public void DetectTimeOutAndDropPiece()
     {
         if (_dropTimer.IsInProgress()) return;
-        if (!_controllable.PieceShiftDown())
+        if (!_tetrisGrid.PieceShiftDown())
         {
             StepUp();
             return;
         }
-
         _dropTimer.UpdateTimeout();
-        Debug.Log("Step updated");
+        Debug.Log("Piece dropped by timer");
     }
 
     public void StepUp()
     {
         if (_dropTimer.IsInProgress()) return;
-        _controllable.PieceLock();
-        
-        TetrisInfo.Instance.AddScore(new ScoreCalculator(_controllable.ClearFullLines()).Calculate());
-        if (_controllable.PieceSpawnRandom())
+        _tetrisGrid.PieceLock();
+        _tetrisGrid.ClearFullLines();
+        if (_tetrisGrid.PieceSpawnRandom())
         {
-            _dropTimer.UpdateDelay(delay => delay - 0.001f);
             _dropTimer.UpdateTimeout();
+            OnStepUp?.Invoke();
             return;
         }
 
-        TetrisInfo.Instance.OverGame("There is no place to spawn new piece");
-    }
-    
-
-   public void CreateNewGame()
-    {
-        _controllable.ClearAll();
-        InitNewGame();
+        OnGameOver?.Invoke("There is no place to spawn new piece");
     }
 
-    private void InitNewGame()
+
+    public void SetNewGame()
     {
-        TetrisInfo.Instance.StartGame();
-        _dropTimer = new TetrisTimer(1f);
-        _moveTimer = new TetrisTimer(0.5f);
-        _controllable.PieceSpawnRandom();
+        OnGameStart?.Invoke();
+        _dropTimer.ResetTimer();
+        _moveTimer.ResetTimer();
+        _tetrisGrid.ClearAll();
+        _tetrisGrid.PieceSpawnRandom();
     }
 }

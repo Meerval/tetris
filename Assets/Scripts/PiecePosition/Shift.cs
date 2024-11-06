@@ -1,14 +1,13 @@
-﻿using Pieces;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace PositionCalculator
+namespace PiecePosition
 {
-    public abstract class ShiftShapeMap : IPositionClc
+    public abstract class Shift : IPosition
     {
 
         private readonly Vector2Int _currentPiecePosition;
 
-        protected ShiftShapeMap(Vector2Int currentPiecePosition)
+        protected Shift(Vector2Int currentPiecePosition)
         {
             _currentPiecePosition = currentPiecePosition;
         }

@@ -1,10 +1,10 @@
-﻿public interface IGameController
+﻿public interface IController
 {
     bool DetectAndExecutePieceRotation();
     bool DetectAndExecutePieceShift();
     bool DetectAndExecutePieceHardDrop();
     void DetectTimeOutAndDropPiece();
     void StepUp();
-    void CreateNewGame();
+    void SetNewGame();
 }
 

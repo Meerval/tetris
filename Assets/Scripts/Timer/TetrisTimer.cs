@@ -1,21 +1,13 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using UnityEngine;
+
 
 namespace Timer
 {
-    public class TetrisTimer : ITimer
+    public abstract class TetrisTimer : MonoBehaviour, ITimer
     {
-        private readonly float _delay;
-        private float _delayTmp;
+        [SerializeField] protected float delay;
         private float _timeout;
-
-        public TetrisTimer(float delay)
-        {
-            _delay = delay;
-            _delayTmp = delay;
-            UpdateTimeout();
-        }
 
         public bool IsInProgress()
         {
@@ -29,12 +21,15 @@ namespace Timer
 
         public void UpdateTimeout()
         {
-            _timeout = Time.time + _delayTmp;
+            _timeout = Time.time + delay;
         }
 
-        public void UpdateDelay(Func<float, float> delayFunc)
+        public abstract void ResetTimer();
+
+        public override string ToString()
         {
-            _delayTmp = delayFunc.Invoke(_delayTmp);
+            return $"delay: {delay}, current time: {Time.time.ToString(CultureInfo.InvariantCulture)}, " +
+                   $"timeout: {_timeout.ToString(CultureInfo.InvariantCulture)}";
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿using Math;
+﻿using Position.Math;
 using UnityEngine;
 
-namespace PositionCalculator
+namespace PiecePosition
 {
-    public class RotationClcJLSTZ : RotationClc
+    public class RotationJLSTZ : Rotation
     {
-        public RotationClcJLSTZ(Vector2Int[] shapeMap, RotationAngle angle) : base(shapeMap, angle)
+        public RotationJLSTZ(Vector2Int[] shapeMap, RotationAngle angle) : base(shapeMap, angle)
         {
         }
 

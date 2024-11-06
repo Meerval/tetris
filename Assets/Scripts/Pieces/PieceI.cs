@@ -1,4 +1,4 @@
-﻿using PositionCalculator;
+﻿using PiecePosition;
 using UnityEngine;
 
 namespace Pieces
@@ -29,9 +29,9 @@ namespace Pieces
             return _wallKicks;
         }
 
-        protected override IShapeMapClc RotationCalculator()
+        protected override IShapeMap RotationCalculator()
         {
-            return new RotationClcIO(ShapeMap(), RotationAngle);
+            return new RotationIO(ShapeMap(), RotationAngle);
         }
     }
 }

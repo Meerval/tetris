@@ -1,4 +1,4 @@
-﻿public interface IGridControler
+﻿public interface IGridController
 {
     bool PieceSpawnRandom();
     bool PieceRotateLeft();
@@ -8,6 +8,6 @@
     bool PieceShiftDown();
     bool PieceHardDrop();
     void PieceLock();
-    int ClearFullLines();
+    void ClearFullLines();
     void ClearAll();
 }

@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace PositionCalculator
+namespace PiecePosition
 {
-    public interface IShapeMapClc
+    public interface IShapeMap
     {
         Vector2Int[] GetRotatedShapeMap();
     }

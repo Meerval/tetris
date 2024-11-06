@@ -1,13 +1,10 @@
-﻿using System.Linq;
-using Math;
-using Pretty;
+﻿using Position.Math;
 using UnityEngine;
 
-namespace PositionCalculator
+namespace PiecePosition
 {
-    public class RotationClcIO : RotationClc
-    {
-        public RotationClcIO(Vector2Int[] shapeMap, RotationAngle angle) : base(shapeMap, angle)
+    public class RotationIO : Rotation {
+        public RotationIO(Vector2Int[] shapeMap, RotationAngle angle) : base(shapeMap, angle)
         {
         }
 

@@ -1,14 +1,14 @@
-﻿using PositionCalculator;
+﻿using PiecePosition;
 using UnityEngine;
 
-public class TetrisGridController : MonoBehaviour, IGridControler
+public class TetrisGridController : MonoBehaviour, IGridController
 {
-    private TetrisGrid _grid;
+    private IGrid _grid;
 
     public void Awake()
     {
-        _grid = GetComponentInChildren<TetrisGrid>();
-        Debug.Log("BoardAction is awake");
+        _grid = GetComponent<TetrisGrid>();
+        Debug.Log("TetrisGridController awoke");
     }
 
     public bool PieceSpawnRandom()
@@ -38,21 +38,21 @@ public class TetrisGridController : MonoBehaviour, IGridControler
 
     public bool PieceShiftLeft()
     {
-        if (!_grid.ShiftPiece(currentPosition => new ShiftClcLeft(currentPosition))) return false;
+        if (!_grid.ShiftPiece(currentPosition => new ShiftLeft(currentPosition))) return false;
         Debug.Log("Piece shifted left");
         return true;
     }
 
     public bool PieceShiftRight()
     {
-        if (!_grid.ShiftPiece(currentPosition => new ShiftClcRight(currentPosition))) return false;
+        if (!_grid.ShiftPiece(currentPosition => new ShiftRight(currentPosition))) return false;
         Debug.Log("Piece shifted right");
         return true;
     }
 
     public bool PieceShiftDown()
     {
-        if (!_grid.ShiftPiece(currentPosition => new ShiftClcDown(currentPosition))) return false;
+        if (!_grid.ShiftPiece(currentPosition => new ShiftDown(currentPosition))) return false;
         Debug.Log("Piece shifted down");
         return true;
     }
@@ -67,9 +67,9 @@ public class TetrisGridController : MonoBehaviour, IGridControler
         return true;
     }
 
-    public int ClearFullLines()
+    public void ClearFullLines()
     {
-        return _grid.ClearFullLines();
+        _grid.ClearFullLines();
     }
 
     public void ClearAll()

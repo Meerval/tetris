@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace PositionCalculator
+namespace PiecePosition
 {
-    public abstract class RotationClc : IShapeMapClc
+    public abstract class Rotation : IShapeMap
     {
         protected readonly Vector2Int[] ShapeMap;
         protected readonly RotationAngle Angle;
 
-        protected RotationClc(Vector2Int[] shapeMap, RotationAngle angle)
+        protected Rotation(Vector2Int[] shapeMap, RotationAngle angle)
         {
             ShapeMap = shapeMap;
             Angle = angle;

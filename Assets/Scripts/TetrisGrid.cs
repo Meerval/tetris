@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using PiecePosition;
 using Pieces;
-using PositionCalculator;
 using Pretty;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class TetrisGrid : MonoBehaviour, IGrid
 {
-  
+    public static Action<int> OnScoreUp;
+    
     [SerializeField] private TileBase projectionTile;
     [SerializeField] private TilemapController tilemapPrefab;
     
@@ -37,7 +38,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
 
         Debug.Log
         (
-            $"StandardGrid is awake with size of {size.ToString()} and bounds {_bounds.ToString()}"
+            $"StandardGrid awoke with size of {size.ToString()} and bounds {_bounds.ToString()}"
         );
     }
 
@@ -102,7 +103,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
     }
 
 
-    public bool ShiftPiece(Func<Vector2Int, IPositionClc> newPositionFunc)
+    public bool ShiftPiece(Func<Vector2Int, IPosition> newPositionFunc)
     {
         Vector2Int newPosition = newPositionFunc.Invoke(_activePiecePosition).GetNewPosition();
         if (IsAvailablePosition(newPosition))
@@ -177,7 +178,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
         Debug.Log("Whole grid cleared");
     }
 
-    public int ClearFullLines()
+    public void ClearFullLines()
     {
         List<int> clearedLines = new List<int>();
 
@@ -200,7 +201,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
             Debug.Log($"Lines were cleared: {new PrettyArray<int>(clearedLines)}");
         }
 
-        return clearedLines.Count;
+        OnScoreUp?.Invoke(clearedLines.Count);
     }
 
     private bool IsLineFull(int y)
