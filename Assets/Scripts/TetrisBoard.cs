@@ -1,3 +1,5 @@
+using System;
+using Event;
 using Progress;
 using UnityEngine;
 
@@ -11,6 +13,17 @@ public class TetrisBoard : MonoBehaviour
         Debug.Log("TetrisBoard started");
     }
 
+    private void OnEnable()
+    {
+        EventHab.OnGameOver.AddSubscriber(GameOver, 10);
+    }
+
+
+    private void OnDisable()
+    {
+        EventHab.OnGameOver.RemoveSubscriber(GameOver);
+    }
+
     public void Update()
     {
         _controller.DetectAndExecutePieceRotation();
@@ -18,16 +31,13 @@ public class TetrisBoard : MonoBehaviour
         if (_controller.DetectAndExecutePieceHardDrop())
         {
             _controller.StepUp();
-            DetectGameOver();
             return;
         }
         _controller.DetectTimeOutAndDropPiece();
-        DetectGameOver();
     }
 
-    private void DetectGameOver()
+    private void GameOver(EGameOverReason _)
     {
-        if (TetrisProgressController.Instance.Status() != State.Over) return;
         _controller.SetNewGame();
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Event;
+using UnityEngine;
 
 namespace Progress
 {
@@ -9,13 +10,13 @@ namespace Progress
         
         public void OnEnable()
         {
-            TetrisController.OnGameStart += StartNewProgress;
+            EventHab.OnGameStart.AddSubscriber(StartNewProgress);
             SubscribeProgressAction();
         }
 
         public void OnDisable()
         {
-            TetrisController.OnGameStart -= StartNewProgress;
+            EventHab.OnGameStart.RemoveSubscriber(StartNewProgress);
             UnsubscribeProgressAction();
         }
 

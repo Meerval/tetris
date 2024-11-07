@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Event;
 using UnityEngine;
 
 namespace Progress
@@ -7,8 +7,6 @@ namespace Progress
     {
         private int _currentStep;
         private int _stepCount;
-
-        public static Action OnLevelUp;
 
         protected override void StartNewProgress()
         {
@@ -19,23 +17,23 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            TetrisController.OnStepUp += StepUp;
+            EventHab.OnStepUp.AddSubscriber(StepUp);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            TetrisController.OnStepUp -= StepUp;
+            EventHab.OnStepUp.RemoveSubscriber(StepUp);
         }
 
         private void StepUp()
         {
             _currentStep += 1;
             Debug.Log($"Step updated: {_currentStep}/{_stepCount}");
-            if (_currentStep <= _stepCount) return;
+            if (_currentStep <= _stepCount - 1) return;
             CurrentValue += 1;
-            _currentStep = 1;
-            OnLevelUp?.Invoke();
+            _currentStep = 0;
             Debug.Log($"Level updated: {CurrentValue}");
+            EventHab.OnLevelUp.Trigger();
         }
     }
 }

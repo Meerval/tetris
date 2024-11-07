@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Event;
 using PiecePosition;
 using Pieces;
 using Pretty;
@@ -9,8 +10,6 @@ using UnityEngine.Tilemaps;
 
 public class TetrisGrid : MonoBehaviour, IGrid
 {
-    public static Action<int> OnScoreUp;
-    
     [SerializeField] private TileBase projectionTile;
     [SerializeField] private TilemapController tilemapPrefab;
     
@@ -201,7 +200,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
             Debug.Log($"Lines were cleared: {new PrettyArray<int>(clearedLines)}");
         }
 
-        OnScoreUp?.Invoke(clearedLines.Count);
+        EventHab.OnScoreUp.Trigger(clearedLines.Count);
     }
 
     private bool IsLineFull(int y)

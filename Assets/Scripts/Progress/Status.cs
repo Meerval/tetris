@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Event;
+using UnityEngine;
 
 namespace Progress
 {
@@ -11,14 +12,14 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            TetrisController.OnGameStart += SetStartGame;
-            TetrisController.OnGameOver += SetOverGame;
+            EventHab.OnGameStart.AddSubscriber(SetStartGame);
+            EventHab.OnGameOver.AddSubscriber(SetOverGame);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            TetrisController.OnGameStart -= SetStartGame;
-            TetrisController.OnGameOver -= SetOverGame;
+            EventHab.OnGameStart.RemoveSubscriber(SetStartGame);
+            EventHab.OnGameOver.RemoveSubscriber(SetOverGame);
         }
 
         private void SetStartGame()
@@ -27,10 +28,10 @@ namespace Progress
             Debug.Log("Game Started!");
         }
 
-        private void SetOverGame(string gameOverReason)
+        private void SetOverGame(EGameOverReason eGameOverReason)
         {
             CurrentValue = State.Over;
-            Debug.Log($"Game Over!\nreason: \"{gameOverReason}\"\nlevel: {TetrisProgressController.Instance.Level()}, " +
+            Debug.Log($"Game Over!\nreason: \"{eGameOverReason}\"\nlevel: {TetrisProgressController.Instance.Level()}, " +
                       $"score: {TetrisProgressController.Instance.Score()}");
         }
     }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Event;
+using UnityEngine;
 
 namespace Progress
 {
@@ -13,12 +14,12 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            TetrisGrid.OnScoreUp += UpdateScore;
+            EventHab.OnScoreUp.AddSubscriber(UpdateScore);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            TetrisGrid.OnScoreUp -= UpdateScore;
+            EventHab.OnScoreUp.RemoveSubscriber(UpdateScore);
         }
           
         private void UpdateScore(int removedLinesCount)

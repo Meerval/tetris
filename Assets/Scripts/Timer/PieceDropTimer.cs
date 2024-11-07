@@ -1,4 +1,5 @@
-﻿using Progress;
+﻿using Event;
+using Progress;
 using UnityEngine;
 
 namespace Timer
@@ -14,17 +15,17 @@ namespace Timer
 
         public void OnEnable()
         {
-            PieceDropDelay.OnUpdated += UpdateDelay;
+            EventHab.OnLevelUp.AddSubscriber(UpdateDelay, 2);
         }
 
         public void OnDisable()
         {
-            PieceDropDelay.OnUpdated -= UpdateDelay;
+            EventHab.OnLevelUp.RemoveSubscriber(UpdateDelay);
         }
 
-        private void UpdateDelay(float newDelay)
+        private void UpdateDelay()
         {
-            delay = newDelay;
+            delay = TetrisProgressController.Instance.PieceDropDelay();
             Debug.Log($"Piece move timer delay updated\n{this}");
         }
 

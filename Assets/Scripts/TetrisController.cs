@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Event;
+using Progress;
 using Timer;
 using UnityEngine;
 
 public class TetrisController : MonoBehaviour, IController
 {
-    public static Action OnGameStart;
-    public static Action OnStepUp;
-    public static Action<string> OnGameOver;
-
     private IGridController _tetrisGrid;
 
     private ITimer _dropTimer;
@@ -95,6 +92,7 @@ public class TetrisController : MonoBehaviour, IController
             StepUp();
             return;
         }
+
         _dropTimer.UpdateTimeout();
         Debug.Log("Piece dropped by timer");
     }
@@ -107,17 +105,17 @@ public class TetrisController : MonoBehaviour, IController
         if (_tetrisGrid.PieceSpawnRandom())
         {
             _dropTimer.UpdateTimeout();
-            OnStepUp?.Invoke();
+            EventHab.OnStepUp.Trigger();
             return;
         }
 
-        OnGameOver?.Invoke("There is no place to spawn new piece");
+        EventHab.OnGameOver.Trigger(EGameOverReason.GridFilled);
     }
 
 
     public void SetNewGame()
     {
-        OnGameStart?.Invoke();
+        EventHab.OnGameStart.Trigger();
         _dropTimer.ResetTimer();
         _moveTimer.ResetTimer();
         _tetrisGrid.ClearAll();

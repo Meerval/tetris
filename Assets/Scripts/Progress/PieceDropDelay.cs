@@ -1,4 +1,5 @@
 ﻿using System;
+using Event;
 using UnityEngine;
 
 namespace Progress
@@ -7,9 +8,7 @@ namespace Progress
     {
         private const float BaseDelay = 1.0f;
         private const float DecreaseFactor = 0.5f;
-        
-        public static Action<float> OnUpdated;
-        
+
         protected override void StartNewProgress()
         {
             CurrentValue = BaseDelay;
@@ -17,19 +16,18 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            Level.OnLevelUp += CountDelay;
+            EventHab.OnLevelUp.AddSubscriber(CountDelay, 1);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            Level.OnLevelUp -= CountDelay;
+            EventHab.OnLevelUp.RemoveSubscriber(CountDelay);
         }
 
         private void CountDelay()
         {
             CurrentValue = BaseDelay / (1 + DecreaseFactor * Mathf.Sqrt(TetrisProgressController.Instance.Level()));
             Debug.Log($"Piece drop delay updated: {CurrentValue}");
-            OnUpdated?.Invoke(CurrentValue);
         }
     }
 }
