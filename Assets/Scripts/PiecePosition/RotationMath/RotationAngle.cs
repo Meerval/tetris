@@ -16,7 +16,7 @@ namespace PiecePosition.RotationMath
 
         private int Idx()
         {
-            return Wrapper.Wrap(_idx, 0, PositionsCount());
+            return CircleWrapper.Wrap(_idx, PositionsCount());
         }
 
         private static int PositionsCount()
@@ -58,7 +58,7 @@ namespace PiecePosition.RotationMath
                 wallKickIndex--;
             }
             
-            return Wrapper.Wrap(wallKickIndex, 0,  PositionsCount() * 2);
+            return CircleWrapper.Wrap(wallKickIndex,  PositionsCount() * 2);
         }
     }
 
