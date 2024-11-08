@@ -33,7 +33,7 @@ namespace Timer
         {
             delay = _initDelay;
             UpdateTimeout();
-            Debug.Log($"Piece move timer reset\n{this}");
+            Debug.Log($"Piece drop timer reset\n{this}");
         }
     }
 }

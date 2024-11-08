@@ -355,10 +355,12 @@ GameObject:
   - component: {fileID: 1369799154}
   - component: {fileID: 1369799160}
   - component: {fileID: 1369799159}
+  - component: {fileID: 1369799162}
   - component: {fileID: 1369799153}
   - component: {fileID: 1369799152}
   - component: {fileID: 1369799158}
   - component: {fileID: 1369799157}
+  - component: {fileID: 1369799161}
   m_Layer: 0
   m_Name: TetrisGrid
   m_TagString: Untagged
@@ -517,6 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6e09a9651fc47f481ca80eb05cf6b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hardDropDelay: 0.001
 --- !u!114 &1369799160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -529,6 +532,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2c5c770bfdb4d709130980b3dd851b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1369799161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369799151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4cc5bddd8ae432f94626a08d0c130f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.01
+--- !u!114 &1369799162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1369799151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4cc5bddd8ae432f94626a08d0c130f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.001
 --- !u!1 &1887623652
 GameObject:
   m_ObjectHideFlags: 0
