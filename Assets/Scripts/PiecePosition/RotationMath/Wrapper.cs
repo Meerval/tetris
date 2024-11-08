@@ -1,4 +1,4 @@
-﻿namespace Position.Math
+﻿namespace PiecePosition.RotationMath
 {
     public static class Wrapper
     {

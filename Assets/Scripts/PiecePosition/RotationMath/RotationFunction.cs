@@ -1,7 +1,6 @@
-﻿using PiecePosition;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Position.Math
+namespace PiecePosition.RotationMath
 {
     public class RotationFunction
     {

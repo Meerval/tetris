@@ -1,7 +1,6 @@
-﻿using Position.Math;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace PiecePosition
+namespace PiecePosition.RotationMath
 {
     public class RotationAngle
     {
@@ -39,7 +38,16 @@ namespace PiecePosition
 
         public float Radian()
         {
-            return _idx * Delay;
+            float radians = _idx * Delay;
+            float twoPi = 2 * Mathf.PI;
+            radians %= twoPi;
+            
+            if (radians < -twoPi)
+                radians += twoPi;
+            else if (radians > twoPi)
+                radians -= twoPi;
+
+            return radians;
         }
 
         public int GetWallKickIdx()
