@@ -50,6 +50,11 @@ namespace Progress
             return _level.Value();
         }
 
+        public int Step()
+        {
+            return ((Level)_level).Step();
+        }
+
         public int Score()
         {
             return _score.Value();

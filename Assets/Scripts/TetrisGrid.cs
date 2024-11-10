@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Event;
@@ -6,6 +7,7 @@ using PiecePosition;
 using PiecePosition.RotationMath;
 using Pieces;
 using Pretty;
+using Timer;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -180,13 +182,21 @@ public class TetrisGrid : MonoBehaviour, IGrid
 
     public void ClearFullLines()
     {
+        StartCoroutine(PieceHardDrop());
+    }
+
+    private IEnumerator PieceHardDrop()
+    {
         List<int> clearedLines = new List<int>();
 
+        int i = 100;
         int y = _bounds.yMin;
-        while (y < _bounds.yMax)
+        while (y < _bounds.yMax && i > 0)
         {
             if (IsLineFull(y))
             {
+                TimerOfClearLine.Instance.UpdateTimeout();
+                yield return new WaitWhile(TimerOfClearLine.Instance.IsInProgress);
                 ClearLine(y);
                 clearedLines.Add(y);
             }
@@ -194,6 +204,8 @@ public class TetrisGrid : MonoBehaviour, IGrid
             {
                 y++;
             }
+
+            i++;
         }
 
         if (clearedLines.Count > 0)

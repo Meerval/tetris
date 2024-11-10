@@ -2,12 +2,12 @@
 
 namespace Timer
 {
-    public class PieceMoveTimer : TetrisTimer
+    public class TimerOfClearLine : TimerOfTetris<TimerOfClearLine>
     {
         public override void ResetTimer()
         {
             UpdateTimeout();
-            Debug.Log($"Piece move timer vas reset\n{this}");
+            Debug.Log($"Timer of clear line was resetted\n{this}");
         }
 
     }

@@ -35,5 +35,10 @@ namespace Progress
             Debug.Log($"Level updated: {CurrentValue}");
             EventHab.OnLevelUp.Trigger();
         }
+
+        public int Step()
+        {
+            return _currentStep;
+        }
     }
 }

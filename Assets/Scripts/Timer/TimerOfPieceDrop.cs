@@ -4,11 +4,11 @@ using UnityEngine;
 
 namespace Timer
 {
-    public class PieceDropTimer : TetrisTimer
+    public class TimerOfPieceDrop : TimerOfTetris<TimerOfPieceDrop>
     {
         private float _initDelay;
 
-        private void Awake()
+        private void Start()
         {
             _initDelay = delay;
         }
@@ -26,14 +26,14 @@ namespace Timer
         private void UpdateDelay()
         {
             delay = TetrisProgressController.Instance.PieceDropDelay();
-            Debug.Log($"Piece move timer delay updated\n{this}");
+            Debug.Log($"Delay of piece drop timer updated\n{this}");
         }
 
         public override void ResetTimer()
         {
             delay = _initDelay;
             UpdateTimeout();
-            Debug.Log($"Piece drop timer reset\n{this}");
+            Debug.Log($"Timer of piece drop resetted\n{this}");
         }
     }
 }

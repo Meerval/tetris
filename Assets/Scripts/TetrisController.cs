@@ -7,14 +7,9 @@ public class TetrisController : MonoBehaviour, IController
 {
     private IGridController _tetrisGrid;
 
-    private ITimer _dropTimer;
-    private ITimer _moveTimer;
-
     private void Awake()
     {
         _tetrisGrid = GetComponent<TetrisGridController>();
-        _dropTimer = GetComponent<PieceDropTimer>();
-        _moveTimer = GetComponent<PieceMoveTimer>();
         Debug.Log("TetrisController awoke");
     }
 
@@ -24,7 +19,7 @@ public class TetrisController : MonoBehaviour, IController
         Debug.Log("TetrisController started");
     }
 
-    public bool DetectAndExecutePieceRotation()
+    public void DetectAndExecutePieceRotation()
     {
         bool isMoved = false;
         if (IsKeyDown(KeyCode.Q))
@@ -36,15 +31,15 @@ public class TetrisController : MonoBehaviour, IController
             isMoved = _tetrisGrid.PieceRotateRight();
         }
 
-        return ResetTimersIf(isMoved, _moveTimer);
+        if (isMoved) TimerOfPieceMove.Instance.UpdateTimeout();
     }
 
-    public bool DetectAndExecutePieceShift()
+    public void DetectAndExecutePieceShift()
     {
         bool isMoved = false;
         if (IsKeyDown(KeyCode.S))
         {
-            if (_tetrisGrid.PieceShiftDown()) _dropTimer.UpdateTimeout();
+            if (_tetrisGrid.PieceShiftDown()) TimerOfPieceDrop.Instance.UpdateTimeout();
         }
 
         if (IsKeyDown(KeyCode.A))
@@ -56,7 +51,16 @@ public class TetrisController : MonoBehaviour, IController
             isMoved = _tetrisGrid.PieceShiftRight();
         }
 
-        return ResetTimersIf(isMoved, _moveTimer);
+        if (isMoved) TimerOfPieceMove.Instance.UpdateTimeout();
+    }
+
+    public void DetectAndExecuteHardDrop()
+    {
+        if (IsKeyDown(KeyCode.Space))
+        {
+            _tetrisGrid.PieceHardDrop();
+            TimerOfPieceMove.Instance.UpdateTimeout();
+        }
     }
 
     private static bool IsKeyDown(KeyCode keyCode)
@@ -66,45 +70,26 @@ public class TetrisController : MonoBehaviour, IController
         return true;
     }
 
-    public bool DetectAndExecutePieceHardDrop()
-    {
-        bool isMoved = false;
-        if (IsKeyDown(KeyCode.Space))
-        {
-            isMoved = _tetrisGrid.PieceHardDrop();
-        }
-
-        return ResetTimersIf(isMoved, _moveTimer);
-    }
-
-    private bool ResetTimersIf(bool isReason, ITimer timer)
-    {
-        if (!isReason) return false;
-        timer.UpdateTimeout();
-        return true;
-    }
-
     public void DetectTimeOutAndDropPiece()
     {
-        if (_dropTimer.IsInProgress()) return;
+        if (TimerOfPieceDrop.Instance.IsInProgress() || TimerOfClearLine.Instance.IsInProgress()) return;
         if (!_tetrisGrid.PieceShiftDown())
         {
-            StepUp();
+            TetrisStepUp();
             return;
         }
 
-        _dropTimer.UpdateTimeout();
-        Debug.Log("Piece dropped by timer");
+        TimerOfPieceDrop.Instance.UpdateTimeout();
     }
 
-    public void StepUp()
+    private void TetrisStepUp()
     {
-        if (_dropTimer.IsInProgress()) return;
+        if (TimerOfPieceMove.Instance.IsInProgress()) return;
         _tetrisGrid.PieceLock();
         _tetrisGrid.ClearFullLines();
         if (_tetrisGrid.PieceSpawnRandom())
         {
-            _dropTimer.UpdateTimeout();
+            TimerOfPieceDrop.Instance.UpdateTimeout();
             EventHab.OnStepUp.Trigger();
             return;
         }
@@ -116,8 +101,8 @@ public class TetrisController : MonoBehaviour, IController
     public void SetNewGame()
     {
         EventHab.OnGameStart.Trigger();
-        _dropTimer.ResetTimer();
-        _moveTimer.ResetTimer();
+        TimerOfPieceDrop.Instance.ResetTimer();
+        TimerOfPieceMove.Instance.ResetTimer();
         _tetrisGrid.ClearAll();
         _tetrisGrid.PieceSpawnRandom();
     }

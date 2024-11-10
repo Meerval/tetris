@@ -6,7 +6,7 @@
     bool PieceShiftLeft();
     bool PieceShiftRight();
     bool PieceShiftDown();
-    bool PieceHardDrop();
+    void PieceHardDrop();
     void PieceLock();
     void ClearFullLines();
     void ClearAll();

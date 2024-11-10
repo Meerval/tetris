@@ -1,18 +1,17 @@
 ﻿using System.Collections;
 using PiecePosition;
 using PiecePosition.RotationMath;
+using Progress;
 using Timer;
 using UnityEngine;
 
 public class TetrisGridController : MonoBehaviour, IGridController
 {
     private IGrid _grid;
-    private ITimer _hardDropTimer;
 
     public void Awake()
     {
         _grid = GetComponent<TetrisGrid>();
-        _hardDropTimer = GetComponent<PieceHardDropTimer>();
         Debug.Log("TetrisGridController awoke");
     }
 
@@ -62,21 +61,21 @@ public class TetrisGridController : MonoBehaviour, IGridController
         return true;
     }
 
-    public bool PieceHardDrop()
+    public void PieceHardDrop()
     {
         StartCoroutine(PieceHardDropCoroutine());
         Debug.Log("Piece hard dropped");
-        return true;
     }
 
     private IEnumerator PieceHardDropCoroutine()
     {
-        int i = 1000;
-        while (PieceShiftDown() && i > 0)
+        int tryCount = 1000;
+        int currentStep = TetrisProgressController.Instance.Step();
+        while (tryCount > 0 && TetrisProgressController.Instance.Step() == currentStep && PieceShiftDown())
         {
-            _hardDropTimer.UpdateTimeout();
-            yield return new WaitWhile(_hardDropTimer.IsTimedOut);
-            i--;
+            TimerOfPieceHardDrop.Instance.UpdateTimeout();
+            yield return new WaitWhile(TimerOfPieceHardDrop.Instance.IsInProgress);
+            tryCount--;
         }
 
         Debug.Log("Piece hard dropped");

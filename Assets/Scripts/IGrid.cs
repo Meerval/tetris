@@ -11,5 +11,4 @@ public interface IGrid
     public void LockPiece();
     public void ClearAll();
     public void ClearFullLines();
-
 }
