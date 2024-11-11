@@ -15,7 +15,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
 {
     [SerializeField] private TileBase projectionTile;
     [SerializeField] private TilemapController tilemapPrefab;
-    
+
     private ITilemapController _activeTilemap;
     private ITilemapController _projectedTilemap;
     private ITilemapController _lockedTilemap;
@@ -29,11 +29,11 @@ public class TetrisGrid : MonoBehaviour, IGrid
     {
         Vector2Int size = Vector2Int.RoundToInt(GetComponent<SpriteRenderer>().size);
         _bounds = new RectInt(new Vector2Int(-size.x / 2, -size.y / 2), size);
-        
+
         _activeTilemap = Instantiate(tilemapPrefab, gameObject.transform);
         _projectedTilemap = Instantiate(tilemapPrefab, gameObject.transform);
         _lockedTilemap = Instantiate(tilemapPrefab, gameObject.transform);
-        
+
         ((TilemapController)_activeTilemap).gameObject.name = "ActiveTilemap";
         ((TilemapController)_projectedTilemap).gameObject.name = "ProjectedTilemap";
         ((TilemapController)_lockedTilemap).gameObject.name = "LockedTilemap";
@@ -53,6 +53,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
         {
             _activePiecePosition = _spawnPosition;
             SetPiece(_activePiecePosition);
+            EventHab.OnSpawnPiece.Trigger(_activePiece);
             return true;
         }
 

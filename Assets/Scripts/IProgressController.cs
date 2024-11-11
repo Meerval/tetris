@@ -1,11 +1,12 @@
-﻿namespace Progress
+﻿using System.Collections.Generic;
+using Pieces;
+using Progress;
+
+public interface IConditionController
 {
-    public interface IConditionController
-    {
-        State Status();
-        float PieceDropDelay();
-        int Level();
-        int Step();
-        int Score();
-    }
+    State Status();
+    float PieceDropDelay();
+    List<(int, IPiece)> SpawnPieces();
+    int Level();
+    int Score();
 }

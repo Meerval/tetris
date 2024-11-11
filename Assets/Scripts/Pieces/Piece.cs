@@ -10,6 +10,7 @@ namespace Pieces
     {
         [SerializeField] private TileBase tile;
         protected readonly RotationAngle RotationAngle = new();
+        private string _id;
 
         private Vector2Int[] _shapeMapTmp;
 
@@ -28,6 +29,7 @@ namespace Pieces
         private void Awake()
         {
             _shapeMapTmp = (Vector2Int[])ShapeMap().Clone();
+            _id = Guid.NewGuid().ToString();
         }
 
         public TileBase Tile()
@@ -90,7 +92,8 @@ namespace Pieces
 
         public override string ToString()
         {
-            return GetType().Name.Replace("Piece", "Piece ");
+            string id = _id == null || _id.Length < 8 ? "" : $"#{_id[..8]}...";
+            return $"{GetType().Name} {id}".Replace("Piece", "Piece ");
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Event;
+using Pieces;
 using UnityEngine;
 
 namespace Progress
@@ -17,15 +18,15 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            EventHab.OnStepUp.AddSubscriber(StepUp);
+            EventHab.OnSpawnPiece.AddSubscriber(StepUp);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            EventHab.OnStepUp.RemoveSubscriber(StepUp);
+            EventHab.OnSpawnPiece.RemoveSubscriber(StepUp);
         }
 
-        private void StepUp()
+        private void StepUp(IPiece _)
         {
             _currentStep += 1;
             Debug.Log($"Step updated: {_currentStep}/{_stepCount}");
@@ -34,11 +35,6 @@ namespace Progress
             _currentStep = 0;
             Debug.Log($"Level updated: {CurrentValue}");
             EventHab.OnLevelUp.Trigger();
-        }
-
-        public int Step()
-        {
-            return _currentStep;
         }
     }
 }

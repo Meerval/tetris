@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using PiecePosition;
 using PiecePosition.RotationMath;
-using Progress;
 using Timer;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ public class TetrisGridController : MonoBehaviour, IGridController
 {
     private IGrid _grid;
 
-    public void Awake()
+    private void Awake()
     {
         _grid = GetComponent<TetrisGrid>();
         Debug.Log("TetrisGridController awoke");
@@ -17,8 +16,7 @@ public class TetrisGridController : MonoBehaviour, IGridController
 
     public bool PieceSpawnRandom()
     {
-        if (!_grid.SpawnNewPiece()) return false;
-        return true;
+        return _grid.SpawnNewPiece();
     }
 
     public bool PieceRotateLeft()
@@ -70,8 +68,13 @@ public class TetrisGridController : MonoBehaviour, IGridController
     private IEnumerator PieceHardDropCoroutine()
     {
         int tryCount = 1000;
-        int currentStep = TetrisProgressController.Instance.Step();
-        while (tryCount > 0 && TetrisProgressController.Instance.Step() == currentStep && PieceShiftDown())
+        int spawnedPiecesCount = TetrisProgressController.Instance.SpawnPieces().Count;
+        while
+        (
+            tryCount > 0
+            && spawnedPiecesCount == TetrisProgressController.Instance.SpawnPieces().Count
+            && PieceShiftDown()
+        )
         {
             TimerOfPieceHardDrop.Instance.UpdateTimeout();
             yield return new WaitWhile(TimerOfPieceHardDrop.Instance.IsInProgress);

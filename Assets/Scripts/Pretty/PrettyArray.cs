@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Pretty
 {
-    public class PrettyArray<T> : IPretty
+    public class PrettyArray<T> : Pretty
     {
         private readonly IEnumerable<string> _enumerable;
 
@@ -23,14 +23,9 @@ namespace Pretty
         }
         
 
-        public string Prettify()
+        public override string Prettify()
         {
             return "[" + string.Join(", ", _enumerable) + "]";
-        }
-
-        public override string ToString()
-        {
-            return Prettify();
         }
     }
 }

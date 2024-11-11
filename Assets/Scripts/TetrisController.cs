@@ -90,7 +90,6 @@ public class TetrisController : MonoBehaviour, IController
         if (_tetrisGrid.PieceSpawnRandom())
         {
             TimerOfPieceDrop.Instance.UpdateTimeout();
-            EventHab.OnStepUp.Trigger();
             return;
         }
 
