@@ -1,19 +1,21 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Pieces;
 using Progress;
 using UnityEngine;
 
-public class TetrisProgressController : MonoBehaviour, IConditionController
+public class TetrisProgress : MonoBehaviour, IConditionController
 {
-    private IProgress<State> _state;
+    private IProgress<EState> _state;
     private IProgress<float> _pieceDropDelay;
     private IProgress<List<(int, IPiece)>> _spawnPieces;
+    private IPiece _activePiece;
     private IProgress<int> _level;
     private IProgress<int> _score;
 
     public static IConditionController Instance;
 
-    private TetrisProgressController()
+    private TetrisProgress()
     {
     }
 
@@ -31,14 +33,14 @@ public class TetrisProgressController : MonoBehaviour, IConditionController
 
         DontDestroyOnLoad(gameObject);
 
-        _state = gameObject.AddComponent<Status>();
+        _state = gameObject.AddComponent<State>();
         _pieceDropDelay = gameObject.AddComponent<PieceDropDelay>();
         _spawnPieces = gameObject.AddComponent<SpawnedPieces>();
         _level = gameObject.AddComponent<Level>();
         _score = gameObject.AddComponent<Score>();
     }
 
-    public State Status()
+    public EState State()
     {
         return _state.Value();
     }
@@ -60,6 +62,12 @@ public class TetrisProgressController : MonoBehaviour, IConditionController
 
     public List<(int, IPiece)> SpawnPieces()
     {
+        _activePiece = _spawnPieces.Value().Last().Item2;
         return _spawnPieces.Value();
+    }
+
+    public IPiece ActivePiece()
+    {
+        return _activePiece;
     }
 }

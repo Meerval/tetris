@@ -6,10 +6,35 @@ using UnityEngine;
 public class TetrisController : MonoBehaviour, IController
 {
     private IGridController _tetrisGrid;
+    private bool _hasToWait;
+
+    private void OnEnable()
+    {
+        EventHab.OnWaitCoroutineStart.AddSubscriber(HasToWait);
+        EventHab.OnWaitCoroutineStop.AddSubscriber(HasNotToWait);
+    }
+
+    private void OnDisable()
+    {
+        EventHab.OnWaitCoroutineStart.RemoveSubscriber(HasToWait);
+        EventHab.OnWaitCoroutineStop.RemoveSubscriber(HasNotToWait);
+    }
+
+    private void HasToWait()
+    {
+        _hasToWait = true;
+    }
+
+    private void HasNotToWait()
+    {
+        _hasToWait = false;
+    }
+
 
     private void Awake()
     {
         _tetrisGrid = GetComponent<TetrisGridController>();
+        _hasToWait = false;
         Debug.Log("TetrisController awoke");
     }
 
@@ -63,30 +88,40 @@ public class TetrisController : MonoBehaviour, IController
         }
     }
 
-    private static bool IsKeyDown(KeyCode keyCode)
+    private bool IsKeyDown(KeyCode keyCode)
     {
-        if (!Input.GetKeyDown(keyCode)) return false;
-        Debug.Log($"A key was pressed on the keyboard: {keyCode}");
+        if (
+            _hasToWait
+            || !TetrisProgress.Instance.State().Equals(EState.PieceInProgress)
+            || !Input.GetKeyDown(keyCode)
+        ) return false;
+        Debug.Log($"[KEY PRESSED] {keyCode}");
         return true;
     }
 
     public void DetectTimeOutAndDropPiece()
     {
-        if (TimerOfPieceDrop.Instance.IsInProgress() || TimerOfClearLine.Instance.IsInProgress()) return;
-        if (!_tetrisGrid.PieceShiftDown())
+        if (
+            _hasToWait
+            || TimerOfPieceDrop.Instance.IsInProgress()
+            || TetrisProgress.Instance.State().Equals(EState.WaitForActivePiece)
+        ) return;
+        if (_tetrisGrid.PieceShiftDown())
         {
-            TetrisStepUp();
-            return;
+            TimerOfPieceDrop.Instance.UpdateTimeout();
         }
-
-        TimerOfPieceDrop.Instance.UpdateTimeout();
+        else
+        {
+            if (_hasToWait || TimerOfPieceMove.Instance.IsInProgress()) return;
+            _tetrisGrid.PieceLock();
+            _tetrisGrid.ClearFullLines();
+            EventHab.OnWaitForActivePiece.Trigger();
+        }
     }
 
-    private void TetrisStepUp()
+    public void SpawnPieceAsWill()
     {
-        if (TimerOfPieceMove.Instance.IsInProgress()) return;
-        _tetrisGrid.PieceLock();
-        _tetrisGrid.ClearFullLines();
+        if (_hasToWait || !TetrisProgress.Instance.State().Equals(EState.WaitForActivePiece)) return;
         if (_tetrisGrid.PieceSpawnRandom())
         {
             TimerOfPieceDrop.Instance.UpdateTimeout();
@@ -96,13 +131,11 @@ public class TetrisController : MonoBehaviour, IController
         EventHab.OnGameOver.Trigger(EGameOverReason.GridFilled);
     }
 
-
     public void SetNewGame()
     {
         EventHab.OnGameStart.Trigger();
         TimerOfPieceDrop.Instance.ResetTimer();
         TimerOfPieceMove.Instance.ResetTimer();
         _tetrisGrid.ClearAll();
-        _tetrisGrid.PieceSpawnRandom();
     }
 }

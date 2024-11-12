@@ -1,7 +1,5 @@
-using System;
 using Event;
 using Progress;
-using Timer;
 using UnityEngine;
 
 public class TetrisBoard : MonoBehaviour
@@ -27,15 +25,17 @@ public class TetrisBoard : MonoBehaviour
 
     public void Update()
     {
-        if (TimerOfPieceHardDrop.Instance.IsInProgress() || TimerOfClearLine.Instance.IsInProgress()) return;
         _controller.DetectAndExecuteHardDrop();
         _controller.DetectAndExecutePieceRotation();
         _controller.DetectAndExecutePieceShift();
         _controller.DetectTimeOutAndDropPiece();
+        _controller.SpawnPieceAsWill();
     }
 
-    private void GameOver(EGameOverReason _)
+    private void GameOver(EGameOverReason reason)
     {
         _controller.SetNewGame();
+        Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisProgress.Instance.Level()}, " +
+                  $"score: {TetrisProgress.Instance.Score()}");
     }
 }

@@ -15,7 +15,7 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            EventHab.OnSpawnPiece.AddSubscriber(AddPieceToSpawnedPieces);
+            EventHab.OnSpawnPiece.AddSubscriber(AddPieceToSpawnedPieces, 1);
         }
 
         protected override void UnsubscribeProgressAction()

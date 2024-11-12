@@ -26,7 +26,7 @@ namespace Progress
 
         private void CountDelay()
         {
-            CurrentValue = BaseDelay / (1 + Mathf.Sqrt(DecreaseFactor * TetrisProgressController.Instance.Level()));
+            CurrentValue = BaseDelay / (1 + Mathf.Sqrt(DecreaseFactor * TetrisProgress.Instance.Level()));
             Debug.Log($"Piece drop delay updated: {CurrentValue}");
         }
     }

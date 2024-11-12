@@ -40,7 +40,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
 
         Debug.Log
         (
-            $"StandardGrid awoke with size of {size.ToString()} and bounds {_bounds.ToString()}"
+            $"TetrisGrid awoke with size of {size.ToString()} and bounds {_bounds.ToString()}"
         );
     }
 
@@ -183,38 +183,51 @@ public class TetrisGrid : MonoBehaviour, IGrid
 
     public void ClearFullLines()
     {
-        StartCoroutine(PieceHardDrop());
+        StartCoroutine(ClearFullLinesCoroutines());
     }
 
-    private IEnumerator PieceHardDrop()
+    private IEnumerator ClearFullLinesCoroutines()
     {
-        List<int> clearedLines = new List<int>();
+        EventHab.OnWaitCoroutineStart.Trigger();
+        List<int> fullLines = new List<int>();
 
-        int i = 100;
-        int y = _bounds.yMin;
-        while (y < _bounds.yMax && i > 0)
+        for (int line = _bounds.yMin; line < _bounds.yMax;)
         {
-            if (IsLineFull(y))
+            if (!IsLineFull(line))
+            {
+                line++;
+                continue;
+            }
+
+            for (int x = _bounds.xMax - _bounds.width / 2; x < _bounds.xMax; x++)
             {
                 TimerOfClearLine.Instance.UpdateTimeout();
                 yield return new WaitWhile(TimerOfClearLine.Instance.IsInProgress);
-                ClearLine(y);
-                clearedLines.Add(y);
+                _lockedTilemap.Clear(new Vector2Int(x, line));
+                _lockedTilemap.Clear(new Vector2Int(_bounds.xMax - _bounds.width / 2 - x - 1, line));
             }
-            else
+
+            for (int y = line; y < _bounds.yMax; y++)
             {
-                y++;
+                for (int x = _bounds.xMin; x < _bounds.xMax; x++)
+                {
+                    _lockedTilemap.Set
+                    (
+                        new Vector2Int(x, y),
+                        _lockedTilemap.Get(new Vector2Int(x, y + 1)
+                        )
+                    );
+                }
             }
-
-            i++;
         }
 
-        if (clearedLines.Count > 0)
+        if (fullLines.Count > 0)
         {
-            Debug.Log($"Lines were cleared: {new PrettyArray<int>(clearedLines)}");
+            Debug.Log($"Lines were cleared: {new PrettyArray<int>(fullLines)}");
+            EventHab.OnScoreUp.Trigger(fullLines.Count);
         }
 
-        EventHab.OnScoreUp.Trigger(clearedLines.Count);
+        EventHab.OnWaitCoroutineStop.Trigger();
     }
 
     private bool IsLineFull(int y)
@@ -222,25 +235,6 @@ public class TetrisGrid : MonoBehaviour, IGrid
         return Enumerable
             .Range(_bounds.xMin, _bounds.width)
             .All(x => _lockedTilemap.IsTaken(new Vector2Int(x, y)));
-    }
-
-    private void ClearLine(int y)
-    {
-        for (int x = _bounds.xMin; x < _bounds.xMax; x++)
-        {
-            _lockedTilemap.Clear(new Vector2Int(x, y));
-        }
-
-        while (y < _bounds.yMax)
-        {
-            for (int x = _bounds.xMin; x < _bounds.xMax; x++)
-            {
-                TileBase above = _lockedTilemap.Get(new Vector2Int(x, y + 1));
-                _lockedTilemap.Set(new Vector2Int(x, y), above);
-            }
-
-            y++;
-        }
     }
 
     private void LockTile(Vector2Int position, TileBase tile)

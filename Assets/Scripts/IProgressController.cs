@@ -4,9 +4,10 @@ using Progress;
 
 public interface IConditionController
 {
-    State Status();
+    EState State();
     float PieceDropDelay();
     List<(int, IPiece)> SpawnPieces();
+    IPiece ActivePiece();
     int Level();
     int Score();
 }

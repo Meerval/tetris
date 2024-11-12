@@ -26,7 +26,7 @@ namespace Progress
         {
             if (removedLinesCount == 0) return;
             CurrentValue += 
-                ScoreCoefficient * removedLinesCount * Bonus(removedLinesCount) * TetrisProgressController.Instance.Level();
+                ScoreCoefficient * removedLinesCount * Bonus(removedLinesCount) * TetrisProgress.Instance.Level();
             Debug.Log($"Score Updated: {CurrentValue}");
         }
 

@@ -18,7 +18,7 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            EventHab.OnSpawnPiece.AddSubscriber(StepUp);
+            EventHab.OnSpawnPiece.AddSubscriber(StepUp, 1);
         }
 
         protected override void UnsubscribeProgressAction()

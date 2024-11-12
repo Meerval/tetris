@@ -25,7 +25,7 @@ namespace Timer
 
         private void UpdateDelay()
         {
-            delay = TetrisProgressController.Instance.PieceDropDelay();
+            delay = TetrisProgress.Instance.PieceDropDelay();
             Debug.Log($"Delay of piece drop timer updated\n{this}");
         }
 
