@@ -1,4 +1,6 @@
-﻿using Event;
+﻿using System;
+using System.Collections;
+using Event;
 using Progress;
 using Timer;
 using UnityEngine;
@@ -6,35 +8,21 @@ using UnityEngine;
 public class TetrisController : MonoBehaviour, IController
 {
     private IGridController _tetrisGrid;
-    private bool _hasToWait;
 
-    private void OnEnable()
-    {
-        EventHab.OnWaitCoroutineStart.AddSubscriber(HasToWait);
-        EventHab.OnWaitCoroutineStop.AddSubscriber(HasNotToWait);
-    }
-
-    private void OnDisable()
-    {
-        EventHab.OnWaitCoroutineStart.RemoveSubscriber(HasToWait);
-        EventHab.OnWaitCoroutineStop.RemoveSubscriber(HasNotToWait);
-    }
-
-    private void HasToWait()
-    {
-        _hasToWait = true;
-    }
-
-    private void HasNotToWait()
-    {
-        _hasToWait = false;
-    }
-
+    private IMeta _meta;
+    private ITimer _timerOfDrop;
+    private ITimer _timerOfLock;
+    private ITimer _timerOfMove;
+    private ITimer _timerOfClick;
 
     private void Awake()
     {
         _tetrisGrid = GetComponent<TetrisGridController>();
-        _hasToWait = false;
+        _meta = FindObjectOfType<TetrisMeta>();
+        _timerOfDrop = FindObjectOfType<TimerOfPieceDrop>();
+        _timerOfLock = FindObjectOfType<TimerOfPieceLock>();
+        _timerOfMove = FindObjectOfType<TimerOfPieceMove>();
+        _timerOfClick = FindObjectOfType<TimerOfPieceMove>();
         Debug.Log("TetrisController awoke");
     }
 
@@ -46,96 +34,102 @@ public class TetrisController : MonoBehaviour, IController
 
     public void DetectAndExecutePieceRotation()
     {
-        bool isMoved = false;
-        if (IsKeyDown(KeyCode.Q))
-        {
-            isMoved = _tetrisGrid.PieceRotateLeft();
-        }
-        else if (IsKeyDown(KeyCode.E))
-        {
-            isMoved = _tetrisGrid.PieceRotateRight();
-        }
-
-        if (isMoved) TimerOfPieceMove.Instance.UpdateTimeout();
+        if (IsRotationKeyDown(KeyCode.Q)) _tetrisGrid.PieceRotateLeft();
+        else if (IsRotationKeyDown(KeyCode.E)) _tetrisGrid.PieceRotateRight();
+        else return;
+        _timerOfLock.UpdateTimeout();
     }
 
     public void DetectAndExecutePieceShift()
     {
-        bool isMoved = false;
-        if (IsKeyDown(KeyCode.S))
+        if (IsShiftKey(KeyCode.S, () => _tetrisGrid.PieceShiftDown()))
         {
-            if (_tetrisGrid.PieceShiftDown()) TimerOfPieceDrop.Instance.UpdateTimeout();
+            _timerOfDrop.UpdateTimeout();
         }
-
-        if (IsKeyDown(KeyCode.A))
+        else if (IsShiftKey(KeyCode.A, () => _tetrisGrid.PieceShiftLeft()))
         {
-            isMoved = _tetrisGrid.PieceShiftLeft();
         }
-        else if (IsKeyDown(KeyCode.D))
+        else if (IsShiftKey(KeyCode.D, () => _tetrisGrid.PieceShiftRight()))
         {
-            isMoved = _tetrisGrid.PieceShiftRight();
-        }
-
-        if (isMoved) TimerOfPieceMove.Instance.UpdateTimeout();
-    }
-
-    public void DetectAndExecuteHardDrop()
-    {
-        if (IsKeyDown(KeyCode.Space))
-        {
-            _tetrisGrid.PieceHardDrop();
-            TimerOfPieceMove.Instance.UpdateTimeout();
         }
     }
 
-    private bool IsKeyDown(KeyCode keyCode)
+    private bool IsRotationKeyDown(KeyCode keyCode)
     {
-        if (
-            _hasToWait
-            || !TetrisProgress.Instance.State().Equals(EState.PieceInProgress)
-            || !Input.GetKeyDown(keyCode)
-        ) return false;
-        Debug.Log($"[KEY PRESSED] {keyCode}");
+        if (_meta.IsUpdateLocked() || !_meta.State().Equals(EState.PieceInProgress) ||
+            !Input.GetKeyDown(keyCode)) return false;
+        Debug.Log($"[KEY PRESS] {keyCode}");
         return true;
+    }
+
+    private bool IsShiftKey(KeyCode keyCode, Action action)
+    {
+        if (_meta.IsUpdateLocked() || !_meta.State().Equals(EState.PieceInProgress) ||
+            !Input.GetKey(keyCode)) return false;
+        StartCoroutine(WhileKeyDown(keyCode, action));
+        Debug.Log($"[KEY PRESS] {keyCode}");
+        return true;
+    }
+
+    private IEnumerator WhileKeyDown(KeyCode keyCode, Action action)
+    {
+        EventsHub.OnWaitCoroutineStart.Trigger();
+        _timerOfClick.UpdateTimeout();
+        while (Input.GetKey(keyCode))
+        {
+            action.Invoke();
+            if (_timerOfClick.IsInProgress())
+            {
+                yield return new WaitWhile(_timerOfClick.IsInProgress);
+            }
+
+            _timerOfMove.UpdateTimeout();
+            yield return new WaitWhile(_timerOfMove.IsInProgress);
+            Debug.Log($"[KEY PRESS LONG] {keyCode}");
+        }
+
+        _timerOfMove.ResetTimer();
+        _timerOfLock.UpdateTimeout();
+        EventsHub.OnWaitCoroutineEnd.Trigger();
     }
 
     public void DetectTimeOutAndDropPiece()
     {
-        if (
-            _hasToWait
-            || TimerOfPieceDrop.Instance.IsInProgress()
-            || TetrisProgress.Instance.State().Equals(EState.WaitForActivePiece)
-        ) return;
+        if (_meta.IsUpdateLocked() || _meta.State().Equals(EState.WaitForActivePiece) || _timerOfDrop.IsInProgress())
+        {
+            return;
+        }
+
         if (_tetrisGrid.PieceShiftDown())
         {
-            TimerOfPieceDrop.Instance.UpdateTimeout();
+            _timerOfDrop.UpdateTimeout();
         }
+
         else
         {
-            if (_hasToWait || TimerOfPieceMove.Instance.IsInProgress()) return;
+            if (_meta.IsUpdateLocked() || _timerOfLock.IsInProgress()) return;
             _tetrisGrid.PieceLock();
             _tetrisGrid.ClearFullLines();
-            EventHab.OnWaitForActivePiece.Trigger();
+            EventsHub.OnWaitForPiece.Trigger();
         }
     }
 
     public void SpawnPieceAsWill()
     {
-        if (_hasToWait || !TetrisProgress.Instance.State().Equals(EState.WaitForActivePiece)) return;
+        if (_meta.IsUpdateLocked() || !_meta.State().Equals(EState.WaitForActivePiece)) return;
         if (_tetrisGrid.PieceSpawnRandom())
         {
-            TimerOfPieceDrop.Instance.UpdateTimeout();
+            _timerOfDrop.UpdateTimeout();
             return;
         }
 
-        EventHab.OnGameOver.Trigger(EGameOverReason.GridFilled);
+        EventsHub.OnGameOver.Trigger(EGameOverReason.GridFilled);
     }
 
     public void SetNewGame()
     {
-        EventHab.OnGameStart.Trigger();
-        TimerOfPieceDrop.Instance.ResetTimer();
-        TimerOfPieceMove.Instance.ResetTimer();
+        EventsHub.OnGameStart.Trigger();
+        _timerOfDrop.ResetTimer();
         _tetrisGrid.ClearAll();
     }
 }

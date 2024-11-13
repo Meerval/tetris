@@ -14,18 +14,17 @@ public class TetrisBoard : MonoBehaviour
 
     private void OnEnable()
     {
-        EventHab.OnGameOver.AddSubscriber(GameOver, 10);
+        EventsHub.OnGameOver.AddSubscriber(GameOver, 1);
     }
 
 
     private void OnDisable()
     {
-        EventHab.OnGameOver.RemoveSubscriber(GameOver);
+        EventsHub.OnGameOver.RemoveSubscriber(GameOver);
     }
 
     public void Update()
     {
-        _controller.DetectAndExecuteHardDrop();
         _controller.DetectAndExecutePieceRotation();
         _controller.DetectAndExecutePieceShift();
         _controller.DetectTimeOutAndDropPiece();
@@ -34,8 +33,8 @@ public class TetrisBoard : MonoBehaviour
 
     private void GameOver(EGameOverReason reason)
     {
+        Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisMeta.Instance.Level()}, " +
+                  $"score: {TetrisMeta.Instance.Score()}");
         _controller.SetNewGame();
-        Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisProgress.Instance.Level()}, " +
-                  $"score: {TetrisProgress.Instance.Score()}");
     }
 }

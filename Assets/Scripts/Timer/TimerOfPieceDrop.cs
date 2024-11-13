@@ -15,24 +15,23 @@ namespace Timer
 
         public void OnEnable()
         {
-            EventHab.OnLevelUp.AddSubscriber(UpdateDelay, 2);
+            EventsHub.OnLevelUp.AddSubscriber(UpdateDelay, 2);
         }
 
         public void OnDisable()
         {
-            EventHab.OnLevelUp.RemoveSubscriber(UpdateDelay);
+            EventsHub.OnLevelUp.RemoveSubscriber(UpdateDelay);
         }
 
         private void UpdateDelay()
         {
-            delay = TetrisProgress.Instance.PieceDropDelay();
+            delay = TetrisMeta.Instance.PieceDropDelay();
             Debug.Log($"Delay of piece drop timer updated\n{this}");
         }
 
         public override void ResetTimer()
         {
             delay = _initDelay;
-            UpdateTimeout();
             Debug.Log($"Timer of piece drop resetted\n{this}");
         }
     }

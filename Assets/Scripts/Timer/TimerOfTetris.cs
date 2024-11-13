@@ -49,7 +49,7 @@ namespace Timer
             return Time.time > _timeout;
         }
 
-        public void UpdateTimeout()
+        public virtual void UpdateTimeout()
         {
             _timeout = Time.time + delay;
         }

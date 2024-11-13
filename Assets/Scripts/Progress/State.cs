@@ -14,16 +14,16 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            EventHab.OnWaitForActivePiece.AddSubscriber(WaitForActivePiece);
-            EventHab.OnSpawnPiece.AddSubscriber(PieceInProgress);
-            EventHab.OnGameOver.AddSubscriber(SetOverGame);
+            EventsHub.OnWaitForPiece.AddSubscriber(WaitForActivePiece);
+            EventsHub.OnSpawnPiece.AddSubscriber(PieceInProgress);
+            EventsHub.OnGameOver.AddSubscriber(SetOverGame);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            EventHab.OnWaitForActivePiece.RemoveSubscriber(WaitForActivePiece);
-            EventHab.OnSpawnPiece.RemoveSubscriber(PieceInProgress);
-            EventHab.OnGameOver.RemoveSubscriber(SetOverGame);
+            EventsHub.OnWaitForPiece.RemoveSubscriber(WaitForActivePiece);
+            EventsHub.OnSpawnPiece.RemoveSubscriber(PieceInProgress);
+            EventsHub.OnGameOver.RemoveSubscriber(SetOverGame);
         }
 
         private void WaitForActivePiece()

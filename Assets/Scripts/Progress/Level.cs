@@ -18,12 +18,12 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            EventHab.OnSpawnPiece.AddSubscriber(StepUp, 1);
+            EventsHub.OnSpawnPiece.AddSubscriber(StepUp, 1);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            EventHab.OnSpawnPiece.RemoveSubscriber(StepUp);
+            EventsHub.OnSpawnPiece.RemoveSubscriber(StepUp);
         }
 
         private void StepUp(IPiece _)
@@ -34,7 +34,7 @@ namespace Progress
             CurrentValue += 1;
             _currentStep = 0;
             Debug.Log($"Level updated: {CurrentValue}");
-            EventHab.OnLevelUp.Trigger();
+            EventsHub.OnLevelUp.Trigger();
         }
     }
 }

@@ -14,19 +14,19 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            EventHab.OnScoreUp.AddSubscriber(UpdateScore);
+            EventsHub.OnScoreUp.AddSubscriber(UpdateScore);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            EventHab.OnScoreUp.RemoveSubscriber(UpdateScore);
+            EventsHub.OnScoreUp.RemoveSubscriber(UpdateScore);
         }
           
         private void UpdateScore(int removedLinesCount)
         {
             if (removedLinesCount == 0) return;
             CurrentValue += 
-                ScoreCoefficient * removedLinesCount * Bonus(removedLinesCount) * TetrisProgress.Instance.Level();
+                ScoreCoefficient * removedLinesCount * Bonus(removedLinesCount) * TetrisMeta.Instance.Level();
             Debug.Log($"Score Updated: {CurrentValue}");
         }
 

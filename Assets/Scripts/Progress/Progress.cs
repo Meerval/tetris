@@ -10,13 +10,13 @@ namespace Progress
         
         public void OnEnable()
         {
-            EventHab.OnGameStart.AddSubscriber(StartNewProgress);
+            EventsHub.OnGameStart.AddSubscriber(StartNewProgress);
             SubscribeProgressAction();
         }
 
         public void OnDisable()
         {
-            EventHab.OnGameStart.RemoveSubscriber(StartNewProgress);
+            EventsHub.OnGameStart.RemoveSubscriber(StartNewProgress);
             UnsubscribeProgressAction();
         }
 

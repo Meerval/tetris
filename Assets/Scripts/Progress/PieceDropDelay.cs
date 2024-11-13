@@ -16,17 +16,17 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            EventHab.OnLevelUp.AddSubscriber(CountDelay, 1);
+            EventsHub.OnLevelUp.AddSubscriber(CountDelay, 1);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            EventHab.OnLevelUp.RemoveSubscriber(CountDelay);
+            EventsHub.OnLevelUp.RemoveSubscriber(CountDelay);
         }
 
         private void CountDelay()
         {
-            CurrentValue = BaseDelay / (1 + Mathf.Sqrt(DecreaseFactor * TetrisProgress.Instance.Level()));
+            CurrentValue = BaseDelay / (1 + Mathf.Sqrt(DecreaseFactor * TetrisMeta.Instance.Level()));
             Debug.Log($"Piece drop delay updated: {CurrentValue}");
         }
     }

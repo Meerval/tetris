@@ -53,7 +53,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
         {
             _activePiecePosition = _spawnPosition;
             SetPiece(_activePiecePosition);
-            EventHab.OnSpawnPiece.Trigger(_activePiece);
+            EventsHub.OnSpawnPiece.Trigger(_activePiece);
             return true;
         }
 
@@ -188,7 +188,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
 
     private IEnumerator ClearFullLinesCoroutines()
     {
-        EventHab.OnWaitCoroutineStart.Trigger();
+        EventsHub.OnWaitCoroutineStart.Trigger();
         List<int> fullLines = new List<int>();
 
         for (int line = _bounds.yMin; line < _bounds.yMax;)
@@ -199,6 +199,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
                 continue;
             }
 
+            fullLines.Add(line);
             for (int x = _bounds.xMax - _bounds.width / 2; x < _bounds.xMax; x++)
             {
                 TimerOfClearLine.Instance.UpdateTimeout();
@@ -224,10 +225,10 @@ public class TetrisGrid : MonoBehaviour, IGrid
         if (fullLines.Count > 0)
         {
             Debug.Log($"Lines were cleared: {new PrettyArray<int>(fullLines)}");
-            EventHab.OnScoreUp.Trigger(fullLines.Count);
+            EventsHub.OnScoreUp.Trigger(fullLines.Count);
         }
 
-        EventHab.OnWaitCoroutineStop.Trigger();
+        EventsHub.OnWaitCoroutineEnd.Trigger();
     }
 
     private bool IsLineFull(int y)

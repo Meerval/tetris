@@ -15,12 +15,12 @@ namespace Progress
 
         protected override void SubscribeProgressAction()
         {
-            EventHab.OnSpawnPiece.AddSubscriber(AddPieceToSpawnedPieces, 1);
+            EventsHub.OnSpawnPiece.AddSubscriber(AddPieceToSpawnedPieces, 1);
         }
 
         protected override void UnsubscribeProgressAction()
         {
-            EventHab.OnSpawnPiece.RemoveSubscriber(AddPieceToSpawnedPieces);
+            EventsHub.OnSpawnPiece.RemoveSubscriber(AddPieceToSpawnedPieces);
         }
 
         private void AddPieceToSpawnedPieces(IPiece piece)

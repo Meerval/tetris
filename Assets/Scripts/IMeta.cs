@@ -2,9 +2,10 @@
 using Pieces;
 using Progress;
 
-public interface IConditionController
+public interface IMeta
 {
     EState State();
+    bool IsUpdateLocked();
     float PieceDropDelay();
     List<(int, IPiece)> SpawnPieces();
     IPiece ActivePiece();
