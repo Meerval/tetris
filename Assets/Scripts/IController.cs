@@ -2,7 +2,7 @@
 {
     void DetectAndExecutePieceRotation();
     void DetectAndExecutePieceShift();
-    void DetectTimeOutAndDropPiece();
+    void DropPieceAsTimeout();
     void SpawnPieceAsWill();
     void SetNewGame();
 }

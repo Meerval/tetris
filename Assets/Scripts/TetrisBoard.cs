@@ -27,7 +27,7 @@ public class TetrisBoard : MonoBehaviour
     {
         _controller.DetectAndExecutePieceRotation();
         _controller.DetectAndExecutePieceShift();
-        _controller.DetectTimeOutAndDropPiece();
+        _controller.DropPieceAsTimeout();
         _controller.SpawnPieceAsWill();
     }
 
