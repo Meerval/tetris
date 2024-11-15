@@ -25,7 +25,7 @@ namespace Progress
         private void UpdateScore(int removedLines)
         {
             if (removedLines == 0) return;
-            CurrentValue += ScoreCoefficient * removedLines * Bonus(removedLines) * TetrisMeta.Instance.Level();
+            CurrentValue += ScoreCoefficient * removedLines * Bonus(removedLines);
             Debug.Log($"Score Updated: {CurrentValue}");
             DisplayCurrentValue();
         }
