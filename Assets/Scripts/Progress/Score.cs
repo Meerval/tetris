@@ -3,15 +3,15 @@ using UnityEngine;
 
 namespace Progress
 {
-    public class Score : Progress<int>
+    public class Score : DisplayableProgress<int>
     {
         private const int ScoreCoefficient = 100;
-      
-        protected override void StartNewProgress()
+
+        protected override void StartNewDisplayableProgress()
         {
             CurrentValue = 0;
         }
-
+        
         protected override void SubscribeProgressAction()
         {
             EventsHub.OnScoreUp.AddSubscriber(UpdateScore);
@@ -22,12 +22,12 @@ namespace Progress
             EventsHub.OnScoreUp.RemoveSubscriber(UpdateScore);
         }
           
-        private void UpdateScore(int removedLinesCount)
+        private void UpdateScore(int removedLines)
         {
-            if (removedLinesCount == 0) return;
-            CurrentValue += 
-                ScoreCoefficient * removedLinesCount * Bonus(removedLinesCount) * TetrisMeta.Instance.Level();
+            if (removedLines == 0) return;
+            CurrentValue += ScoreCoefficient * removedLines * Bonus(removedLines) * TetrisMeta.Instance.Level();
             Debug.Log($"Score Updated: {CurrentValue}");
+            DisplayCurrentValue();
         }
 
         private int Bonus(int removedLinesCount)
@@ -42,5 +42,6 @@ namespace Progress
             };
             return bonus;
         }
+        
     }
 }

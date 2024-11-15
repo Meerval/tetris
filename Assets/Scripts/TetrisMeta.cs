@@ -38,8 +38,8 @@ public class TetrisMeta : MonoBehaviour, IMeta
         _updateLock = gameObject.AddComponent<UpdateLock>();
         _pieceDropDelay = gameObject.AddComponent<PieceDropDelay>();
         _spawnPieces = gameObject.AddComponent<SpawnedPieces>();
-        _level = gameObject.AddComponent<Level>();
-        _score = gameObject.AddComponent<Score>();
+        _level = GetComponentInChildren<Level>();
+        _score = GetComponentInChildren<Score>();
     }
 
     public EState State()

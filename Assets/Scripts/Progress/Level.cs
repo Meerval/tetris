@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Progress
 {
-    public class Level : Progress<int>
+    public class Level : DisplayableProgress<int>
     {
         private int _currentStep;
         private int _stepCount;
 
-        protected override void StartNewProgress()
+        protected override void StartNewDisplayableProgress()
         {
             CurrentValue = 0;
             _currentStep = 0;
@@ -35,6 +35,8 @@ namespace Progress
             _currentStep = 0;
             Debug.Log($"Level updated: {CurrentValue}");
             EventsHub.OnLevelUp.Trigger();
+            DisplayCurrentValue();
         }
+        
     }
 }

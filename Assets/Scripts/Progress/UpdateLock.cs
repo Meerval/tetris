@@ -1,6 +1,4 @@
 ﻿using Event;
-using Pieces;
-using UnityEngine;
 
 namespace Progress
 {
