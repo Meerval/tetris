@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 using BoardGUI;
+using UnityEngine;
 
 namespace Progress
 {
-    public abstract class DisplayableProgress<T> : Progress<T>, IDisplayable
+    public abstract class DisplayableProgress<T, V> : Progress<T, V>, IDisplayable where V : MonoBehaviour
     {
         private IProgressText _textToDisplay;
 

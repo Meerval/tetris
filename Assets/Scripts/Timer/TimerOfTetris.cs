@@ -1,41 +1,12 @@
 ﻿using System.Globalization;
+using Structure;
 using UnityEngine;
 
 
 namespace Timer
 {
-    public abstract class TimerOfTetris<T> : MonoBehaviour, ITimer where T : MonoBehaviour, ITimer
+    public abstract class TimerOfTetris<T> : MonoBehaviourSingleton<T>, ITimer where T : MonoBehaviour, ITimer
     {
-        private static T _instance;
-        public static T Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = FindObjectOfType<T>();
-                    if (_instance == null)
-                        return new GameObject(typeof(T).Name).AddComponent<T>();
-                    return _instance;
-                }
-                return _instance;
-            }
-        }
-        
-        protected virtual void Awake()
-        {
-            if (_instance == null)
-            {
-                _instance = this as T;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-        
-        
         [SerializeField] protected float delay;
         private float _timeout;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Progress
 {
-    public class State : Progress<EState>
+    public class State : Progress<EState, State>
     {
         protected override void StartNewProgress()
         {

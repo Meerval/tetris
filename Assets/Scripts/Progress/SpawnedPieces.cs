@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Progress
 {
-    public class SpawnedPieces : Progress<List<(int, IPiece)>>
+    public class SpawnedPieces : Progress<List<(int, IPiece)>, SpawnedPieces>
     {
         protected override void StartNewProgress()
         {

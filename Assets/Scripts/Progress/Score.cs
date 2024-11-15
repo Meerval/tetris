@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Progress
 {
-    public class Score : DisplayableProgress<int>
+    public class Score : DisplayableProgress<int, Score>
     {
         private const int ScoreCoefficient = 100;
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Progress
 {
-    public class PieceDropDelay : Progress<float>
+    public class PieceDropDelay : Progress<float, PieceDropDelay>
     {
         private const float BaseDelay = 1.0f;
         private const float DecreaseFactor = 0.5f;

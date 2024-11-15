@@ -2,9 +2,9 @@
 using System.Linq;
 using Pieces;
 using Progress;
-using UnityEngine;
+using Structure;
 
-public class TetrisMeta : MonoBehaviour, IMeta
+public class TetrisMeta : MonoBehaviourSingleton<TetrisMeta>, IMeta
 {
     private IProgress<EState> _state;
     private IProgress<bool> _updateLock;
@@ -13,27 +13,9 @@ public class TetrisMeta : MonoBehaviour, IMeta
     private IPiece _activePiece;
     private IProgress<int> _level;
     private IProgress<int> _score;
-
-    public static IMeta Instance;
-
-    private TetrisMeta()
-    {
-    }
-
+    
     public void Start()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        DontDestroyOnLoad(gameObject);
-
         _state = gameObject.AddComponent<State>();
         _updateLock = gameObject.AddComponent<UpdateLock>();
         _pieceDropDelay = gameObject.AddComponent<PieceDropDelay>();

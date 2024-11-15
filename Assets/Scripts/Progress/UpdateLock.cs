@@ -2,7 +2,7 @@
 
 namespace Progress
 {
-    public class UpdateLock : Progress<bool>
+    public class UpdateLock : Progress<bool, UpdateLock>
     {
         protected override void StartNewProgress()
         {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Progress
 {
-    public class Level : DisplayableProgress<int>
+    public class Level : DisplayableProgress<int, Level>
     {
         private int _currentStep;
         private int _stepCount;

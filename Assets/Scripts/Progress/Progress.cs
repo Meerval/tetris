@@ -1,11 +1,12 @@
 ﻿using Event;
+using Structure;
 using UnityEngine;
 
 namespace Progress
 {
-    public abstract class Progress<T> : MonoBehaviour, IProgress<T>
+    public abstract class Progress<T,V> : MonoBehaviourSingleton<V>, IProgress<T> where V : MonoBehaviour
     {
-
+        
         protected T CurrentValue;
         
         public void OnEnable()
