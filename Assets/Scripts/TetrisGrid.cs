@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
+using Actions;
 using Event;
 using PiecePosition;
 using PiecePosition.RotationMath;
 using Pieces;
 using Pretty;
-using Timer;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -20,15 +18,20 @@ public class TetrisGrid : MonoBehaviour, IGrid
     private ITilemapController _projectedTilemap;
     private ITilemapController _lockedTilemap;
 
+    private Vector2Int _size;
     private RectInt _bounds;
+
     private IPiece _activePiece;
     private readonly Vector2Int _spawnPosition = new(-1, 8);
     private Vector2Int _activePiecePosition;
 
+    private IFullLinesRemoving _fullLinesRemoving;
+    private IPieceSpawning _pieceSpawning;
+
     public void Awake()
     {
-        Vector2Int size = Vector2Int.RoundToInt(GetComponent<SpriteRenderer>().size);
-        _bounds = new RectInt(new Vector2Int(-size.x / 2, -size.y / 2), size);
+        _size = Vector2Int.RoundToInt(GetComponent<SpriteRenderer>().size);
+        _bounds = new RectInt(new Vector2Int(-_size.x / 2, -_size.y / 2), _size);
 
         _activeTilemap = Instantiate(tilemapPrefab, gameObject.transform);
         _projectedTilemap = Instantiate(tilemapPrefab, gameObject.transform);
@@ -38,26 +41,24 @@ public class TetrisGrid : MonoBehaviour, IGrid
         ((TilemapController)_projectedTilemap).gameObject.name = "ProjectedTilemap";
         ((TilemapController)_lockedTilemap).gameObject.name = "LockedTilemap";
 
+        _fullLinesRemoving = gameObject.AddComponent<FullLinesRemoving>();
+        _pieceSpawning = gameObject.GetComponent<PieceSpawning>();
+
         Debug.Log
         (
-            $"TetrisGrid awoke with size of {size.ToString()} and bounds {_bounds.ToString()}"
+            $"TetrisGrid awoke with size of {_size.ToString()} and bounds {_bounds.ToString()}"
         );
     }
-
 
     public bool SpawnNewPiece()
     {
         _activePiece?.Destroy();
-        _activePiece = gameObject.GetComponent<PieceSpawner>().SpawnRandom();
-        if (IsAvailablePosition(_spawnPosition))
-        {
-            _activePiecePosition = _spawnPosition;
-            SetPiece(_activePiecePosition);
-            EventsHub.OnSpawnPiece.Trigger(_activePiece);
-            return true;
-        }
-
-        return false;
+        _activePiece = _pieceSpawning.Execute();
+        if (!IsAvailablePosition(_spawnPosition)) return false;
+        _activePiecePosition = _spawnPosition;
+        SetPiece(_activePiecePosition);
+        EventsHub.OnSpawnPiece.Trigger(_activePiece);
+        return true;
     }
 
     private bool IsAvailablePosition(Vector2Int newPosition)
@@ -173,69 +174,17 @@ public class TetrisGrid : MonoBehaviour, IGrid
         Debug.Log($"{_activePiece} locked on position {new PrettyArray<Vector2Int>(tilesPosition).Prettify()}");
     }
 
+    public void ClearFullLines()
+    {
+        _fullLinesRemoving.Execute(_lockedTilemap, _bounds);
+    }
+
     public void ClearAll()
     {
         _activeTilemap.ClearAll();
         _projectedTilemap.ClearAll();
         _lockedTilemap.ClearAll();
         Debug.Log("Whole grid cleared");
-    }
-
-    public void ClearFullLines()
-    {
-        StartCoroutine(ClearFullLinesCoroutines());
-    }
-
-    private IEnumerator ClearFullLinesCoroutines()
-    {
-        EventsHub.OnWaitCoroutineStart.Trigger();
-        List<int> fullLines = new List<int>();
-
-        for (int line = _bounds.yMin; line < _bounds.yMax;)
-        {
-            if (!IsLineFull(line))
-            {
-                line++;
-                continue;
-            }
-
-            fullLines.Add(line);
-            for (int x = _bounds.xMax - _bounds.width / 2; x < _bounds.xMax; x++)
-            {
-                TimerOfClearLine.Instance.UpdateTimeout();
-                yield return new WaitWhile(TimerOfClearLine.Instance.IsInProgress);
-                _lockedTilemap.Clear(new Vector2Int(x, line));
-                _lockedTilemap.Clear(new Vector2Int(_bounds.xMax - _bounds.width / 2 - x - 1, line));
-            }
-
-            for (int y = line; y < _bounds.yMax; y++)
-            {
-                for (int x = _bounds.xMin; x < _bounds.xMax; x++)
-                {
-                    _lockedTilemap.Set
-                    (
-                        new Vector2Int(x, y),
-                        _lockedTilemap.Get(new Vector2Int(x, y + 1)
-                        )
-                    );
-                }
-            }
-        }
-
-        if (fullLines.Count > 0)
-        {
-            Debug.Log($"Lines were cleared: {new PrettyArray<int>(fullLines)}");
-            EventsHub.OnScoreUp.Trigger(fullLines.Count);
-        }
-
-        EventsHub.OnWaitCoroutineEnd.Trigger();
-    }
-
-    private bool IsLineFull(int y)
-    {
-        return Enumerable
-            .Range(_bounds.xMin, _bounds.width)
-            .All(x => _lockedTilemap.IsTaken(new Vector2Int(x, y)));
     }
 
     private void LockTile(Vector2Int position, TileBase tile)

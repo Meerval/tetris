@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Pieces;
 using Pretty;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Pieces
+namespace Actions
 {
-    public class PieceSpawner : MonoBehaviour
+    public class PieceSpawning : MonoBehaviour, IPieceSpawning
     {
         [SerializeField] private List<Piece> piecePrefabs;
 
@@ -20,7 +21,7 @@ namespace Pieces
             Debug.Log($"Available pieces: {new PrettyArray<Piece>(piecePrefabs)}");
         }
 
-        public IPiece SpawnRandom()
+        public IPiece Execute()
         {
             Piece piece = Instantiate(piecePrefabs[Random.Range(0, piecePrefabs.Count)], gameObject.transform);
             piece.name = piece.ToString();
