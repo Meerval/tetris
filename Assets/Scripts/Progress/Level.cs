@@ -13,7 +13,7 @@ namespace Progress
         {
             CurrentValue = 1;
             _currentStep = 1;
-            _stepCount = 5;
+            _stepCount = 10;
         }
 
         protected override void SubscribeProgressAction()
@@ -32,6 +32,7 @@ namespace Progress
             Debug.Log($"Step updated: {_currentStep}/{_stepCount}");
             if (_currentStep <= _stepCount + 1) return;
             CurrentValue += 1;
+            _stepCount += 2;
             _currentStep = 1;
             Debug.Log($"Level updated: {CurrentValue}");
             EventsHub.OnLevelUp.Trigger();
