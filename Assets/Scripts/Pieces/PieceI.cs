@@ -28,6 +28,11 @@ namespace Pieces
         {
             return _wallKicks;
         }
+        
+        public override Vector2Int MonitorOffset()
+        {
+            return new Vector2Int(0, -1);
+        }
 
         protected override IShapeMap RotationCalculator()
         {

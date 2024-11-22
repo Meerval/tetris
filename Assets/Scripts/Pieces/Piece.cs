@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 namespace Pieces
 {
-    public abstract class Piece : MonoBehaviour, IPiece
+    public abstract class Piece : MonoBehaviour, IPiece, IPredictedPiece
     {
         [SerializeField] private TileBase tile;
         protected readonly RotationAngle RotationAngle = new();
@@ -76,6 +76,11 @@ namespace Pieces
         public void Destroy()
         {
             Destroy(gameObject);
+        }
+
+        public virtual Vector2Int MonitorOffset()
+        {
+            return new Vector2Int(0, 0);
         }
 
         protected virtual IShapeMap RotationCalculator()

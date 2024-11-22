@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using Pieces;
 using Pretty;
+using Structure;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Actions
 {
-    public class PieceSpawning : MonoBehaviour, IPieceSpawning
+    public class PieceSpawning : MonoBehaviourSingleton<PieceSpawning>, IPieceSpawning
     {
         [SerializeField] private List<Piece> piecePrefabs;
+        private Queue<IPiece> _piecesQueue;
 
-        private void Awake()
+        private void Start()
         {
             if (piecePrefabs == null || piecePrefabs.Count == 0)
             {
@@ -19,13 +21,19 @@ namespace Actions
             }
 
             Debug.Log($"Available pieces: {new PrettyArray<Piece>(piecePrefabs)}");
+            _piecesQueue = new Queue<IPiece>();
         }
 
-        public IPiece Execute()
+        public Queue<IPiece> Execute()
         {
-            Piece piece = Instantiate(piecePrefabs[Random.Range(0, piecePrefabs.Count)], gameObject.transform);
-            piece.name = piece.ToString();
-            return piece;
+            while (_piecesQueue.Count < 2)
+            {
+                Piece piece = Instantiate(piecePrefabs[Random.Range(0, piecePrefabs.Count)], gameObject.transform);
+                piece.name = piece.ToString();
+                _piecesQueue.Enqueue(piece);
+            }
+
+            return _piecesQueue;
         }
     }
 }

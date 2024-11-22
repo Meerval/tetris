@@ -11,8 +11,8 @@ namespace Progress
 
         protected override void StartNewDisplayableProgress()
         {
-            CurrentValue = 0;
-            _currentStep = 0;
+            CurrentValue = 1;
+            _currentStep = 1;
             _stepCount = 5;
         }
 
@@ -30,9 +30,9 @@ namespace Progress
         {
             _currentStep += 1;
             Debug.Log($"Step updated: {_currentStep}/{_stepCount}");
-            if (_currentStep <= _stepCount - 1) return;
+            if (_currentStep <= _stepCount + 1) return;
             CurrentValue += 1;
-            _currentStep = 0;
+            _currentStep = 1;
             Debug.Log($"Level updated: {CurrentValue}");
             EventsHub.OnLevelUp.Trigger();
             DisplayCurrentValue();

@@ -1,9 +1,10 @@
-﻿using Pieces;
+﻿using System.Collections.Generic;
+using Pieces;
 
 namespace Actions
 {
     public interface IPieceSpawning
     {
-        IPiece Execute();
+        Queue<IPiece> Execute();
     }
 }

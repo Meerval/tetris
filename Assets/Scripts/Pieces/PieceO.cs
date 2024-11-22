@@ -16,5 +16,10 @@ namespace Pieces
         {
             return new RotationIO(ShapeMap(), RotationAngle);
         }
+        
+        public override Vector2Int MonitorOffset()
+        {
+            return new Vector2Int(-1, 0);
+        }
     }
 }

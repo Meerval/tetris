@@ -13,6 +13,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
 {
     [SerializeField] private TileBase projectionTile;
     [SerializeField] private TilemapController tilemapPrefab;
+    [SerializeField] private PieceSpawning pieceSpawning;
 
     private ITilemapController _activeTilemap;
     private ITilemapController _projectedTilemap;
@@ -26,7 +27,6 @@ public class TetrisGrid : MonoBehaviour, IGrid
     private Vector2Int _activePiecePosition;
 
     private IFullLinesRemoving _fullLinesRemoving;
-    private IPieceSpawning _pieceSpawning;
 
     public void Awake()
     {
@@ -42,7 +42,6 @@ public class TetrisGrid : MonoBehaviour, IGrid
         ((TilemapController)_lockedTilemap).gameObject.name = "LockedTilemap";
 
         _fullLinesRemoving = gameObject.AddComponent<FullLinesRemoving>();
-        _pieceSpawning = gameObject.GetComponent<PieceSpawning>();
 
         Debug.Log
         (
@@ -53,7 +52,7 @@ public class TetrisGrid : MonoBehaviour, IGrid
     public bool SpawnNewPiece()
     {
         _activePiece?.Destroy();
-        _activePiece = _pieceSpawning.Execute();
+        _activePiece = pieceSpawning.Execute().Dequeue();
         if (!IsAvailablePosition(_spawnPosition)) return false;
         _activePiecePosition = _spawnPosition;
         SetPiece(_activePiecePosition);
