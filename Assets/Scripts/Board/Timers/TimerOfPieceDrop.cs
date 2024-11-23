@@ -1,7 +1,8 @@
 ﻿using Systems.Events;
+using Systems.Timer;
 using UnityEngine;
 
-namespace Board.Timer
+namespace Board.Timers
 {
     public class TimerOfPieceDrop : TimerOfTetris<TimerOfPieceDrop>
     {

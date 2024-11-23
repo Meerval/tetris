@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Systems.Timer;
+using UnityEngine;
 
-namespace Board.Timer
+namespace Board.Timers
 {
     public class TimerOfClearLine : TimerOfTetris<TimerOfClearLine>
     {

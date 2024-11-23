@@ -1,4 +1,4 @@
-﻿namespace Board.Timer
+﻿namespace Systems.Timer
 {
     public interface ITimer
     {

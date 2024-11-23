@@ -1,9 +1,8 @@
 ﻿using System.Globalization;
-using Templates;
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Board.Timer
+namespace Systems.Timer
 {
     public abstract class TimerOfTetris<T> : MonoBehaviourSingleton<T>, ITimer where T : MonoBehaviour, ITimer
     {

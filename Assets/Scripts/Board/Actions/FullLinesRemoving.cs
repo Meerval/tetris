@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Board.Timer;
+using Board.Timers;
 using Systems.Events;
 using Templates.Pretty;
 using UnityEngine;

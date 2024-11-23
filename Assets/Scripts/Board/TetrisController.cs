@@ -1,6 +1,7 @@
 ﻿using Board.Progress;
-using Board.Timer;
+using Board.Timers;
 using Systems.Events;
+using Systems.Timer;
 using UnityEngine;
 
 namespace Board
