@@ -3,7 +3,7 @@ using Board;
 using Systems.Events;
 using UnityEngine;
 
-namespace Board.Progress
+namespace Board.Meta
 {
     public class PieceDropDelay : Progress<float, PieceDropDelay>
     {

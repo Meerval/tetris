@@ -7,7 +7,7 @@ using Templates;
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Board.Progress.UI
+namespace Board.Meta.UI
 {
     public class PiecePredictor : MonoBehaviourSingleton<PiecePredictor>, IPredictor
     {

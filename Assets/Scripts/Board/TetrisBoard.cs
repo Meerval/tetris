@@ -1,5 +1,6 @@
-using Board.Progress;
+using Board.Meta;
 using Systems.Events;
+using Systems.Storage;
 using UnityEngine;
 
 namespace Board
@@ -37,6 +38,7 @@ namespace Board
         {
             Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisMeta.Instance.Level()}, " +
                       $"score: {TetrisMeta.Instance.Score()}");
+            Storage.Instance.SaveGame();
             _controller.SetNewGame();
         }
     }

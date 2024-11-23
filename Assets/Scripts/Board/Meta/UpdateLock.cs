@@ -1,6 +1,6 @@
 ﻿using Systems.Events;
 
-namespace Board.Progress
+namespace Board.Meta
 {
     public class UpdateLock : Progress<bool, UpdateLock>
     {

@@ -1,16 +1,16 @@
-﻿using Board.Progress;
+﻿using Board.Meta;
 using Systems.Events;
 using UnityEngine;
 
-namespace Board.Progress
+namespace Board.Meta
 {
-    public class Score : DisplayableProgress<int, Score>
+    public class Score : DisplayableProgress<long, Score>
     {
         private const int ScoreCoefficient = 100;
 
         protected override void StartNewDisplayableProgress()
         {
-            CurrentValue = 0;
+            CurrentValue = 0L;
         }
         
         protected override void SubscribeProgressAction()

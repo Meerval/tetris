@@ -1,5 +1,5 @@
 ﻿using Board.Pieces;
-using Board.Progress;
+using Board.Meta;
 
 namespace Systems.Events
 {

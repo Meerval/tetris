@@ -3,7 +3,7 @@ using Templates;
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Board.Progress
+namespace Board.Meta
 {
     public abstract class Progress<T,V> : MonoBehaviourSingleton<V>, IProgress<T> where V : MonoBehaviour
     {

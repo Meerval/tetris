@@ -4,7 +4,7 @@ using Systems.Events;
 using Templates.Pretty;
 using UnityEngine;
 
-namespace Board.Progress
+namespace Board.Meta
 {
     public class SpawnedPieces : Progress<List<(int, IPiece)>, SpawnedPieces>
     {

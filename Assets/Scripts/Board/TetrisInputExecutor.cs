@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using Board.Progress;
+using Board.Meta;
 using Board.Timers;
 using Systems.Events;
 using Systems.Timer;
@@ -10,7 +10,7 @@ namespace Board
 {
     public class TetrisInputExecutor : MonoBehaviour, IInputExecutor
     {
-        private IMeta _meta;
+        private TetrisMeta _meta;
         private ITimer _timerOfMove;
         private ITimer _timerOfClick;
 

@@ -21,7 +21,7 @@ namespace Systems.Storage
             };
         }
 
-        public void Add(IStorable saveLoadObject) => _idMap[saveLoadObject.ComponentSaveId] = saveLoadObject;
+        public void Add(IStorable saveLoadObject) => _idMap[saveLoadObject.Id] = saveLoadObject;
 
         public void SaveGame()
         {
@@ -35,13 +35,14 @@ namespace Systems.Storage
             foreach (StorableData data in loadedData)
             {
                 string objectId = data.Id;
-                if (!_idMap.ContainsKey(objectId))
+                if (_idMap.ContainsKey(objectId))
+                {
+                    _idMap[objectId].RestoreValues(data);
+                }
+                else
                 {
                     Debug.LogError($"Can't restore data for object with id {objectId}");
-                    continue;
                 }
-
-                _idMap[objectId].RestoreValues(data);
             }
         }
     }

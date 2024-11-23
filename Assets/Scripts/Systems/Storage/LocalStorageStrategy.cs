@@ -9,8 +9,8 @@ namespace Systems.Storage
 {
     public class FileStorageStrategy : IStorageStrategy
     {
-        private const string SaveFolderName = "Resources/Saved";
-        private const string SaveFileName = "GameSaveFile.json";
+        private const string SaveFolderName = "Resources/Saves";
+        private const string SaveFileName = "Saves.json";
         private static string FolderFullName => Path.Combine(Application.persistentDataPath, SaveFolderName);
         private static string FileFullName => Path.Combine(FolderFullName, SaveFileName);
 
@@ -35,19 +35,34 @@ namespace Systems.Storage
 
         public StorableData[] Load()
         {
-            if (!File.Exists(FileFullName))
-            {
-                Debug.LogError($"Can't load save file. File {FileFullName} is doesn't exist.");
-                return null;
-            }
-
             try
             {
+                if (!Directory.Exists(FolderFullName))
+                {
+                    Directory.CreateDirectory(FolderFullName);
+                    if (Directory.Exists(FolderFullName))
+                    {
+                        Debug.Log($"Directory created: {FolderFullName}");
+                    }
+
+                    Debug.LogError($"Can't load directory. Path {FolderFullName} doesn't exist and can't be created");
+                }
+
+                if (!File.Exists(FileFullName))
+                {
+                    File.Create(FileFullName).Dispose();
+                    if (File.Exists(FileFullName))
+                    {
+                        Debug.Log($"File created at: {FileFullName}");
+                    }
+
+                    Debug.LogError($"Can't load file. Path {FileFullName} doesn't exist and can't be created");
+                }
+
                 string serializedFile = File.ReadAllText(FileFullName);
                 if (string.IsNullOrEmpty(serializedFile))
                 {
-                    Debug.LogError($"Loaded file {FileFullName} is empty.");
-                    return null;
+                    return new[] { new StorableData("RecordScore", new object[] { 0 }) };
                 }
 
                 Debug.Log($"Save to {FileFullName}");
@@ -55,7 +70,7 @@ namespace Systems.Storage
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.LogError($"Parsing is failed: {e.Message}");
                 throw;
             }
         }

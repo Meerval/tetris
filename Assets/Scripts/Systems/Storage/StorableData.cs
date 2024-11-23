@@ -1,9 +1,7 @@
-﻿using UnityEngine;
-
-namespace Systems.Storage
+﻿namespace Systems.Storage
 {
     [System.Serializable]
-    public class StorableData: MonoBehaviour
+    public class StorableData
     {
         public string Id { get; private set; }
         public object[] Data { get; private set; }

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Board.Progress;
 using Board.Pieces;
+using Systems.Storage;
 using Templates.Singleton;
 
-namespace Board
+namespace Board.Meta
 {
-    public class TetrisMeta : MonoBehaviourSingleton<TetrisMeta>, IMeta
+    public class TetrisMeta : MonoBehaviourSingleton<TetrisMeta>
     {
         private IProgress<EState> _state;
         private IProgress<bool> _updateLock;
@@ -14,8 +14,9 @@ namespace Board
         private IProgress<List<(int, IPiece)>> _spawnPieces;
         private IPiece _activePiece;
         private IProgress<int> _level;
-        private IProgress<int> _score;
-    
+        private IProgress<long> _score;
+        private IProgress<long> _recordScore;
+
         public void Start()
         {
             _state = gameObject.AddComponent<State>();
@@ -24,6 +25,10 @@ namespace Board
             _spawnPieces = gameObject.AddComponent<SpawnedPieces>();
             _level = GetComponentInChildren<Level>();
             _score = GetComponentInChildren<Score>();
+            _recordScore = GetComponentInChildren<RecordScore>();
+
+            Storage.Instance.Add((IStorable)_recordScore);
+            Storage.Instance.LoadGame();
         }
 
         public EState State()
@@ -46,9 +51,14 @@ namespace Board
             return _level.Value();
         }
 
-        public int Score()
+        public long Score()
         {
             return _score.Value();
+        }
+
+        public long RecordScore()
+        {
+            return _recordScore.Value();
         }
 
         public List<(int, IPiece)> SpawnPieces()

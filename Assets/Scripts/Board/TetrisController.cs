@@ -1,4 +1,4 @@
-﻿using Board.Progress;
+﻿using Board.Meta;
 using Board.Timers;
 using Systems.Events;
 using Systems.Timer;
@@ -11,7 +11,7 @@ namespace Board
         private IGridController _tetrisGrid;
         private IInputExecutor _inputExecutor;
 
-        private IMeta _meta;
+        private TetrisMeta _meta;
         private ITimer _timerOfDrop;
         private ITimer _timerOfLock;
 

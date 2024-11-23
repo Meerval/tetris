@@ -1,9 +1,9 @@
-﻿using Board.Progress;
+﻿using Board.Meta;
 using Board.Pieces;
 using Systems.Events;
 using UnityEngine;
 
-namespace Board.Progress
+namespace Board.Meta
 {
     public class Level : DisplayableProgress<int, Level>
     {

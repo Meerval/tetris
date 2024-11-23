@@ -21,7 +21,7 @@ namespace Templates.Singleton
             if (_instance == null)
             {
                 _instance = this as T;
-                DontDestroyOnLoad(gameObject);
+                if (transform.parent == null) DontDestroyOnLoad(gameObject);
             }
             else
             {

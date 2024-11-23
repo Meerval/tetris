@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Board.Progress.UI;
-using Board.Progress;
+using Board.Meta.UI;
+using Board.Meta;
 using UnityEngine;
 
-namespace Board.Progress
+namespace Board.Meta
 {
     public abstract class DisplayableProgress<T1, T2> : Progress<T1, T2>, IDisplayable where T2 : MonoBehaviour
     {
@@ -11,8 +11,7 @@ namespace Board.Progress
 
         protected override void StartNewProgress()
         {
-            _textToDisplay = GetComponentsInChildren<ProgressText>()
-                .First(component => component.name.Contains(GetType().Name));
+            _textToDisplay = GetComponentInChildren<ProgressText>();
             
             StartNewDisplayableProgress();
             DisplayCurrentValue();

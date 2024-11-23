@@ -1,4 +1,4 @@
-﻿namespace Board.Progress
+﻿namespace Board.Meta
 {
     public interface IProgress<out T>
     {
