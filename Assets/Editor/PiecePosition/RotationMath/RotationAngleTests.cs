@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
+using Board.PiecePosition.RotationMath;
 using NUnit.Framework;
-using PiecePosition.RotationMath;
 using UnityEngine;
 
 namespace Editor.PiecePosition.RotationMath

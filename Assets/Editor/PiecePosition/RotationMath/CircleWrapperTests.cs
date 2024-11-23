@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using Board.PiecePosition.RotationMath;
 using NUnit.Framework;
-using PiecePosition.RotationMath;
 
 namespace Editor.PiecePosition.RotationMath
 {
