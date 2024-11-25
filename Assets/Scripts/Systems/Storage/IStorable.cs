@@ -1,4 +1,6 @@
-﻿namespace Systems.Storage
+﻿using Systems.Storage.POCO;
+
+namespace Systems.Storage
 {
     public interface IStorable
     {
