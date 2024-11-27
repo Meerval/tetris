@@ -5,10 +5,10 @@ using System.Linq;
 namespace Systems.Storage.POCO
 {
     [Serializable]
-    public class SaveData
+    public class SaveData : Poco<SaveData>
     {
-        public DateTime SaveTime { get; }
-        public List<StorableData> Data { get; }
+        public DateTime SaveTime { get; set; }
+        public List<StorableData> Data { get; set; }
 
         public SaveData()
         {

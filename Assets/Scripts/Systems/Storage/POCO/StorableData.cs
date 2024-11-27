@@ -3,15 +3,15 @@
 namespace Systems.Storage.POCO
 {
     [Serializable]
-    public class StorableData
+    public class StorableData : Poco<StorableData>
     {
-        public string Id { get; private set; }
-        public object[] Data { get; private set; }
+        public string Id { get; set; }
+        public object[] Data { get; set; }
 
         public StorableData()
         {
             Id = "Empty";
-            Data = new object[]{ };
+            Data = new object[] { };
         }
 
         public StorableData(string id, object[] data)
@@ -24,7 +24,7 @@ namespace Systems.Storage.POCO
         {
             return Id == "Empty";
         }
-        
+
         public static StorableData[] Initial()
         {
             return new[] { new StorableData("RecordScore", new object[] { 0 }) };

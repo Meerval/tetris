@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using Newtonsoft.Json;
 using Systems.Storage.POCO;
+using UnityEngine;
 
 namespace Systems.FileAccess
 {
@@ -11,13 +12,15 @@ namespace Systems.FileAccess
         }
 
         protected override void Overwrite(SaveData data, StreamWriter writer)
-        { 
+        {
             writer.Write(JsonConvert.SerializeObject(data));
         }
 
         protected override SaveData ReadToEnd(StreamReader reader)
         {
-            return JsonConvert.DeserializeObject<SaveData>(reader.ReadToEnd());
+            string r = reader.ReadToEnd();
+            Debug.Log($"row = {r}");
+            return JsonConvert.DeserializeObject<SaveData>(r);
         }
     }
 }

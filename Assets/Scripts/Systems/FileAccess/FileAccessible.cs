@@ -126,10 +126,12 @@ namespace Systems.FileAccess
         {
             try
             {
-                using StreamReader reader = new(_filePath, Encoding.UTF8);
-                SaveData data = ReadToEnd(reader);
-                Debug.Log($"Data loaded from file: {_filePath}");
-                return data;
+                using (StreamReader reader = new(_filePath, Encoding.UTF8))
+                {
+                    SaveData data = ReadToEnd(reader);
+                    Debug.Log($"Data loaded from file: {_filePath}\nData: {data}");
+                    return data;
+                }
             }
             catch (Exception e)
             {
