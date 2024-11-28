@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Systems.Storage
 {
-    public class FileStorageStrategy : IStorageStrategy
+    public class LocalDrive : IDrive
     {
         private const string SaveFolderName = "Saves";
         private const string SaveFileName = "Saves.json";

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Settings.Systems.Storage;
 using Systems.Storage.POCO;
+using Templates.Selectors;
 using Templates.Singleton;
 using UnityEngine;
 
@@ -10,28 +10,24 @@ namespace Systems.Storage
     public class Storage : SimpleSingleton<Storage>
     {
         private readonly Dictionary<string, IStorable> _idMap;
-        private readonly IStorageStrategy _strategy;
+        private readonly IDrive _drive;
 
         public Storage()
         {
             _idMap = new Dictionary<string, IStorable>();
-            _strategy = StorageSettings.Strategy switch
-            {
-                EStorageStrategy.Local => new FileStorageStrategy(),
-                _ => throw new Exception("There is no other classes of IStorageStrategy to create")
-            };
+            _drive = new DriveSelector().Select();
         }
 
         public void Add(IStorable saveLoadObject) => _idMap[saveLoadObject.Id] = saveLoadObject;
 
         public void SaveGame()
         {
-            _strategy.Save(_idMap.Values);
+            _drive.Save(_idMap.Values);
         }
 
         public void LoadGame()
         {
-            var loadedData = _strategy.Load();
+            var loadedData = _drive.Load();
 
             foreach (StorableData data in loadedData)
             {

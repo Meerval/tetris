@@ -2,6 +2,7 @@
 using System.Linq;
 using Board.Pieces;
 using Systems.Storage;
+using Systems.Storage.POCO;
 using Templates.Singleton;
 
 namespace Board.Meta
