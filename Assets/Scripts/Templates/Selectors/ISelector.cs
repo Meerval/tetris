@@ -20,7 +20,7 @@ namespace Templates.Selectors
 
         private void EnsureKeyExists()
         {
-            if (TypesMap.ContainsKey(Key))
+            if (!TypesMap.ContainsKey(Key))
                 throw new Exception
                 (
                     $"There is no type of '{typeof(T1).Name}' with key '{Key}' to create.\n" +
