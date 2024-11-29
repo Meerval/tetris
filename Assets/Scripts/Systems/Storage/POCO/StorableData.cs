@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Settings;
 using Templates.POCO;
-using Templates.TypeSelectors;
+using Templates.Pretty;
+using UnityEngine;
 
 namespace Systems.Storage.POCO
 {
@@ -10,24 +10,37 @@ namespace Systems.Storage.POCO
     public class StorableData : Poco<StorableData>
     {
         public string Id { get; set; }
-        public Poco<object> Data { get; set; }
+        public Dictionary<string, object> Data { get; set; }
 
         public StorableData()
         {
             Id = EmptyId;
+            Data = new Dictionary<string, object>();
         }
 
-        public StorableData(string id, Poco<object> data)
+        public StorableData(string id, Dictionary<string, object> data)
         {
             Id = id;
             Data = data;
         }
-    }
-    
-    public class DataSelector : SettingsDependantSelector<IPoco, string>
-    {
-        protected override Dictionary<string, Type> TypesMap { get; } = new();
-        
-        protected override string Key { get; set; } = TetrisSettings.Drive;
+
+        public bool TryParseLong(string key, out long result)
+        {
+            if (long.TryParse(Data[key].ToString(), out result))
+            {
+                return true;
+            }
+
+            TrowParseErrorLog(key, "long");
+            result = -1L;
+            return false;
+        }
+
+        private void TrowParseErrorLog(string key, string type)
+        {
+            Debug.LogError(
+                $"Can't parse value with key='{key}' to '{type}'" +
+                $"from Data='{new PrettyDictionary<string, object>(Data).Prettify()}'");
+        }
     }
 }

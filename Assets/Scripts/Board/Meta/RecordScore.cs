@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Systems.Events;
 using Systems.Storage.POCO;
-using Templates.POCO;
 using UnityEngine;
 
 namespace Board.Meta
@@ -9,11 +9,19 @@ namespace Board.Meta
     public class RecordScore : DisplayableProgress<long, RecordScore>, IStorable
     {
         public string Id => "RecordScore";
-        public StorableData StorableData => new(Id, new RecordScoreData(CurrentValue));
+
+        public StorableData StorableData => new(Id, new Dictionary<string, object>
+            {
+                { "Score", CurrentValue },
+                { "UserName", "Admin" },
+                { "Date", DateTime.Now }
+            }
+        );
 
         public void Load(StorableData loadData)
         {
-            CurrentValue = ((RecordScoreData)loadData.Data).Score;
+            if (loadData.TryParseLong("Score", out long currentValue)) CurrentValue = currentValue;
+            else LoadInitial();
         }
 
         public void LoadInitial()
@@ -41,28 +49,6 @@ namespace Board.Meta
             CurrentValue = TetrisMeta.Instance.Score();
             Debug.Log($"Record Score Updated: {CurrentValue}");
             DisplayCurrentValue();
-        }
-    }
-
-    [Serializable]
-    public class RecordScoreData : Poco<object>
-    {
-        public long Score { get; set; }
-        public string UserName { get; set; }
-        public DateTime Date { get; set; }
-
-        public RecordScoreData(long score)
-        {
-            Score = score;
-            UserName = "Admin";
-            Date = DateTime.Now;
-        }
-
-        public RecordScoreData()
-        {
-            Score = 0;
-            UserName = "-";
-            Date = DateTime.Now;
         }
     }
 }
