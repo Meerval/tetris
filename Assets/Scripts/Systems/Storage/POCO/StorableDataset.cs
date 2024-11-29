@@ -6,7 +6,7 @@ using Templates.POCO;
 namespace Systems.Storage.POCO
 {
     [Serializable]
-    public class StorableDataset : Poco<StorableDataset>
+    public class StorableDataset : Poco<StorableData>
     {
         public DateTime SaveTime { get; set; }
         public List<StorableData> Data { get; set; }
@@ -19,13 +19,8 @@ namespace Systems.Storage.POCO
 
         public StorableDataset(List<StorableData> data) : this()
         {
-            Data = data;
+            Data = data.ToList();
             SaveTime = DateTime.Now;
-        }
-
-        public bool IsEmpty()
-        {
-            return Data.Where(storableData => !storableData.IsEmpty()).ToList().Count == 0;
         }
     }
 }

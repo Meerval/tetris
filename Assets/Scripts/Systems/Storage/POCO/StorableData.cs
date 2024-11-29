@@ -1,4 +1,5 @@
 ﻿using System;
+using Board.Meta;
 using Templates.POCO;
 
 namespace Systems.Storage.POCO
@@ -7,28 +8,17 @@ namespace Systems.Storage.POCO
     public class StorableData : Poco<StorableData>
     {
         public string Id { get; set; }
-        public object[] Data { get; set; }
+        public Poco<object> Data { get; set; }
 
         public StorableData()
         {
             Id = EmptyId;
-            Data = new object[] { };
         }
 
-        public StorableData(string id, object[] data)
+        public StorableData(string id, Poco<object> data)
         {
             Id = id;
             Data = data;
-        }
-
-        public bool IsEmpty()
-        {
-            return Id == EmptyId;
-        }
-
-        public static StorableData[] Initial()
-        {
-            return new[] { new StorableData("RecordScore", new object[] { 0 }) };
         }
     }
 }

@@ -4,9 +4,9 @@ using Templates.Pretty;
 namespace Templates.POCO
 {
     [Serializable]
-    public abstract class Poco<T> : IPoco
+    public class Poco<T> : IPoco
     {
-        protected string EmptyId = "@NONE";
+        protected string EmptyId = "@NONE_ID";
 
         public override string ToString()
         {

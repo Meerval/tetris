@@ -1,4 +1,6 @@
-﻿namespace Templates.POCO
+﻿using System;
+
+namespace Templates.POCO
 {
     public interface IPoco
     {
