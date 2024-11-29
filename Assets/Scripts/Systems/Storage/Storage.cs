@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Systems.Storage.POCO;
-using Templates.Pretty;
 using Templates.Singleton;
-using Templates.TypeSelectors;
 using UnityEngine;
 
 namespace Systems.Storage

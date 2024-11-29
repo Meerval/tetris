@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Settings;
-using Systems.Storage;
+using Templates.TypeSelectors;
 
-namespace Templates.TypeSelectors
+namespace Systems.Storage
 {
-    public class DriveSelector : TypeSelector<IDrive, string>
+    public class DriveSelector : SettingsDependantSelector<IDrive, string>
     {
         protected override Dictionary<string, Type> TypesMap { get; } = new ()
         {

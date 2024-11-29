@@ -1,6 +1,8 @@
 ﻿using System;
-using Board.Meta;
+using System.Collections.Generic;
+using Settings;
 using Templates.POCO;
+using Templates.TypeSelectors;
 
 namespace Systems.Storage.POCO
 {
@@ -20,5 +22,12 @@ namespace Systems.Storage.POCO
             Id = id;
             Data = data;
         }
+    }
+    
+    public class DataSelector : SettingsDependantSelector<IPoco, string>
+    {
+        protected override Dictionary<string, Type> TypesMap { get; } = new();
+        
+        protected override string Key { get; set; } = TetrisSettings.Drive;
     }
 }
