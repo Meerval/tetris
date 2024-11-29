@@ -6,18 +6,18 @@ using Templates.POCO;
 namespace Systems.Storage.POCO
 {
     [Serializable]
-    public class SaveData : Poco<SaveData>
+    public class StorableDataset : Poco<StorableDataset>
     {
         public DateTime SaveTime { get; set; }
         public List<StorableData> Data { get; set; }
 
-        public SaveData()
+        public StorableDataset()
         {
             Data = new List<StorableData>();
             SaveTime = DateTime.Now;
         }
 
-        public SaveData(List<StorableData> data) : this()
+        public StorableDataset(List<StorableData> data) : this()
         {
             Data = data;
             SaveTime = DateTime.Now;

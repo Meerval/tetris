@@ -11,7 +11,7 @@ namespace Systems.Storage.POCO
 
         public StorableData()
         {
-            Id = Empty;
+            Id = EmptyId;
             Data = new object[] { };
         }
 
@@ -23,7 +23,7 @@ namespace Systems.Storage.POCO
 
         public bool IsEmpty()
         {
-            return Id == Empty;
+            return Id == EmptyId;
         }
 
         public static StorableData[] Initial()

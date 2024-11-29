@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Systems.Storage.POCO;
 using Templates.Singleton;
 using Templates.TypeSelectors;
@@ -26,20 +27,26 @@ namespace Systems.Storage
 
         public void LoadGame()
         {
-            var loadedData = _drive.Load();
+            List<StorableData> loadedData = _drive.Load();
 
-            foreach (StorableData data in loadedData)
-            {
-                string objectId = data.Id;
-                if (_idMap.ContainsKey(objectId))
+            loadedData.Where(data => !_idMap.ContainsKey(data.Id)).ToList()
+                .ForEach(data => Debug.LogWarning($"Can't restore data for object with id='{data.Id}'"));
+
+            _idMap.Keys.ToList().ForEach
+            (
+                key =>
                 {
-                    _idMap[objectId].RestoreValues(data);
+                    if (loadedData.Select(data => data.Id).Contains(key))
+                    {
+                        _idMap[key].Load(loadedData.Find(data => data.Id.Equals(key)));
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Object with id='{key}' was loaded with initial data");
+                        _idMap[key].LoadInitial();
+                    }
                 }
-                else
-                {
-                    Debug.LogError($"Can't restore data for object with id {objectId}");
-                }
-            }
+            );
         }
     }
 }

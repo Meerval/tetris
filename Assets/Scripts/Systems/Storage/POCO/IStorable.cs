@@ -3,7 +3,8 @@
     public interface IStorable
     {
         public string Id { get; }
-        public StorableData DataToStore();
-        public void RestoreValues(StorableData storableDataData);
+        public StorableData StorableData { get; }
+        public void Load(StorableData loadData);
+        public void LoadInitial();
     }
 }

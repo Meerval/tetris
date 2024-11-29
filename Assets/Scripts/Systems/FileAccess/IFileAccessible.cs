@@ -6,7 +6,7 @@ namespace Systems.FileAccess
     {
         public void Create();
         public void Delete();
-        public void Overwrite(SaveData data);
-        public SaveData Read();
+        public void Overwrite(StorableDataset data);
+        public StorableDataset Read();
     }
 }

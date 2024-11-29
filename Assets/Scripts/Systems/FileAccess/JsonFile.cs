@@ -11,16 +11,16 @@ namespace Systems.FileAccess
         {
         }
 
-        protected override void Overwrite(SaveData data, StreamWriter writer)
+        protected override void Overwrite(StorableDataset data, StreamWriter writer)
         {
-            writer.Write(JsonConvert.SerializeObject(data));
+            writer.Write(data.ToString());
         }
 
-        protected override SaveData ReadToEnd(StreamReader reader)
+        protected override StorableDataset ReadToEnd(StreamReader reader)
         {
             string r = reader.ReadToEnd();
             Debug.Log($"row = {r}");
-            return JsonConvert.DeserializeObject<SaveData>(r);
+            return JsonConvert.DeserializeObject<StorableDataset>(r);
         }
     }
 }

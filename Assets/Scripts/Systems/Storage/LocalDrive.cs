@@ -17,15 +17,14 @@ namespace Systems.Storage
 
         public void Save(IEnumerable<IStorable> objectsToSave)
         {
-            List<StorableData> serializedData = objectsToSave.Select(@object => @object.DataToStore()).ToList();
-            SaveData saveData = new(serializedData);
-            _file.Overwrite(saveData);
+            List<StorableData> serializedData = objectsToSave.Select(o => o.StorableData).ToList();
+            StorableDataset storableDataset = new(serializedData);
+            _file.Overwrite(storableDataset);
         }
 
-        public StorableData[] Load()
+        public List<StorableData> Load()
         {
-            SaveData data = _file.Read();
-            return data.IsEmpty() ? StorableData.Initial() : data.Data.ToArray();
+            return _file.Read().Data;
         }
     }
 }

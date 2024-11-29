@@ -8,13 +8,9 @@ namespace Board.Meta
     public class RecordScore : DisplayableProgress<long, RecordScore>, IStorable
     {
         public string Id => "RecordScore";
-
-        public StorableData DataToStore()
-        {
-            return new StorableData(Id, new object[]{CurrentValue});
-        }
-
-        public void RestoreValues(StorableData loadData)
+        public StorableData StorableData => new (Id, new object[] { CurrentValue });
+        
+        public void Load(StorableData loadData)
         {
             if (loadData?.Data == null || loadData.Data.Length < 1)
             {
@@ -24,7 +20,14 @@ namespace Board.Meta
             if (long.TryParse(loadData.Data[0].ToString(), out long currentValue)) CurrentValue = currentValue;
         }
 
-        protected override void StartNewDisplayableProgress() { }
+        public void LoadInitial()
+        {
+            CurrentValue = 0;
+        }
+
+        protected override void StartNewDisplayableProgress()
+        {
+        }
 
         protected override void SubscribeProgressAction()
         {

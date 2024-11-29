@@ -6,7 +6,7 @@ namespace Templates.POCO
     [Serializable]
     public abstract class Poco<T> : IPoco
     {
-        public string Empty { get; } = "@NONE";
+        protected string EmptyId = "@NONE";
 
         public override string ToString()
         {

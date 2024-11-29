@@ -6,6 +6,6 @@ namespace Systems.Storage
     public interface IDrive
     {
         public void Save(IEnumerable<IStorable> objectsToSave);
-        public StorableData[] Load();
+        public List<StorableData> Load();
     }
 }

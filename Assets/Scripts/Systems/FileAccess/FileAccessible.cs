@@ -105,7 +105,7 @@ namespace Systems.FileAccess
             Debug.LogWarning($"File {_filePath} cannot be deleted: file not found");
         }
 
-        public void Overwrite(SaveData data)
+        public void Overwrite(StorableDataset data)
         {
             try
             {
@@ -122,26 +122,26 @@ namespace Systems.FileAccess
             }
         }
 
-        public SaveData Read()
+        public StorableDataset Read()
         {
             try
             {
                 using (StreamReader reader = new(_filePath, Encoding.UTF8))
                 {
-                    SaveData data = ReadToEnd(reader);
+                    StorableDataset data = ReadToEnd(reader);
                     Debug.Log($"Data loaded from file: {_filePath}\nData: {data}");
-                    return data;
+                    return data ?? new StorableDataset();
                 }
             }
             catch (Exception e)
             {
                 Debug.LogError($"Failed to load file: {_filePath}, Error: {e.Message}");
-                return new SaveData();
+                return new StorableDataset();
             }
         }
 
-        protected abstract void Overwrite(SaveData data, StreamWriter writer);
+        protected abstract void Overwrite(StorableDataset data, StreamWriter writer);
 
-        protected abstract SaveData ReadToEnd(StreamReader reader);
+        protected abstract StorableDataset ReadToEnd(StreamReader reader);
     }
 }
