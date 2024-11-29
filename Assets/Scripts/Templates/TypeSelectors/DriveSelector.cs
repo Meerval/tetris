@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using Settings;
 using Systems.Storage;
 
-namespace Templates.Selectors
+namespace Templates.TypeSelectors
 {
-    public class DriveSelector : Selector<IDrive, string>
+    public class DriveSelector : TypeSelector<IDrive, string>
     {
         protected override Dictionary<string, Type> TypesMap { get; } = new ()
         {

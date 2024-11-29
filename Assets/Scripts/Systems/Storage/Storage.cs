@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Systems.Storage.POCO;
-using Templates.Selectors;
 using Templates.Singleton;
+using Templates.TypeSelectors;
 using UnityEngine;
 
 namespace Systems.Storage

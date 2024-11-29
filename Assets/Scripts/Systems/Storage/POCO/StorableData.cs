@@ -1,4 +1,5 @@
 ﻿using System;
+using Templates.POCO;
 
 namespace Systems.Storage.POCO
 {
@@ -10,7 +11,7 @@ namespace Systems.Storage.POCO
 
         public StorableData()
         {
-            Id = "Empty";
+            Id = Empty;
             Data = new object[] { };
         }
 
@@ -22,7 +23,7 @@ namespace Systems.Storage.POCO
 
         public bool IsEmpty()
         {
-            return Id == "Empty";
+            return Id == Empty;
         }
 
         public static StorableData[] Initial()

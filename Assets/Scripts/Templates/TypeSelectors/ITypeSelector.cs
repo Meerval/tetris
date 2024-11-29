@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Templates.Pretty;
 
-namespace Templates.Selectors
+namespace Templates.TypeSelectors
 {
-    public interface ISelector<out T> where T : class
+    public interface ITypeSelector<out T> where T : class
     {
         public T Select();
     }
 
-    public abstract class Selector<T1, T2> : ISelector<T1> where T1 : class
+    public abstract class TypeSelector<T1, T2> : ITypeSelector<T1> where T1 : class
     {
         public T1 Select()
         {
