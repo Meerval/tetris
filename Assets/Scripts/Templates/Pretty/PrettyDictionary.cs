@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 namespace Templates.Pretty
 {
-    public class PrettyDictionary<T1, T2> : IPretty
+    public class PrettyDictionary<T1, T2> : Pretty
     {
         private readonly Dictionary<T1, T2> _t;
 
@@ -11,7 +11,7 @@ namespace Templates.Pretty
             _t = t;
         }
 
-        public string Prettify()
+        public override string Prettify()
         {
             return JsonConvert.SerializeObject(_t, Formatting.Indented);
         }

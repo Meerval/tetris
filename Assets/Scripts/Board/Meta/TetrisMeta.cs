@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Board.Meta.Objects;
 using Board.Pieces;
 using Systems.Storage;
-using Systems.Storage.POCO;
 using Templates.Singleton;
+using UnityEngine;
 
 namespace Board.Meta
 {
@@ -28,8 +29,8 @@ namespace Board.Meta
             _score = GetComponentInChildren<Score>();
             _recordScore = GetComponentInChildren<RecordScore>();
 
-            Storage.Instance.Add((IStorable)_recordScore);
             Storage.Instance.LoadGame();
+            Debug.Log("TetrisMeta started");
         }
 
         public EState State()

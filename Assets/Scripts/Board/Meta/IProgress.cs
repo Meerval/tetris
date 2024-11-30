@@ -2,6 +2,6 @@
 {
     public interface IProgress<out T>
     {
-        T Value();
+        public T Value();
     }
 }

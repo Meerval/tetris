@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using Board.Meta.UI;
-using Board.Meta;
+﻿using Board.Meta.UI;
 using UnityEngine;
 
 namespace Board.Meta
@@ -9,17 +7,11 @@ namespace Board.Meta
     {
         private IProgressText _textToDisplay;
 
-        protected override void StartNewProgress()
+        public void Start()
         {
             _textToDisplay = GetComponentInChildren<ProgressText>();
-            
-            StartNewDisplayableProgress();
-            DisplayCurrentValue();
+            _textToDisplay.Display(CurrentValue.ToString());
         }
-
-        protected abstract void StartNewDisplayableProgress();
-        protected abstract override void SubscribeProgressAction();
-        protected abstract override void UnsubscribeProgressAction();
 
         public void DisplayCurrentValue()
         {

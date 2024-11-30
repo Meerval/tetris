@@ -1,12 +1,15 @@
-﻿using Board.Meta;
+﻿using Board.Meta.Objects;
 using Board.Pieces;
 using Systems.Events;
+using Systems.Storage;
 using UnityEngine;
 
-namespace Board.Meta
+namespace Board.Meta.Objects
 {
     public class State : Progress<EState, State>
     {
+        protected override IStorable StorableTracker => null;
+        
         protected override void StartNewProgress()
         {
             CurrentValue = EState.WaitForActivePiece;

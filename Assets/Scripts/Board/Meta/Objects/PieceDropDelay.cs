@@ -1,14 +1,17 @@
 ﻿using System;
 using Board;
 using Systems.Events;
+using Systems.Storage;
 using UnityEngine;
 
-namespace Board.Meta
+namespace Board.Meta.Objects
 {
     public class PieceDropDelay : Progress<float, PieceDropDelay>
     {
+        
         private const float BaseDelay = 1.0f;
         private const float DecreaseFactor = 0.5f;
+        protected override IStorable StorableTracker => null;
 
         protected override void StartNewProgress()
         {

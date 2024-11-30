@@ -1,18 +1,20 @@
-﻿using Board.Meta;
+﻿using Board.Meta.Objects;
 using Systems.Events;
+using Systems.Storage;
 using UnityEngine;
 
-namespace Board.Meta
+namespace Board.Meta.Objects
 {
     public class Score : DisplayableProgress<long, Score>
     {
         private const int ScoreCoefficient = 100;
+        protected override IStorable StorableTracker => null;
 
-        protected override void StartNewDisplayableProgress()
+        protected override void StartNewProgress()
         {
             CurrentValue = 0L;
         }
-        
+
         protected override void SubscribeProgressAction()
         {
             EventsHub.OnScoreUp.AddSubscriber(UpdateScore);
@@ -22,7 +24,7 @@ namespace Board.Meta
         {
             EventsHub.OnScoreUp.RemoveSubscriber(UpdateScore);
         }
-          
+
         private void UpdateScore(int removedLines)
         {
             if (removedLines == 0) return;
@@ -43,6 +45,5 @@ namespace Board.Meta
             };
             return bonus;
         }
-        
     }
 }

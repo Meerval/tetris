@@ -1,15 +1,15 @@
 ﻿using Systems.Events;
-using Templates;
+using Systems.Storage;
 using Templates.Singleton;
 using UnityEngine;
 
 namespace Board.Meta
 {
-    public abstract class Progress<T,V> : MonoBehaviourSingleton<V>, IProgress<T> where V : MonoBehaviour
+    public abstract class Progress<T1, T2> : MonoBehaviourSingleton<T2>, IProgress<T1>, IStorableDataProvider
+        where T2 : MonoBehaviour
     {
-        
-        protected T CurrentValue;
-        
+        protected T1 CurrentValue;
+
         public void OnEnable()
         {
             EventsHub.OnGameStart.AddSubscriber(StartNewProgress);
@@ -22,23 +22,34 @@ namespace Board.Meta
             UnsubscribeProgressAction();
         }
 
-        public void Start()
+        protected override void AfterAwake()
         {
+            Store(StorableTracker);
             StartNewProgress();
         }
-
-        public T Value()
+        public T1 Value()
         {
             return CurrentValue;
         }
-        
-        protected abstract void StartNewProgress();
-        protected abstract void SubscribeProgressAction();
-        protected abstract void UnsubscribeProgressAction();
 
         public override string ToString()
         {
             return CurrentValue.ToString();
         }
+
+        public void Store(IStorable storable)
+        {
+            if (storable == null)
+            {
+                Debug.LogWarning($"Object='{typeof(T2).FullName}' is not ready to store yet");
+                return;
+            }
+            IStorable.Store(storable);
+        }
+
+        protected abstract IStorable StorableTracker { get; }
+        protected abstract void StartNewProgress();
+        protected abstract void SubscribeProgressAction();
+        protected abstract void UnsubscribeProgressAction();
     }
 }

@@ -15,9 +15,11 @@ namespace Templates.Singleton
                 return _instance == null ? new GameObject(typeof(T).Name).AddComponent<T>() : _instance;
             }
         }
-        
+
         protected virtual void Awake()
         {
+            BeforeAwake();
+            
             if (_instance == null)
             {
                 _instance = this as T;
@@ -27,6 +29,16 @@ namespace Templates.Singleton
             {
                 Destroy(gameObject);
             }
+
+            AfterAwake();
+        }
+
+        protected virtual void BeforeAwake()
+        {
+        }
+
+        protected virtual void AfterAwake()
+        {
         }
     }
 }

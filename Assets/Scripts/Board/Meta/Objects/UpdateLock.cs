@@ -1,9 +1,12 @@
 ﻿using Systems.Events;
+using Systems.Storage;
 
-namespace Board.Meta
+namespace Board.Meta.Objects
 {
     public class UpdateLock : Progress<bool, UpdateLock>
     {
+        protected override IStorable StorableTracker => null;
+
         protected override void StartNewProgress()
         {
             CurrentValue = false;

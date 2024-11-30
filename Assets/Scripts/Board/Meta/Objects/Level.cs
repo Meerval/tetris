@@ -1,16 +1,18 @@
-﻿using Board.Meta;
+﻿using Board.Meta.Objects;
 using Board.Pieces;
 using Systems.Events;
+using Systems.Storage;
 using UnityEngine;
 
-namespace Board.Meta
+namespace Board.Meta.Objects
 {
     public class Level : DisplayableProgress<int, Level>
     {
         private int _currentStep;
         private int _stepCount;
+        protected override IStorable StorableTracker => null;
 
-        protected override void StartNewDisplayableProgress()
+        protected override void StartNewProgress()
         {
             CurrentValue = 1;
             _currentStep = 0;
@@ -35,6 +37,7 @@ namespace Board.Meta
                 Debug.Log($"Step updated: {_currentStep}/{_stepCount}");
                 return;
             }
+
             CurrentValue += 1;
             _currentStep = 1;
             _stepCount += 2;

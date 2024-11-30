@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Systems.Storage.POCO;
+using Templates.Pretty;
 using Templates.Singleton;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ namespace Systems.Storage
 {
     public class Storage : SimpleSingleton<Storage>
     {
-        private readonly Dictionary<string, IStorable> _idMap;
+       private readonly Dictionary<string, IStorable> _idMap;
         private readonly IDrive _drive;
 
         public Storage()
@@ -17,7 +18,11 @@ namespace Systems.Storage
             _drive = new DriveSelector().Select();
         }
 
-        public void Add(IStorable saveLoadObject) => _idMap[saveLoadObject.Id] = saveLoadObject;
+        public void Add(IStorable saveLoadObject)
+        {
+            _idMap[saveLoadObject.Id] = saveLoadObject;
+            Debug.Log($"Storable object with id='{saveLoadObject.Id}' was added to Storage");
+        }
 
         public void SaveGame()
         {
@@ -26,10 +31,23 @@ namespace Systems.Storage
 
         public void LoadGame()
         {
+            if (_idMap.Count == 0)
+            {
+                Debug.LogWarning("There is no storable objects to load");
+                return;
+            }
+            
             List<StorableData> loadedData = _drive.Load();
 
             loadedData.Where(data => !_idMap.ContainsKey(data.Id)).ToList()
-                .ForEach(data => Debug.LogWarning($"Can't restore data for object with id='{data.Id}'"));
+                .ForEach
+                (
+                    data => Debug.LogWarning
+                    (
+                        $"Can't restore data for object with id='{data.Id}':\n" +
+                        $"there is no id='{data.Id}' in id-type map='{new PrettyDictionary<string, IStorable>(_idMap)}'"
+                    )
+                );
 
             _idMap.Keys.ToList().ForEach(key => LoadFromDataList(loadedData, key));
         }

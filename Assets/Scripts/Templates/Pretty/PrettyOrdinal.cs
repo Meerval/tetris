@@ -1,6 +1,6 @@
 ﻿namespace Templates.Pretty
 {
-    public class PrettyOrdinal: Pretty
+    public class PrettyOrdinal : Pretty
     {
         private readonly int _number;
 

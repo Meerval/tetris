@@ -1,10 +1,9 @@
 ﻿using Newtonsoft.Json;
-using Systems.Storage.POCO;
 using Templates.POCO;
 
 namespace Templates.Pretty
 {
-    public class PrettyObject<T> : IPretty where T : IPoco
+    public class PrettyObject<T> : Pretty where T : IPoco
     {
         private readonly T _t;
 
@@ -13,7 +12,7 @@ namespace Templates.Pretty
             _t = t;
         }
 
-        public string Prettify()
+        public override string Prettify()
         {
             return JsonConvert.SerializeObject(_t, Formatting.Indented);
         }

@@ -1,13 +1,16 @@
 ﻿using System.Collections.Generic;
 using Board.Pieces;
 using Systems.Events;
+using Systems.Storage;
 using Templates.Pretty;
 using UnityEngine;
 
-namespace Board.Meta
+namespace Board.Meta.Objects
 {
     public class SpawnedPieces : Progress<List<(int, IPiece)>, SpawnedPieces>
     {
+        protected override IStorable StorableTracker => null;
+        
         protected override void StartNewProgress()
         {
             CurrentValue = new List<(int, IPiece)>();

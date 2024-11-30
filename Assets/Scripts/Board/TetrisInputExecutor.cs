@@ -19,7 +19,7 @@ namespace Board
             _meta = FindObjectOfType<TetrisMeta>();
             _timerOfMove = FindObjectOfType<TimerOfPieceMove>();
             _timerOfClick = FindObjectOfType<TimerOfSingleClick>();
-            Debug.Log("Input awoke");
+            Debug.Log("TetrisInputExecutor awoke");
         }
 
         public bool OnRotationLeft(Action action)
