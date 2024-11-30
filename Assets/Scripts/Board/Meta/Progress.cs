@@ -27,6 +27,7 @@ namespace Board.Meta
             Store(StorableTracker);
             StartNewProgress();
         }
+        
         public T1 Value()
         {
             return CurrentValue;
