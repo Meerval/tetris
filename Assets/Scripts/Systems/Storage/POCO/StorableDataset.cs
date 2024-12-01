@@ -6,7 +6,7 @@ using Templates.POCO;
 namespace Systems.Storage.POCO
 {
     [Serializable]
-    public class StorableDataset : Poco<StorableData>
+    public class StorableDataset : Poco
     {
         public DateTime SaveTime { get; set; }
         public List<StorableData> Data { get; set; }

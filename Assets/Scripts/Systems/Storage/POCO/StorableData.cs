@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Systems.Storage.POCO
 {
     [Serializable]
-    public class StorableData : Poco<StorableData>
+    public class StorableData : Poco
     {
         public string Id { get; set; }
         public Dictionary<string, object> Data { get; set; }

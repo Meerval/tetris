@@ -4,13 +4,13 @@ using Templates.Pretty;
 namespace Templates.POCO
 {
     [Serializable]
-    public class Poco<T> : IPoco
+    public class Poco : IPoco
     {
         protected string EmptyId = "@NONE_ID";
 
         public override string ToString()
         {
-            return new PrettyObject<Poco<T>>(this).Prettify();
+            return new PrettyObject(this).Prettify();
         }
     }
 }

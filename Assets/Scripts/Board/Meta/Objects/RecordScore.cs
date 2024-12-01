@@ -9,6 +9,8 @@ namespace Board.Meta.Objects
 {
     public class RecordScore : DisplayableProgress<long, RecordScore>
     {
+        private DateTime _dateTime;
+        
         protected override IStorable StorableTracker => new RecordScoreTracker();
 
         protected override void StartNewProgress()
@@ -29,6 +31,7 @@ namespace Board.Meta.Objects
         {
             if (TetrisMeta.Instance.Score() < CurrentValue) return;
             CurrentValue = TetrisMeta.Instance.Score();
+            _dateTime = DateTime.Now;
             Debug.Log($"Record Score Updated: {CurrentValue}");
             DisplayCurrentValue();
         }
@@ -43,7 +46,7 @@ namespace Board.Meta.Objects
                 {
                     { "Score", _recordScore.Value() },
                     { "UserName", "Admin" },
-                    { "Date", DateTime.Now }
+                    { "Date", _recordScore._dateTime }
                 }
             );
 
@@ -56,6 +59,7 @@ namespace Board.Meta.Objects
             public void LoadInitial()
             {
                 _recordScore.CurrentValue = 0;
+                _recordScore._dateTime = DateTime.MinValue;
             }
         }
     }

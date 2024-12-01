@@ -3,11 +3,11 @@ using Templates.POCO;
 
 namespace Templates.Pretty
 {
-    public class PrettyObject<T> : Pretty where T : IPoco
+    public class PrettyObject : Pretty
     {
-        private readonly T _t;
+        private readonly IPoco _t;
 
-        public PrettyObject(T t)
+        public PrettyObject(IPoco t)
         {
             _t = t;
         }

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Templates.POCO
+﻿namespace Templates.POCO
 {
     public interface IPoco
     {
