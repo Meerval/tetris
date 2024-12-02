@@ -12,7 +12,7 @@ namespace Systems.Storage
 
         public string Id { get; }
         public StorableData StorableData { get; }
-        public void Load(StorableData loadData);
+        public void Load(StorableData data);
         public void LoadInitial();
 
         public string ToString()

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+
 namespace Templates.Pretty
 {
     public class PrettyDictionary<T1, T2> : Pretty

@@ -2,7 +2,7 @@
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Systems.Timer
+namespace Systems.Chrono.Timer
 {
     public abstract class TimerOfTetris<T> : MonoBehaviourSingleton<T>, ITimer where T : MonoBehaviour, ITimer
     {

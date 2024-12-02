@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Systems.Chrono;
 using Templates.POCO;
 using Templates.Pretty;
 using UnityEngine;
@@ -24,7 +25,7 @@ namespace Systems.Storage.POCO
             Data = data;
         }
 
-        public bool TryParseLong(string key, out long result)
+        public bool TryParse(string key, out long result)
         {
             if (long.TryParse(Data[key].ToString(), out result))
             {
@@ -33,6 +34,32 @@ namespace Systems.Storage.POCO
 
             TrowParseErrorLog(key, "long");
             result = -1L;
+            return false;
+        }
+
+        public bool TryParse(string key, out string result)
+        {
+            if (Data[key] != null)
+            {
+                result = Data[key].ToString();
+                return true;
+            }
+
+            TrowParseErrorLog(key, "string");
+            result = string.Empty;
+            return false;
+        }
+
+        public bool TryParse(string key, out Timestamp timestamp)
+        {
+            if (TryParse(key, out string strTimestamp))
+            {
+                timestamp = new Timestamp(strTimestamp);
+                return true;
+            }
+
+            TrowParseErrorLog(key, "string");
+            timestamp = new Timestamp("0");
             return false;
         }
 

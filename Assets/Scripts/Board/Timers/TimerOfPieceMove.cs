@@ -1,4 +1,4 @@
-﻿using Systems.Timer;
+﻿using Systems.Chrono.Timer;
 using UnityEngine;
 
 namespace Board.Timers

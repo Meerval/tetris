@@ -1,4 +1,4 @@
-﻿namespace Systems.Timer
+﻿namespace Systems.Chrono.Timer
 {
     public interface ITimer
     {
