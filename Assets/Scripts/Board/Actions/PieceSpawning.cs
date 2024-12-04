@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using Board.Pieces;
 using Systems.Pretty;
-using Templates;
-using Systems.Pretty;
 using Templates.Singleton;
 using UnityEngine;
 using Random = UnityEngine.Random;

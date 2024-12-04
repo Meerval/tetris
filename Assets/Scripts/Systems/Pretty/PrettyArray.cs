@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace Systems.Pretty
 {
-    public class PrettyArray<T> : Systems.Pretty.Pretty
+    public class PrettyArray<T> : Pretty
     {
         private readonly IEnumerable<string> _enumerable;
 
