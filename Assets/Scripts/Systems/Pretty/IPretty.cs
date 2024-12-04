@@ -1,4 +1,4 @@
-﻿namespace Templates.Pretty
+﻿namespace Systems.Pretty
 {
     public interface IPretty
     {

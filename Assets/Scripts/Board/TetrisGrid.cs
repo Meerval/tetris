@@ -5,7 +5,8 @@ using Board.PiecePosition;
 using Board.PiecePosition.RotationMath;
 using Board.Pieces;
 using Systems.Events;
-using Templates.Pretty;
+using Systems.Pretty;
+using Systems.Pretty;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 

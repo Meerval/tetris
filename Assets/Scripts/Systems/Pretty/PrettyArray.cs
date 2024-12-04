@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Templates.Pretty
+namespace Systems.Pretty
 {
-    public class PrettyArray<T> : Pretty
+    public class PrettyArray<T> : Systems.Pretty.Pretty
     {
         private readonly IEnumerable<string> _enumerable;
 

@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Templates.POCO;
 
-namespace Templates.Pretty
+namespace Systems.Pretty
 {
     public class PrettyObject : Pretty
     {

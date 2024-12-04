@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Board.Timers;
 using Systems.Events;
-using Templates.Pretty;
+using Systems.Pretty;
+using Systems.Pretty;
 using UnityEngine;
 
 namespace Board.Actions

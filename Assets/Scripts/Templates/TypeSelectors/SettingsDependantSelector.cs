@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Templates.Pretty;
+using Systems.Pretty;
+using Systems.Pretty;
 
 namespace Templates.TypeSelectors
 {

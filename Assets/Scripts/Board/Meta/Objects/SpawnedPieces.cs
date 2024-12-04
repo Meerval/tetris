@@ -2,7 +2,7 @@
 using Board.Pieces;
 using Systems.Events;
 using Systems.Storage;
-using Templates.Pretty;
+using Systems.Pretty;
 using UnityEngine;
 
 namespace Board.Meta.Objects

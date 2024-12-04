@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Systems.Storage.POCO;
-using Templates.Pretty;
+using Systems.Pretty;
 using Templates.Singleton;
 using UnityEngine;
 
