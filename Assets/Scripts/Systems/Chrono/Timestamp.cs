@@ -1,22 +1,19 @@
 ﻿using System;
-using Templates.POCO;
 
 namespace Systems.Chrono
 {
     public class Timestamp : ITimestamp
     {
         private const string DefaultFormat = "yyyy-MM-dd'T'HH:mm:ss.fffzzz";
+        
+        public static Timestamp Now => new (DateTime.Now);
+        public static Timestamp Empty => new (DateTime.MinValue);
 
         private DateTime Time { get; set; }
-
-        public Timestamp()
+        
+        private Timestamp(DateTime dateTime)
         {
-            Time = DateTime.Now;
-        }
-
-        public Timestamp(Timestamp timestamp)
-        {
-            Time = timestamp.Time;
+            Time = dateTime;
         }
 
         public Timestamp(string timestamp)
