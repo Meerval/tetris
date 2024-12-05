@@ -28,7 +28,7 @@ namespace Systems.Chrono.Timer
 
         public override string ToString()
         {
-            return $"delay: {delay}, current time: {Time.time.ToString(CultureInfo.InvariantCulture)}, " +
+            return $"Timer {typeof(T).Name} = delay: {delay}, current time: {Time.time.ToString(CultureInfo.InvariantCulture)}, " +
                    $"timeout: {_timeout.ToString(CultureInfo.InvariantCulture)}";
         }
     }

@@ -13,6 +13,7 @@ namespace Board
         private TetrisMeta _meta;
         private ITimer _timerOfMove;
         private ITimer _timerOfClick;
+        private bool _isShifted;
 
         private void Awake()
         {
@@ -22,56 +23,78 @@ namespace Board
             Debug.Log("TetrisInputExecutor awoke");
         }
 
-        public bool OnRotationLeft(Action action)
+        public bool OnRotationLeft(Func<bool> action, out bool isRotated)
         {
-            return IsRotationKeyDown(KeyCode.Q, action);
+            bool isActed = IsRotationKeyDown(KeyCode.Q, action, out bool rotated);
+            isRotated = rotated;
+            return isActed;
         }
 
-        public bool OnRotationRight(Action action)
+        public bool OnRotationRight(Func<bool> action, out bool isRotated)
         {
-            return IsRotationKeyDown(KeyCode.E, action);
+            bool isActed = IsRotationKeyDown(KeyCode.E, action, out bool rotated);
+            isRotated = rotated;
+            return isActed;
         }
 
-        public bool OnShiftLeft(Action action)
+        public bool OnShiftLeft(Func<bool> action, out bool isShifted)
         {
-            return IsShiftKey(KeyCode.A, action);
+            bool isActed = IsShiftKey(KeyCode.A, action, out bool shifted);
+            isShifted = shifted;
+            return isActed;
         }
 
-        public bool OnShiftRight(Action action)
+        public bool OnShiftRight(Func<bool> action, out bool isShifted)
         {
-            return IsShiftKey(KeyCode.D, action);
+            bool isActed = IsShiftKey(KeyCode.D, action, out bool shifted);
+            isShifted = shifted;
+            return isActed;
         }
 
-        public bool OnShiftDown(Action action)
+        public bool OnShiftDown(Func<bool> action, out bool isShifted)
         {
-            return IsShiftKey(KeyCode.S, action);
+            bool isActed = IsShiftKey(KeyCode.S, action, out bool shifted);
+            isShifted = shifted;
+            return isActed;
         }
 
-        private bool IsRotationKeyDown(KeyCode keyCode, Action action)
+        private bool IsRotationKeyDown(KeyCode keyCode, Func<bool> action, out bool isRotated)
         {
             if (_meta.IsUpdateLocked() || !_meta.State().Equals(EState.PieceInProgress) ||
-                !Input.GetKeyDown(keyCode)) return false;
-            action.Invoke();
+                !Input.GetKeyDown(keyCode))
+            {
+                isRotated = false;
+                return false;
+            }
+
+            isRotated = action.Invoke();
             Debug.Log($"[KEY PRESS] {keyCode}");
             return true;
         }
 
-        private bool IsShiftKey(KeyCode keyCode, Action action)
+        private bool IsShiftKey(KeyCode keyCode, Func<bool> action, out bool isShifted)
         {
             if (_meta.IsUpdateLocked() || !_meta.State().Equals(EState.PieceInProgress) ||
-                !Input.GetKey(keyCode)) return false;
+                !Input.GetKey(keyCode))
+            {
+                isShifted = false;
+                return false;
+            }
+
             StartCoroutine(WhileKeyPressedCoroutine(keyCode, action));
             Debug.Log($"[KEY PRESS] {keyCode}");
+            isShifted = _isShifted;
             return true;
         }
 
-        private IEnumerator WhileKeyPressedCoroutine(KeyCode keyCode, Action action)
+        private IEnumerator WhileKeyPressedCoroutine(KeyCode keyCode, Func<bool> action)
         {
             EventsHub.OnWaitCoroutineStart.Trigger();
             _timerOfClick.UpdateTimeout();
-            while (Input.GetKey(keyCode))
+            _isShifted = false;
+            while (Input.GetKey(keyCode) && action.Invoke())
             {
-                action.Invoke();
+                _isShifted = true;
                 if (_timerOfClick.IsInProgress())
                 {
                     yield return new WaitWhile(_timerOfClick.IsInProgress);
@@ -81,6 +104,7 @@ namespace Board
                 yield return new WaitWhile(_timerOfMove.IsInProgress);
                 Debug.Log($"[KEY PRESS LONG] {keyCode}");
             }
+
             _timerOfMove.ResetTimer();
             EventsHub.OnWaitCoroutineEnd.Trigger();
         }

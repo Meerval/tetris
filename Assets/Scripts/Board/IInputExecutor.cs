@@ -4,10 +4,10 @@ namespace Board
 {
     public interface IInputExecutor
     {
-        bool OnRotationLeft(Action action);
-        bool OnRotationRight(Action action);
-        bool OnShiftLeft(Action action);
-        bool OnShiftRight(Action action);
-        bool OnShiftDown(Action action);
+        bool OnRotationLeft(Func<bool> action, out bool isRotated);
+        bool OnRotationRight(Func<bool> action, out bool isRotated);
+        bool OnShiftLeft(Func<bool> action, out bool isShifted);
+        bool OnShiftRight(Func<bool> action, out bool isShifted);
+        bool OnShiftDown(Func<bool> action, out bool isShifted);
     }
 }

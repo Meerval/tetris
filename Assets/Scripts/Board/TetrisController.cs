@@ -1,5 +1,6 @@
 ﻿using Board.Meta;
 using Board.Timers;
+using Systems.Accumulator;
 using Systems.Chrono.Timer;
 using Systems.Events;
 using UnityEngine;
@@ -14,6 +15,10 @@ namespace Board
         private TetrisMeta _meta;
         private ITimer _timerOfDrop;
         private ITimer _timerOfLock;
+
+        private readonly Accumulator _failedShiftDown = new(5);
+        private readonly Accumulator _failedShiftLeft = new(5);
+        private readonly Accumulator _failedShiftRight = new(5);
 
         private void Awake()
         {
@@ -34,30 +39,64 @@ namespace Board
 
         public void DetectAndExecutePieceRotation()
         {
-            if (_inputExecutor.OnRotationLeft(() => _tetrisGrid.PieceRotateLeft())) { }
-            else if (_inputExecutor.OnRotationRight(() => _tetrisGrid.PieceRotateRight())) { }
-            else return;
-
-            _timerOfLock.UpdateTimeout();
+            if (_inputExecutor.OnRotationLeft(() => _tetrisGrid.PieceRotateLeft(), out bool isRotatedLeft))
+            {
+                if (isRotatedLeft) _timerOfLock.UpdateTimeout();
+            }
+            else if (_inputExecutor.OnRotationRight(() => _tetrisGrid.PieceRotateRight(), out bool isRotatedRight))
+            {
+                if (isRotatedLeft || isRotatedRight) _timerOfLock.UpdateTimeout();
+            }
         }
 
         public void DetectAndExecutePieceShift()
         {
-            if (_inputExecutor.OnShiftDown(() => _tetrisGrid.PieceShiftDown()))
+            if (_inputExecutor.OnShiftDown(() => _tetrisGrid.PieceShiftDown(), out bool isShiftedDown))
             {
-                _timerOfDrop.UpdateTimeout();
-            }
-            else if (_inputExecutor.OnShiftLeft(() => _tetrisGrid.PieceShiftLeft())) { }
-            else if (_inputExecutor.OnShiftRight(() => _tetrisGrid.PieceShiftRight())) { }
-            else return;
+                if (isShiftedDown) _timerOfDrop.UpdateTimeout();
+                else
+                {
+                    _failedShiftDown.Increment();
+                    _failedShiftLeft.Reset();
+                    _failedShiftRight.Reset();
+                }
 
-            _timerOfLock.UpdateTimeout();
+                if (_failedShiftDown.IsNotFull()) _timerOfLock.UpdateTimeout();
+            }
+            else if (_inputExecutor.OnShiftLeft(() => _tetrisGrid.PieceShiftLeft(), out bool isShiftedLeft))
+            {
+                if (!isShiftedLeft)
+                {
+                    _failedShiftDown.Reset();
+                    _failedShiftLeft.Increment();
+                    _failedShiftRight.Reset();
+                }
+
+                if (_failedShiftLeft.IsNotFull()) _timerOfLock.UpdateTimeout();
+            }
+            else if (_inputExecutor.OnShiftRight(() => _tetrisGrid.PieceShiftRight(), out bool isShiftedRight))
+            {
+                if (!isShiftedRight)
+                {
+                    _failedShiftDown.Reset();
+                    _failedShiftLeft.Reset();
+                    _failedShiftRight.Increment();
+                }
+
+                if (_failedShiftRight.IsNotFull()) _timerOfLock.UpdateTimeout();
+            }
+            else
+            {
+                _failedShiftDown.Reset();
+                _failedShiftLeft.Reset();
+                _failedShiftRight.Reset();
+            }
         }
 
         public void DropPieceAsTimeout()
         {
             if (IsPieceDropUnavailable()) return;
-            if (_tetrisGrid.PieceShiftDown())  _timerOfDrop.UpdateTimeout();
+            if (_tetrisGrid.PieceShiftDown()) _timerOfDrop.UpdateTimeout();
             else
             {
                 if (_meta.IsUpdateLocked() || _timerOfLock.IsInProgress()) return;
@@ -69,7 +108,8 @@ namespace Board
 
         private bool IsPieceDropUnavailable()
         {
-            return _meta.IsUpdateLocked() || _meta.State().Equals(EState.WaitForActivePiece) || _timerOfDrop.IsInProgress();
+            return _meta.IsUpdateLocked() || _meta.State().Equals(EState.WaitForActivePiece) ||
+                   _timerOfDrop.IsInProgress();
         }
 
         public void SpawnPieceAsWill()
