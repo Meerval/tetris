@@ -1,12 +1,9 @@
-﻿using System;
-using Board;
-using Systems.Events;
-using Systems.Storage;
+﻿using Systems.Storage;
 using UnityEngine;
 
-namespace Board.Meta.Objects
+namespace Board.Data.Objects
 {
-    public class PieceDropDelay : ProgressSingleton<float, PieceDropDelay>
+    public class PieceDropDelay : TetrisDataSingleton<float, PieceDropDelay>
     {
         
         private const float BaseDelay = 1.0f;

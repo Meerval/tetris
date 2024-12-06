@@ -1,6 +1,6 @@
 ﻿using Board.Pieces;
 
-namespace Board.Meta.UI
+namespace Board.Data.UI
 {
     public interface IPredictor
     {

@@ -1,11 +1,10 @@
-﻿using Systems.Events;
-using Systems.Storage;
+﻿using Systems.Storage;
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Board.Meta
+namespace Board.Data
 {
-    public abstract class ProgressSingleton<T1, T2> : MonoBehaviourSingleton<T2>, IProgress<T1>, IStorableDataProvider
+    public abstract class TetrisDataSingleton<T1, T2> : MonoBehaviourSingleton<T2>, ITetrisData<T1>, IStorableDataProvider
         where T2 : MonoBehaviour
     {
         protected T1 CurrentValue;

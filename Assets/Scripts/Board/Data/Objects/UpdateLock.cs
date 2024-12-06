@@ -1,9 +1,9 @@
 ﻿using Systems.Events;
 using Systems.Storage;
 
-namespace Board.Meta.Objects
+namespace Board.Data.Objects
 {
-    public class UpdateLock : ProgressSingleton<bool, UpdateLock>
+    public class UpdateLock : TetrisDataSingleton<bool, UpdateLock>
     {
         protected override IStorable StorableTracker => null;
 

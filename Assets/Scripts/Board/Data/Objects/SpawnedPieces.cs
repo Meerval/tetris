@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using Board.Pieces;
-using Systems.Events;
 using Systems.Storage;
 using Systems.Pretty;
 using UnityEngine;
 
-namespace Board.Meta.Objects
+namespace Board.Data.Objects
 {
-    public class SpawnedPieces : ProgressSingleton<List<(int, IPiece)>, SpawnedPieces>
+    public class SpawnedPieces : TetrisDataSingleton<List<(int, IPiece)>, SpawnedPieces>
     {
         protected override IStorable StorableTracker => null;
         

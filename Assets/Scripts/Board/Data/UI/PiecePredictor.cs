@@ -2,12 +2,10 @@
 using System.Linq;
 using Board.Actions;
 using Board.Pieces;
-using Systems.Events;
-using Templates;
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Board.Meta.UI
+namespace Board.Data.UI
 {
     public class PiecePredictor : MonoBehaviourSingleton<PiecePredictor>, IPredictor
     {

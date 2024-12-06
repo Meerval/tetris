@@ -1,9 +1,9 @@
-﻿using Board.Meta.UI;
+﻿using Board.Data.UI;
 using UnityEngine;
 
-namespace Board.Meta
+namespace Board.Data
 {
-    public abstract class DisplayableProgressSingleton<T1, T2> : ProgressSingleton<T1, T2>, IDisplayable where T2 : MonoBehaviour
+    public abstract class DisplayableTetrisDataSingleton<T1, T2> : TetrisDataSingleton<T1, T2>, IDisplayable where T2 : MonoBehaviour
     {
         private IProgressText _textToDisplay;
 

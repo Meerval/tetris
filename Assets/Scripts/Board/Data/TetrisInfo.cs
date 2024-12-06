@@ -1,23 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Board.Meta.Objects;
+using Board.Data.Objects;
 using Board.Pieces;
 using Systems.Storage;
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Board.Meta
+namespace Board.Data
 {
     public class TetrisMeta : MonoBehaviourSingleton<TetrisMeta>
     {
-        private IProgress<EState> _state;
-        private IProgress<bool> _updateLock;
-        private IProgress<float> _pieceDropDelay;
-        private IProgress<List<(int, IPiece)>> _spawnPieces;
+        private ITetrisData<EState> _state;
+        private ITetrisData<bool> _updateLock;
+        private ITetrisData<float> _pieceDropDelay;
+        private ITetrisData<List<(int, IPiece)>> _spawnPieces;
         private IPiece _activePiece;
-        private IProgress<int> _level;
-        private IProgress<long> _score;
-        private IProgress<long> _recordScore;
+        private ITetrisData<int> _level;
+        private ITetrisData<long> _score;
+        private ITetrisData<long> _recordScore;
 
         public void Start()
         {

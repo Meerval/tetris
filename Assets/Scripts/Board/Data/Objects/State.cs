@@ -1,12 +1,10 @@
-﻿using Board.Meta.Objects;
-using Board.Pieces;
-using Systems.Events;
+﻿using Board.Pieces;
 using Systems.Storage;
 using UnityEngine;
 
-namespace Board.Meta.Objects
+namespace Board.Data.Objects
 {
-    public class State : ProgressSingleton<EState, State>
+    public class State : TetrisDataSingleton<EState, State>
     {
         protected override IStorable StorableTracker => null;
         

@@ -1,12 +1,10 @@
-﻿using Board.Meta.Objects;
-using Board.Pieces;
-using Systems.Events;
+﻿using Board.Pieces;
 using Systems.Storage;
 using UnityEngine;
 
-namespace Board.Meta.Objects
+namespace Board.Data.Objects
 {
-    public class Level : DisplayableProgressSingleton<int, Level>
+    public class Level : DisplayableTetrisDataSingleton<int, Level>
     {
         private int _currentStep;
         private int _stepCount;

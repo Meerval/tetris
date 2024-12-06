@@ -1,14 +1,13 @@
 ﻿using System.Collections.Generic;
 using Systems.Chrono;
-using Systems.Events;
 using Systems.Parsers.Object;
 using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace Board.Meta.Objects
+namespace Board.Data.Objects
 {
-    public class RecordScore : DisplayableProgressSingleton<long, RecordScore>
+    public class RecordScore : DisplayableTetrisDataSingleton<long, RecordScore>
     {
         private Timestamp _timestamp;
         private string _username;

@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Board.Meta.UI
+namespace Board.Data.UI
 {
     public class ProgressText : MonoBehaviour, IProgressText
     {

@@ -1,4 +1,4 @@
-﻿namespace Board.Meta
+﻿namespace Board.Data
 {
     public interface IDisplayable
     {

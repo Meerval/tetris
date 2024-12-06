@@ -1,4 +1,4 @@
-﻿namespace Board.Meta.UI
+﻿namespace Board.Data.UI
 {
     public interface IProgressText
     {

@@ -1,7 +1,7 @@
 ﻿using Board.Pieces;
-using Board.Meta;
+using Systems.Events;
 
-namespace Systems.Events
+namespace Board.Data
 {
     public static class EventsHub
     {

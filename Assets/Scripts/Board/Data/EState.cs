@@ -1,4 +1,4 @@
-﻿namespace Board.Meta
+﻿namespace Board.Data
 {
     public enum EState
     {

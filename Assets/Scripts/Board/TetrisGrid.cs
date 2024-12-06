@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Board.Actions;
+using Board.Data;
 using Board.PiecePosition;
 using Board.PiecePosition.RotationMath;
 using Board.Pieces;

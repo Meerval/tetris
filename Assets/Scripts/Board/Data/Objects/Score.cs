@@ -1,11 +1,11 @@
-﻿using Board.Meta.Objects;
+﻿using Board.Data.Objects;
 using Systems.Events;
 using Systems.Storage;
 using UnityEngine;
 
-namespace Board.Meta.Objects
+namespace Board.Data.Objects
 {
-    public class Score : DisplayableProgressSingleton<long, Score>
+    public class Score : DisplayableTetrisDataSingleton<long, Score>
     {
         private const int ScoreCoefficient = 100;
         protected override IStorable StorableTracker => null;
