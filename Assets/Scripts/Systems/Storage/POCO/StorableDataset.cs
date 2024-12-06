@@ -9,19 +9,26 @@ namespace Systems.Storage.POCO
     [Serializable]
     public class StorableDataset : Poco
     {
-        public string Time { get; set; }
+        private Timestamp _time;
+
+        public string Time
+        {
+            get => _time.ToString();
+            set => _time = new Timestamp(value);
+        }
+
         public List<StorableData> Data { get; set; }
 
         public StorableDataset()
         {
             Data = new List<StorableData>();
-            Time = Timestamp.Now.ToString();
+            _time = Timestamp.Now;
         }
 
         public StorableDataset(List<StorableData> data) : this()
         {
             Data = data.ToList();
-            Time = Timestamp.Now.ToString();
+            _time = Timestamp.Now;
         }
     }
 }

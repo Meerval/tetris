@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Systems.Chrono;
 using Systems.Events;
+using Systems.Parsers.Object;
 using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
@@ -41,47 +42,43 @@ namespace Board.Meta.Objects
         private class RecordScoreTracker : IStorable
         {
             private readonly RecordScore _recordScore = Instance;
-
-
             public string Id => "RecordScore";
-            private const string Score = "Score";
-            private const string UserName = "UserName";
-            private const string Time = "Time";
 
-            private Dictionary<string, object> Data => new()
-            {
-                { Score, _recordScore.Value() },
-                { UserName, _recordScore._username },
-                { Time, _recordScore._timestamp.ToString() }
-            };
-
-            private Dictionary<string, object> InitData => new()
-            {
-                { Score, 0 },
-                { UserName, "-" },
-                { Time, Timestamp.Empty }
-            };
-
-            public StorableData StorableData => new(Id, Data);
+            public StorableData StorableData => new(Id, new Dictionary<string, object>
+                {
+                    { Key.Score, _recordScore.Value() },
+                    { Key.UserName, _recordScore._username },
+                    { Key.Time, _recordScore._timestamp.ToString() }
+                }
+            );
 
             public void Load(StorableData data)
             {
-                _recordScore.CurrentValue = data.TryParse(Score, out long value)
-                    ? value
-                    : (long)InitData[Score];
-                _recordScore._username = data.TryParse(UserName, out string username)
-                    ? username
-                    : (string)InitData[UserName];
-                _recordScore._timestamp = data.TryParse(Time, out Timestamp time)
-                    ? time
-                    : (Timestamp)InitData[Time];
+                var d = data.Data;
+                _recordScore.CurrentValue = ObjectToLong.TryParse(d[Key.Score]).OrElse(InitialData.Score);
+                _recordScore._username = ObjectToString.TryParse(d[Key.UserName]).OrElse(InitialData.UserName);
+                _recordScore._timestamp = ObjectToTimestamp.TryParse(d[Key.Time]).OrElse(InitialData.Time);
             }
 
             public void LoadInitial()
             {
-                _recordScore.CurrentValue = (long)InitData[Score];
-                _recordScore._username = (string)InitData[UserName];
-                _recordScore._timestamp = (Timestamp)InitData[Time];
+                _recordScore.CurrentValue = InitialData.Score;
+                _recordScore._username = InitialData.UserName;
+                _recordScore._timestamp = InitialData.Time;
+            }
+
+            private struct InitialData
+            {
+                public const long Score = 0;
+                public const string UserName = "-";
+                public static readonly Timestamp Time = Timestamp.Empty;
+            }
+
+            private struct Key
+            {
+                public const string Score = "Score";
+                public const string UserName = "UserName";
+                public const string Time = "Time";
             }
         }
     }
