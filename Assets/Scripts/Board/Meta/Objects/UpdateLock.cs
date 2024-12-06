@@ -3,7 +3,7 @@ using Systems.Storage;
 
 namespace Board.Meta.Objects
 {
-    public class UpdateLock : Progress<bool, UpdateLock>
+    public class UpdateLock : ProgressSingleton<bool, UpdateLock>
     {
         protected override IStorable StorableTracker => null;
 

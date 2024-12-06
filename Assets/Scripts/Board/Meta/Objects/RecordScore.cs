@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Board.Meta.Objects
 {
-    public class RecordScore : DisplayableProgress<long, RecordScore>
+    public class RecordScore : DisplayableProgressSingleton<long, RecordScore>
     {
         private Timestamp _timestamp;
         private string _username;

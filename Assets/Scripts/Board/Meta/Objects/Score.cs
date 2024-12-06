@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Board.Meta.Objects
 {
-    public class Score : DisplayableProgress<long, Score>
+    public class Score : DisplayableProgressSingleton<long, Score>
     {
         private const int ScoreCoefficient = 100;
         protected override IStorable StorableTracker => null;

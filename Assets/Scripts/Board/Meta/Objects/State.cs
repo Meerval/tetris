@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Board.Meta.Objects
 {
-    public class State : Progress<EState, State>
+    public class State : ProgressSingleton<EState, State>
     {
         protected override IStorable StorableTracker => null;
         

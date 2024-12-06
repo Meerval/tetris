@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Board.Meta.Objects
 {
-    public class Level : DisplayableProgress<int, Level>
+    public class Level : DisplayableProgressSingleton<int, Level>
     {
         private int _currentStep;
         private int _stepCount;

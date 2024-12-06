@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Board.Meta
 {
-    public abstract class DisplayableProgress<T1, T2> : Progress<T1, T2>, IDisplayable where T2 : MonoBehaviour
+    public abstract class DisplayableProgressSingleton<T1, T2> : ProgressSingleton<T1, T2>, IDisplayable where T2 : MonoBehaviour
     {
         private IProgressText _textToDisplay;
 

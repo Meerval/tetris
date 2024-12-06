@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Board.Meta.Objects
 {
-    public class SpawnedPieces : Progress<List<(int, IPiece)>, SpawnedPieces>
+    public class SpawnedPieces : ProgressSingleton<List<(int, IPiece)>, SpawnedPieces>
     {
         protected override IStorable StorableTracker => null;
         

@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Board.Meta.Objects
 {
-    public class PieceDropDelay : Progress<float, PieceDropDelay>
+    public class PieceDropDelay : ProgressSingleton<float, PieceDropDelay>
     {
         
         private const float BaseDelay = 1.0f;

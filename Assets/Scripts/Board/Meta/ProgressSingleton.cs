@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Board.Meta
 {
-    public abstract class Progress<T1, T2> : MonoBehaviourSingleton<T2>, IProgress<T1>, IStorableDataProvider
+    public abstract class ProgressSingleton<T1, T2> : MonoBehaviourSingleton<T2>, IProgress<T1>, IStorableDataProvider
         where T2 : MonoBehaviour
     {
         protected T1 CurrentValue;
