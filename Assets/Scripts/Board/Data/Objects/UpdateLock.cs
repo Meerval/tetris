@@ -5,7 +5,7 @@ namespace Board.Data.Objects
 {
     public class UpdateLock : TetrisDataSingleton<bool, UpdateLock>
     {
-        protected override IStorable StorableTracker => null;
+        protected override IStorable StorableTetrisData => null;
 
         protected override void StartNewProgress()
         {

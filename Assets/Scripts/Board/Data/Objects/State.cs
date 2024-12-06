@@ -6,7 +6,7 @@ namespace Board.Data.Objects
 {
     public class State : TetrisDataSingleton<EState, State>
     {
-        protected override IStorable StorableTracker => null;
+        protected override IStorable StorableTetrisData => null;
         
         protected override void StartNewProgress()
         {

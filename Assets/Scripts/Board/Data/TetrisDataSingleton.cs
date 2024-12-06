@@ -23,7 +23,7 @@ namespace Board.Data
 
         protected override void AfterAwake()
         {
-            Store(StorableTracker);
+            Store(StorableTetrisData);
             StartNewProgress();
         }
         
@@ -47,7 +47,7 @@ namespace Board.Data
             IStorable.Store(storable);
         }
 
-        protected abstract IStorable StorableTracker { get; }
+        protected abstract IStorable StorableTetrisData { get; }
         protected abstract void StartNewProgress();
         protected abstract void SubscribeProgressAction();
         protected abstract void UnsubscribeProgressAction();

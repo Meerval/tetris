@@ -8,7 +8,7 @@ namespace Board.Data.Objects
     {
         private int _currentStep;
         private int _stepCount;
-        protected override IStorable StorableTracker => null;
+        protected override IStorable StorableTetrisData => null;
 
         protected override void StartNewProgress()
         {

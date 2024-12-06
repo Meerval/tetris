@@ -8,7 +8,7 @@ namespace Board.Data.Objects
     public class Score : DisplayableTetrisDataSingleton<long, Score>
     {
         private const int ScoreCoefficient = 100;
-        protected override IStorable StorableTracker => null;
+        protected override IStorable StorableTetrisData => null;
 
         protected override void StartNewProgress()
         {

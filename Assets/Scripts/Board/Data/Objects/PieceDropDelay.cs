@@ -8,7 +8,7 @@ namespace Board.Data.Objects
         
         private const float BaseDelay = 1.0f;
         private const float DecreaseFactor = 0.5f;
-        protected override IStorable StorableTracker => null;
+        protected override IStorable StorableTetrisData => null;
 
         protected override void StartNewProgress()
         {

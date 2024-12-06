@@ -12,7 +12,7 @@ namespace Board.Data.Objects
         private Timestamp _timestamp;
         private string _username;
 
-        protected override IStorable StorableTracker => new RecordScoreTracker();
+        protected override IStorable StorableTetrisData => new RecordScoreStorable();
 
         protected override void StartNewProgress()
         {
@@ -38,7 +38,7 @@ namespace Board.Data.Objects
             DisplayCurrentValue();
         }
 
-        private class RecordScoreTracker : IStorable
+        private class RecordScoreStorable : IStorable
         {
             private readonly RecordScore _recordScore = Instance;
             public string Id => "RecordScore";

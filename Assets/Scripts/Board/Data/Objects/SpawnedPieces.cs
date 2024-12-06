@@ -8,7 +8,7 @@ namespace Board.Data.Objects
 {
     public class SpawnedPieces : TetrisDataSingleton<List<(int, IPiece)>, SpawnedPieces>
     {
-        protected override IStorable StorableTracker => null;
+        protected override IStorable StorableTetrisData => null;
         
         protected override void StartNewProgress()
         {
