@@ -10,7 +10,6 @@ namespace Board.Data.Objects
     public class RecordScore : DisplayableTetrisDataSingleton<long, RecordScore>
     {
         private Timestamp _timestamp;
-        private string _username;
 
         protected override IStorable StorableTetrisData => new RecordScoreStorable();
 
@@ -18,12 +17,12 @@ namespace Board.Data.Objects
         {
         }
 
-        protected override void SubscribeProgressAction()
+        protected override void SubscribeDisplayableDataAction()
         {
             EventsHub.OnScoreUp.AddSubscriber(UpdateRecordScore, 1);
         }
 
-        protected override void UnsubscribeProgressAction()
+        protected override void UnsubscribeDisplayableDataAction()
         {
             EventsHub.OnScoreUp.RemoveSubscriber(UpdateRecordScore);
         }
@@ -33,7 +32,6 @@ namespace Board.Data.Objects
             if (TetrisMeta.Instance.Score() < CurrentValue) return;
             CurrentValue = TetrisMeta.Instance.Score();
             _timestamp = Timestamp.Now;
-            _username = "Admin";
             Debug.Log($"Record Score Updated: {CurrentValue}");
             DisplayCurrentValue();
         }
@@ -41,12 +39,11 @@ namespace Board.Data.Objects
         private class RecordScoreStorable : IStorable
         {
             private readonly RecordScore _recordScore = Instance;
-            public string Id => "RecordScore";
+            public string Id => Key.Id;
 
             public StorableData StorableData => new(Id, new Dictionary<string, object>
                 {
-                    { Key.Score, _recordScore.Value() },
-                    { Key.UserName, _recordScore._username },
+                    { Key.Score, _recordScore.CurrentValue },
                     { Key.Time, _recordScore._timestamp.ToString() }
                 }
             );
@@ -55,30 +52,27 @@ namespace Board.Data.Objects
             {
                 var d = data.Data;
                 _recordScore.CurrentValue = ObjectToLong.TryParse(d[Key.Score]).OrElse(InitialData.Score);
-                _recordScore._username = ObjectToString.TryParse(d[Key.UserName]).OrElse(InitialData.UserName);
                 _recordScore._timestamp = ObjectToTimestamp.TryParse(d[Key.Time]).OrElse(InitialData.Time);
             }
 
             public void LoadInitial()
             {
                 _recordScore.CurrentValue = InitialData.Score;
-                _recordScore._username = InitialData.UserName;
                 _recordScore._timestamp = InitialData.Time;
-            }
-
-            private struct InitialData
-            {
-                public const long Score = 0;
-                public const string UserName = "-";
-                public static readonly Timestamp Time = Timestamp.Empty;
             }
 
             private struct Key
             {
+                public const string Id = "RecordScore";
                 public const string Score = "Score";
-                public const string UserName = "UserName";
                 public const string Time = "Time";
             }
+        }
+
+        private struct InitialData
+        {
+            public const long Score = 0;
+            public static readonly Timestamp Time = Timestamp.Empty;
         }
     }
 }

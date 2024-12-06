@@ -1,7 +1,4 @@
-﻿using Templates.Singleton;
-using UnityEngine;
-
-namespace Systems.Accumulator
+﻿namespace Systems.Accumulator
 {
     class Accumulator: IAccumulator
     {
@@ -20,7 +17,6 @@ namespace Systems.Accumulator
             {
                 Value++;
             }
-            else Debug.LogWarning($"Accumulator '{this}' is full and cannot be incremented");
         }
 
         public void Decrement()
@@ -29,7 +25,6 @@ namespace Systems.Accumulator
             {
                 Value--;
             }
-            else Debug.LogWarning($"Accumulator '{this}' is empty and cannot be decremented");
         }
 
         public void Reset()

@@ -12,6 +12,7 @@ namespace Board.Timers
         private void Start()
         {
             _initDelay = delay;
+            delay = TetrisMeta.Instance.PieceDropDelay();
         }
 
         public void OnEnable()

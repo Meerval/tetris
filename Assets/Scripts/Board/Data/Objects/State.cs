@@ -1,16 +1,20 @@
-﻿using Board.Pieces;
+﻿using System;
+using System.Collections.Generic;
+using Board.Pieces;
+using Systems.Parsers.Object;
 using Systems.Storage;
+using Systems.Storage.POCO;
 using UnityEngine;
 
 namespace Board.Data.Objects
 {
     public class State : TetrisDataSingleton<EState, State>
     {
-        protected override IStorable StorableTetrisData => null;
-        
+        protected override IStorable StorableTetrisData => new StateStorable();
+
         protected override void StartNewProgress()
         {
-            CurrentValue = EState.WaitForActivePiece;
+            CurrentValue = InitialData.State;
             Debug.Log($"[STATE UPDATE: {CurrentValue}] Game Started!");
         }
 
@@ -30,7 +34,7 @@ namespace Board.Data.Objects
 
         private void WaitForActivePiece()
         {
-            CurrentValue = EState.WaitForActivePiece;
+            CurrentValue = InitialData.State;
             Debug.Log($"[STATE UPDATE: {CurrentValue}] Wait for active piece");
         }
 
@@ -44,6 +48,39 @@ namespace Board.Data.Objects
         {
             CurrentValue = EState.GameOver;
             Debug.Log($"[STATE UPDATE: {CurrentValue}] Game Over!");
+        }
+
+        private class StateStorable : IStorable
+        {
+            private readonly State _state = Instance;
+            public string Id => "State";
+
+            public StorableData StorableData => new(Id, new Dictionary<string, object>
+                {
+                    { Key.State, _state.CurrentValue.ToString() }
+                }
+            );
+
+            public void Load(StorableData data)
+            {
+                string stateName = ObjectToString.TryParse(data.Data[Key.State]).OrElse(InitialData.State.ToString());
+                _state.CurrentValue = Enum.TryParse(stateName, out EState state) ? state : InitialData.State;
+            }
+
+            public void LoadInitial()
+            {
+                _state.CurrentValue = InitialData.State;
+            }
+
+            private struct Key
+            {
+                public const string State = "State";
+            }
+        }
+
+        private struct InitialData
+        {
+            public const EState State = EState.WaitForActivePiece;
         }
     }
 }

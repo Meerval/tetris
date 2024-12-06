@@ -12,10 +12,25 @@ namespace Board.Data
             _textToDisplay = GetComponentInChildren<ProgressText>();
             _textToDisplay.Display(CurrentValue.ToString());
         }
-
+        
         public void DisplayCurrentValue()
         {
             _textToDisplay.Display(CurrentValue.ToString());
         }
+        
+        protected override void SubscribeProgressAction()
+        {
+            EventsHub.OnGameStart.AddSubscriber(DisplayCurrentValue);
+            SubscribeDisplayableDataAction();
+        }
+
+        protected override void UnsubscribeProgressAction()
+        {
+            EventsHub.OnGameStart.RemoveSubscriber(DisplayCurrentValue);
+            UnsubscribeDisplayableDataAction();
+        }
+
+        protected abstract void SubscribeDisplayableDataAction();
+        protected abstract void UnsubscribeDisplayableDataAction();
     }
 }

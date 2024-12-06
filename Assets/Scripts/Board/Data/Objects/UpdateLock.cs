@@ -1,15 +1,17 @@
-﻿using Systems.Events;
+﻿using System.Collections.Generic;
+using Systems.Parsers.Object;
 using Systems.Storage;
+using Systems.Storage.POCO;
 
 namespace Board.Data.Objects
 {
     public class UpdateLock : TetrisDataSingleton<bool, UpdateLock>
     {
-        protected override IStorable StorableTetrisData => null;
+        protected override IStorable StorableTetrisData => new UpdateLockStorable();
 
         protected override void StartNewProgress()
         {
-            CurrentValue = false;
+            CurrentValue = InitialData.IsLocked;
         }
 
         protected override void SubscribeProgressAction()
@@ -32,6 +34,39 @@ namespace Board.Data.Objects
         private void Unlock()
         {
             CurrentValue = false;
+        }
+
+        private class UpdateLockStorable : IStorable
+        {
+            private readonly UpdateLock _updateLock = Instance;
+            public string Id => Key.Id;
+
+            public StorableData StorableData => new(Id, new Dictionary<string, object>
+                {
+                    { Key.IsLocked, _updateLock.CurrentValue.ToString() }
+                }
+            );
+
+            public void Load(StorableData data)
+            {
+                _updateLock.CurrentValue = ObjectToBool.TryParse(data.Data[Key.IsLocked]).OrElse(InitialData.IsLocked);
+            }
+
+            public void LoadInitial()
+            {
+                _updateLock.CurrentValue = InitialData.IsLocked;
+            }
+
+            private struct Key
+            {
+                public const string Id = "UpdateLock";
+                public const string IsLocked = "IsLocked";
+            }
+        }
+
+        private struct InitialData
+        {
+            public const bool IsLocked = false;
         }
     }
 }
