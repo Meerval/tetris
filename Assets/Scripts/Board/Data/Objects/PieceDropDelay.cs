@@ -11,6 +11,7 @@ namespace Board.Data.Objects
         private const float DecreaseFactor = 0.5f;
         
         protected override IStorable StorableTetrisData => new PieceDropDelayStorable();
+        protected override bool IsResettableByNewGame => true;
         
         
         protected override void SubscribeDataAction()

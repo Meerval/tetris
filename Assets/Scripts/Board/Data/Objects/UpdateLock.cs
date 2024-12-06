@@ -8,6 +8,7 @@ namespace Board.Data.Objects
     public class UpdateLock : TetrisDataSingleton<bool, UpdateLock>
     {
         protected override IStorable StorableTetrisData => new UpdateLockStorable();
+        protected override bool IsResettableByNewGame => true;
 
         protected override void SubscribeDataAction()
         {

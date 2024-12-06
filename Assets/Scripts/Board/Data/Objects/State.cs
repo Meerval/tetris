@@ -11,6 +11,7 @@ namespace Board.Data.Objects
     public class State : TetrisDataSingleton<EState, State>
     {
         protected override IStorable StorableTetrisData => new StateStorable();
+        protected override bool IsResettableByNewGame => true;
 
         protected override void SubscribeDataAction()
         {

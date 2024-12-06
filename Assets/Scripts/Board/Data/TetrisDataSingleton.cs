@@ -4,7 +4,8 @@ using UnityEngine;
 
 namespace Board.Data
 {
-    public abstract class TetrisDataSingleton<T1, T2> : MonoBehaviourSingleton<T2>, ITetrisData<T1>, IStorableDataProvider
+    public abstract class TetrisDataSingleton<T1, T2> : MonoBehaviourSingleton<T2>, ITetrisData<T1>,
+        IStorableDataProvider
         where T2 : MonoBehaviour
     {
         protected T1 CurrentValue;
@@ -25,12 +26,12 @@ namespace Board.Data
         {
             Store(StorableTetrisData);
         }
-        
+
         protected virtual void InitForNewGame()
         {
-            StorableTetrisData.LoadInitial();
+            if (IsResettableByNewGame) StorableTetrisData.LoadInitial();
         }
-        
+
         public T1 Value()
         {
             return CurrentValue;
@@ -48,11 +49,12 @@ namespace Board.Data
                 Debug.LogWarning($"Object='{typeof(T2).FullName}' is not ready to store yet");
                 return;
             }
+
             IStorable.Store(storable);
         }
 
         protected abstract IStorable StorableTetrisData { get; }
-
+        protected abstract bool IsResettableByNewGame { get; }
         protected abstract void SubscribeDataAction();
         protected abstract void UnsubscribeDataAction();
     }

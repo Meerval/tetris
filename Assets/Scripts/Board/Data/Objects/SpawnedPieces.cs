@@ -9,6 +9,7 @@ namespace Board.Data.Objects
     public class SpawnedPieces : TetrisDataSingleton<List<(int, IPiece)>, SpawnedPieces>
     {
         protected override IStorable StorableTetrisData => null;
+        protected override bool IsResettableByNewGame => true;
 
         protected override void SubscribeDataAction()
         {

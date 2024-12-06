@@ -12,6 +12,7 @@ namespace Board.Data.Objects
         private int _currentStep;
         private int _stepCount;
         protected override IStorable StorableTetrisData => new LevelStorable();
+        protected override bool IsResettableByNewGame => true;
 
         protected override void SubscribeDisplayableDataAction()
         {

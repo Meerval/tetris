@@ -11,6 +11,7 @@ namespace Board.Data.Objects
         private const int ScoreCoefficient = 100;
         
         protected override IStorable StorableTetrisData => new ScoreStorable();
+        protected override bool IsResettableByNewGame => true;
 
         protected override void InitForNewGame()
         {

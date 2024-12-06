@@ -12,6 +12,7 @@ namespace Board.Data.Objects
         private Timestamp _timestamp;
 
         protected override IStorable StorableTetrisData => new RecordScoreStorable();
+        protected override bool IsResettableByNewGame => false;
 
         protected override void InitForNewGame()
         {
