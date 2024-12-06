@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace Board.Data
 {
-    public abstract class DisplayableTetrisDataSingleton<T1, T2> : TetrisDataSingleton<T1, T2>, IDisplayable where T2 : MonoBehaviour
+    public abstract class DisplayableTetrisDataSingleton<T1, T2> : TetrisDataSingleton<T1, T2>, IDisplayable
+        where T2 : MonoBehaviour
     {
         private IProgressText _textToDisplay;
 
@@ -12,21 +13,21 @@ namespace Board.Data
             _textToDisplay = GetComponentInChildren<ProgressText>();
             _textToDisplay.Display(CurrentValue.ToString());
         }
-        
+
         public void DisplayCurrentValue()
         {
             _textToDisplay.Display(CurrentValue.ToString());
         }
-        
-        protected override void SubscribeProgressAction()
+
+        protected override void SubscribeDataAction()
         {
-            EventsHub.OnGameStart.AddSubscriber(DisplayCurrentValue);
+            EventsHub.OnNewGameStart.AddSubscriber(DisplayCurrentValue, 1);
             SubscribeDisplayableDataAction();
         }
 
-        protected override void UnsubscribeProgressAction()
+        protected override void UnsubscribeDataAction()
         {
-            EventsHub.OnGameStart.RemoveSubscriber(DisplayCurrentValue);
+            EventsHub.OnNewGameStart.RemoveSubscriber(DisplayCurrentValue);
             UnsubscribeDisplayableDataAction();
         }
 

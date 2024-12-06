@@ -9,18 +9,13 @@ namespace Board.Data.Objects
     {
         protected override IStorable StorableTetrisData => new UpdateLockStorable();
 
-        protected override void StartNewProgress()
-        {
-            CurrentValue = InitialData.IsLocked;
-        }
-
-        protected override void SubscribeProgressAction()
+        protected override void SubscribeDataAction()
         {
             EventsHub.OnWaitCoroutineStart.AddSubscriber(Lock);
             EventsHub.OnWaitCoroutineEnd.AddSubscriber(Unlock);
         }
 
-        protected override void UnsubscribeProgressAction()
+        protected override void UnsubscribeDataAction()
         {
             EventsHub.OnWaitCoroutineStart.RemoveSubscriber(Lock);
             EventsHub.OnWaitCoroutineEnd.RemoveSubscriber(Unlock);

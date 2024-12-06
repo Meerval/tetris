@@ -12,7 +12,7 @@ namespace Board.Data.Objects
         
         protected override IStorable StorableTetrisData => new ScoreStorable();
 
-        protected override void StartNewProgress()
+        protected override void InitForNewGame()
         {
             CurrentValue = InitialData.Score;
         }

@@ -34,7 +34,6 @@ namespace Board
 
         private void Start()
         {
-            SetNewGame();
             Debug.Log("TetrisController started");
         }
 
@@ -128,7 +127,7 @@ namespace Board
 
         public void SetNewGame()
         {
-            EventsHub.OnGameStart.Trigger();
+            EventsHub.OnNewGameStart.Trigger();
             _timerOfDrop.ResetTimer();
             _tetrisGrid.ClearAll();
         }

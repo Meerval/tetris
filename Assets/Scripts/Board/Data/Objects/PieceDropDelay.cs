@@ -11,18 +11,14 @@ namespace Board.Data.Objects
         private const float DecreaseFactor = 0.5f;
         
         protected override IStorable StorableTetrisData => new PieceDropDelayStorable();
-
-        protected override void StartNewProgress()
-        {
-            CurrentValue = InitialData.BaseDelay;
-        }
-
-        protected override void SubscribeProgressAction()
+        
+        
+        protected override void SubscribeDataAction()
         {
             EventsHub.OnLevelUp.AddSubscriber(CountDelay, 1);
         }
 
-        protected override void UnsubscribeProgressAction()
+        protected override void UnsubscribeDataAction()
         {
             EventsHub.OnLevelUp.RemoveSubscriber(CountDelay);
         }

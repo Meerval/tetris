@@ -12,20 +12,14 @@ namespace Board.Data.Objects
     {
         protected override IStorable StorableTetrisData => new StateStorable();
 
-        protected override void StartNewProgress()
-        {
-            CurrentValue = InitialData.State;
-            Debug.Log($"[STATE UPDATE: {CurrentValue}] Game Started!");
-        }
-
-        protected override void SubscribeProgressAction()
+        protected override void SubscribeDataAction()
         {
             EventsHub.OnWaitForPiece.AddSubscriber(WaitForActivePiece);
             EventsHub.OnSpawnPiece.AddSubscriber(PieceInProgress);
             EventsHub.OnGameOver.AddSubscriber(SetOverGame);
         }
 
-        protected override void UnsubscribeProgressAction()
+        protected override void UnsubscribeDataAction()
         {
             EventsHub.OnWaitForPiece.RemoveSubscriber(WaitForActivePiece);
             EventsHub.OnSpawnPiece.RemoveSubscriber(PieceInProgress);
@@ -70,6 +64,7 @@ namespace Board.Data.Objects
             public void LoadInitial()
             {
                 _state.CurrentValue = InitialData.State;
+                Debug.Log($"[STATE UPDATE: {_state.CurrentValue}] New Game Started!");
             }
 
             private struct Key

@@ -11,20 +11,24 @@ namespace Board.Data
 
         public void OnEnable()
         {
-            EventsHub.OnGameStart.AddSubscriber(StartNewProgress);
-            SubscribeProgressAction();
+            EventsHub.OnNewGameStart.AddSubscriber(InitForNewGame);
+            SubscribeDataAction();
         }
 
         public void OnDisable()
         {
-            EventsHub.OnGameStart.RemoveSubscriber(StartNewProgress);
-            UnsubscribeProgressAction();
+            EventsHub.OnNewGameStart.RemoveSubscriber(InitForNewGame);
+            UnsubscribeDataAction();
         }
 
         protected override void AfterAwake()
         {
             Store(StorableTetrisData);
-            StartNewProgress();
+        }
+        
+        protected virtual void InitForNewGame()
+        {
+            StorableTetrisData.LoadInitial();
         }
         
         public T1 Value()
@@ -48,8 +52,8 @@ namespace Board.Data
         }
 
         protected abstract IStorable StorableTetrisData { get; }
-        protected abstract void StartNewProgress();
-        protected abstract void SubscribeProgressAction();
-        protected abstract void UnsubscribeProgressAction();
+
+        protected abstract void SubscribeDataAction();
+        protected abstract void UnsubscribeDataAction();
     }
 }

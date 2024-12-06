@@ -13,13 +13,6 @@ namespace Board.Data.Objects
         private int _stepCount;
         protected override IStorable StorableTetrisData => new LevelStorable();
 
-        protected override void StartNewProgress()
-        {
-            CurrentValue = InitialData.Level;
-            _currentStep = InitialData.Step;
-            _stepCount = InitialData.StepCount;
-        }
-
         protected override void SubscribeDisplayableDataAction()
         {
             EventsHub.OnSpawnPiece.AddSubscriber(StepUp, 1);

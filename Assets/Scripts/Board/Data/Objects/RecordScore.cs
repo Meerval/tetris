@@ -13,7 +13,7 @@ namespace Board.Data.Objects
 
         protected override IStorable StorableTetrisData => new RecordScoreStorable();
 
-        protected override void StartNewProgress()
+        protected override void InitForNewGame()
         {
         }
 
