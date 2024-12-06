@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Board.Timers
 {
-    public class TimerOfClearLine : TimerOfTetris<TimerOfClearLine>
+    public class TimerOfClearLine : TimerSingleton<TimerOfClearLine>
     {
         public override void ResetTimer()
         {

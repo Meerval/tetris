@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Systems.Chrono.Timer
 {
-    public abstract class TimerOfTetris<T> : MonoBehaviourSingleton<T>, ITimer where T : MonoBehaviour, ITimer
+    public abstract class TimerSingleton<T> : MonoBehaviourSingleton<T>, ITimer where T : MonoBehaviour, ITimer
     {
         [SerializeField] protected float delay;
         private float _timeout;

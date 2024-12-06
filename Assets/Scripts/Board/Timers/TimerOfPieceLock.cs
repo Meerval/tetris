@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Board.Timers
 {
-    public class TimerOfPieceLock : TimerOfTetris<TimerOfPieceLock>
+    public class TimerOfPieceLock : TimerSingleton<TimerOfPieceLock>
     {
         public override void ResetTimer()
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Board.Timers
 {
-    public class TimerOfPieceDrop : TimerOfTetris<TimerOfPieceDrop>
+    public class TimerOfPieceDrop : TimerSingleton<TimerOfPieceDrop>
     {
         private float _initDelay;
 

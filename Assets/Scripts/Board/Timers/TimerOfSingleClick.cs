@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Board.Timers
 {
-    public class TimerOfSingleClick : TimerOfTetris<TimerOfSingleClick>
+    public class TimerOfSingleClick : TimerSingleton<TimerOfSingleClick>
     {
         public override void ResetTimer()
         {

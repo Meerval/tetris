@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Board.Timers
 {
-    public class TimerOfPieceMove : TimerOfTetris<TimerOfPieceMove>
+    public class TimerOfPieceMove : TimerSingleton<TimerOfPieceMove>
     {
         private float _initDelay;
         private int _updateCount;
