@@ -48,7 +48,7 @@ namespace Board.Data.Objects
         private class StateStorable : IStorable
         {
             private readonly State _state = Instance;
-            public string Id => "State";
+            public string Id => Key.Id;
 
             public StorableData StorableData => new(Id, new Dictionary<string, object>
                 {
@@ -70,6 +70,7 @@ namespace Board.Data.Objects
 
             private struct Key
             {
+                public const string Id = "State";
                 public const string State = "State";
             }
         }

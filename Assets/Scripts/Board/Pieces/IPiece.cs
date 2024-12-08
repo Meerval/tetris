@@ -7,11 +7,12 @@ namespace Board.Pieces
 {
     public interface IPiece
     {
-        TileBase Tile();
-        Vector2Int[] CurrentShapeMap();
-        bool HasNoWallKick(Func<Vector2Int, bool> checkFreePlace);
-        void AddRotation(Direction direction);
-        void SubRotation(Direction direction);
-        void Destroy();
+        public EPiece PieceType { get; }
+        public TileBase Tile();
+        public Vector2Int[] CurrentShapeMap();
+        public bool HasNoWallKick(Func<Vector2Int, bool> checkFreePlace);
+        public void AddRotation(Direction direction);
+        public void SubRotation(Direction direction);
+        public void Destroy();
     }
 }

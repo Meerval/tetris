@@ -13,7 +13,7 @@ namespace Board.Actions
         [SerializeField] private List<Piece> piecePrefabs;
         private Queue<IPiece> _piecesQueue;
 
-        private void Start()
+        protected override void AfterAwake()
         {
             if (piecePrefabs == null || piecePrefabs.Count == 0)
             {
@@ -34,6 +34,11 @@ namespace Board.Actions
             }
 
             return _piecesQueue;
+        }
+
+        public IPiece ExecuteShadow(EPiece pieceType)
+        {
+            return piecePrefabs.Find(piece => piece.PieceType == pieceType);
         }
     }
 }

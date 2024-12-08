@@ -88,8 +88,6 @@ namespace Board.Pieces
             return new RotationJLSTZ(ShapeMap(), RotationAngle);
         }
 
-        protected abstract Vector2Int[] ShapeMap();
-
         public virtual Vector2Int[] CurrentShapeMap()
         {
             return _shapeMapTmp;
@@ -100,5 +98,8 @@ namespace Board.Pieces
             string id = _id == null || _id.Length < 8 ? "" : $"#{_id[..8]}...";
             return $"{GetType().Name} {id}".Replace("Piece", "Piece ");
         }
+
+        public abstract EPiece PieceType { get; }
+        protected abstract Vector2Int[] ShapeMap();
     }
 }

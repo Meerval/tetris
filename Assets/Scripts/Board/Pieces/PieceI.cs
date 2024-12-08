@@ -5,6 +5,8 @@ namespace Board.Pieces
 {
     public class PieceI : Piece
     {
+        public override EPiece PieceType => EPiece.I;
+
         private readonly Vector2Int[] _shapeMap = { new(-1, 1), new(0, 1), new(1, 1), new(2, 1) };
 
         private readonly Vector2Int[,] _wallKicks =
@@ -28,7 +30,7 @@ namespace Board.Pieces
         {
             return _wallKicks;
         }
-        
+
         public override Vector2Int MonitorOffset()
         {
             return new Vector2Int(0, -1);
