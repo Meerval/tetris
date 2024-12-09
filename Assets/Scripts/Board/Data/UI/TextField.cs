@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace Board.Data.UI
 {
-    public class ProgressText : MonoBehaviour, IProgressText
+    public class TextField : MonoBehaviour, ITextField
     {
         private TextMeshProUGUI _textMesh;
-        [SerializeField] private string progressName; 
+        [SerializeField] private string fieldName; 
 
         private void Awake()
         {
@@ -14,9 +14,9 @@ namespace Board.Data.UI
             if (_textMesh == null) Debug.LogError("TextMeshProUGUI is null");
         }
 
-        public void Display(string progressValue)
+        public void Show(string value)
         {
-            _textMesh.text = $"{progressName}: {progressValue}";
+            _textMesh.text = $"{fieldName}: {value}";
         }
 
     }

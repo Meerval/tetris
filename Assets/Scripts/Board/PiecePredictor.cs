@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Board.Actions;
+using Board.Data;
+using Board.Data.UI;
 using Board.Pieces;
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Board.Data.UI
+namespace Board
 {
     public class PiecePredictor : MonoBehaviourSingleton<PiecePredictor>, IPredictor
     {

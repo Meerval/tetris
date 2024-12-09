@@ -593,7 +593,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemapPrefab: {fileID: 2430315049351262204, guid: d800aa6e480c3b7408a5a79f192a2bf0, type: 3}
-  piecePrefabs: {fileID: 1138360131}
 --- !u!1 &584019870
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,7 +835,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9e3d322b0f45588e30761a98ff395a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressName: Level
+  fieldName: 
 --- !u!114 &662607383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1324,7 +1323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9e3d322b0f45588e30761a98ff395a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressName: Score
+  fieldName: Score
 --- !u!114 &1316530236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1624,7 +1623,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9e3d322b0f45588e30761a98ff395a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressName: Record Score
+  fieldName: Record Score
 --- !u!114 &1424640401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1869,7 +1868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed9e3d322b0f45588e30761a98ff395a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  progressName: Level
+  fieldName: Level
 --- !u!1 &1887623652
 GameObject:
   m_ObjectHideFlags: 0
