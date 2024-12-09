@@ -5,6 +5,7 @@ using Board.Pieces;
 using Systems.Storage;
 using Templates.Singleton;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Board.Data
 {
@@ -15,6 +16,7 @@ namespace Board.Data
         private ITetrisData<float> _pieceDropDelay;
         private ITetrisData<List<(int, IPiece)>> _spawnPieces;
         private ITetrisData<Queue<IPiece>> _pieceQueue;
+        private ITetrisData<List<List<TileBase>>> _tilesPosition;
         private IPiece _activePiece;
         private ITetrisData<int> _level;
         private ITetrisData<long> _score;
@@ -27,6 +29,7 @@ namespace Board.Data
             _pieceDropDelay = gameObject.AddComponent<PieceDropDelay>();
             _spawnPieces = gameObject.AddComponent<SpawnedPieces>();
             _pieceQueue = gameObject.AddComponent<PieceQueue>();
+            _tilesPosition = gameObject.AddComponent<TilesPosition>();
             _level = GetComponentInChildren<Level>();
             _score = GetComponentInChildren<Score>();
             _recordScore = GetComponentInChildren<RecordScore>();
@@ -74,6 +77,11 @@ namespace Board.Data
         public Queue<IPiece> PieceQueue()
         {
             return _pieceQueue.Value();
+        }
+
+        public List<List<TileBase>> TilesPosition()
+        {
+            return _tilesPosition.Value();
         }
 
         public IPiece ActivePiece()

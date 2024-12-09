@@ -36,8 +36,6 @@ namespace Board.Data.Objects
             {
                 CurrentValue.Enqueue(PiecePrefabs.Instance.GetRandom());
             }
-            
-            Debug.Log($"QUEUE: {new PrettyArray<IPiece>(CurrentValue)}");
         }
 
         private class PieceQueueStorable : IStorable

@@ -16,7 +16,6 @@ namespace Board
     {
         [SerializeField] private TileBase projectionTile;
         [SerializeField] private TilemapController tilemapPrefab;
-        [SerializeField] private PiecePrefabs piecePrefabs;
 
         private ITilemapController _activeTilemap;
         private ITilemapController _projectedTilemap;
