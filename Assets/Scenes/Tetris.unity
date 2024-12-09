@@ -154,11 +154,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 662607381}
-  m_Father: {fileID: 30414849}
+  m_Father: {fileID: 547715113}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -1.5, y: -5}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &25080145
@@ -271,11 +271,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 547715113}
   - {fileID: 584019871}
   - {fileID: 661600232}
   - {fileID: 144029893}
-  - {fileID: 547715113}
-  - {fileID: 25080144}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &30414850
@@ -513,7 +512,8 @@ Transform:
   m_LocalPosition: {x: 1.5, y: 5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 25080144}
   m_Father: {fileID: 30414849}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &547715118
@@ -593,7 +593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemapPrefab: {fileID: 2430315049351262204, guid: d800aa6e480c3b7408a5a79f192a2bf0, type: 3}
-  pieceSpawning: {fileID: 1138360131}
+  piecePrefabs: {fileID: 1138360131}
 --- !u!1 &584019870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1131,7 +1131,7 @@ GameObject:
   - component: {fileID: 1138360132}
   - component: {fileID: 1138360131}
   m_Layer: 0
-  m_Name: Piece Spawner
+  m_Name: Piece Prefabs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1458,7 +1458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectionTile: {fileID: 11400000, guid: a10927dec698b7c49b1375f89e8db4d2, type: 2}
   tilemapPrefab: {fileID: 2430315049351262204, guid: d800aa6e480c3b7408a5a79f192a2bf0, type: 3}
-  pieceSpawning: {fileID: 1138360131}
+  piecePrefabs: {fileID: 1138360131}
 --- !u!212 &1369799154
 SpriteRenderer:
   m_ObjectHideFlags: 0

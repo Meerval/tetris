@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Board.Actions
 {
-    public class PieceSpawning : MonoBehaviourSingleton<PieceSpawning>, IPieceSpawning
+    public class PiecePrefabs : MonoBehaviourSingleton<PiecePrefabs>
     {
         [SerializeField] private List<Piece> piecePrefabs;
         private Queue<IPiece> _piecesQueue;
@@ -36,9 +36,14 @@ namespace Board.Actions
             return _piecesQueue;
         }
 
-        public IPiece ExecuteShadow(EPiece pieceType)
+        public IPiece Get(EPiece pieceType)
         {
             return piecePrefabs.Find(piece => piece.PieceType == pieceType);
+        }
+
+        public IPiece GetRandom()
+        {
+            return piecePrefabs[Random.Range(0, piecePrefabs.Count)];
         }
     }
 }

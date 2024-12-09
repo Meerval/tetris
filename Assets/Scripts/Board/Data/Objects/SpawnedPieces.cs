@@ -55,7 +55,7 @@ namespace Board.Data.Objects
                 
                 IPiece CreateIPiece(char c)
                 {
-                    IPiece piece = PieceSpawning.Instance.ExecuteShadow(EPieceParser.Parse(c));
+                    IPiece piece = PiecePrefabs.Instance.Get(EPieceParser.Parse(c));
                     return piece;
                 }
                 

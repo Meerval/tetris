@@ -10,7 +10,7 @@ namespace Board.Data.UI
     public class PiecePredictor : MonoBehaviourSingleton<PiecePredictor>, IPredictor
     {
         [SerializeField] private TilemapController tilemapPrefab;
-        [SerializeField] private PieceSpawning pieceSpawning;
+        [SerializeField] private PiecePrefabs piecePrefabs;
 
         private ITilemapController _tilemap;
 
@@ -48,7 +48,7 @@ namespace Board.Data.UI
         public void Predict(IPiece currentPiece)
         {
             Clear();
-            _predictedPiece = (IPredictedPiece) pieceSpawning.Execute().Peek();
+            _predictedPiece = (IPredictedPiece) piecePrefabs.Execute().Peek();
             SetPiece();
         }
 

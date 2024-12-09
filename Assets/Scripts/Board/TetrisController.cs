@@ -13,7 +13,7 @@ namespace Board
         private IGridController _tetrisGrid;
         private IInputExecutor _inputExecutor;
 
-        private TetrisMeta _meta;
+        private TetrisInfo _info;
         private ITimer _timerOfDrop;
         private ITimer _timerOfLock;
 
@@ -26,7 +26,7 @@ namespace Board
             _tetrisGrid = GetComponent<TetrisGridController>();
             _inputExecutor = GetComponent<TetrisInputExecutor>();
 
-            _meta = FindObjectOfType<TetrisMeta>();
+            _info = FindObjectOfType<TetrisInfo>();
             _timerOfDrop = FindObjectOfType<TimerOfPieceDrop>();
             _timerOfLock = FindObjectOfType<TimerOfPieceLock>();
             Debug.Log("TetrisController awoke");
@@ -99,7 +99,7 @@ namespace Board
             if (_tetrisGrid.PieceShiftDown()) _timerOfDrop.UpdateTimeout();
             else
             {
-                if (_meta.IsUpdateLocked() || _timerOfLock.IsInProgress()) return;
+                if (_info.IsUpdateLocked() || _timerOfLock.IsInProgress()) return;
                 _tetrisGrid.PieceLock();
                 _tetrisGrid.ClearFullLines();
                 EventsHub.OnWaitForPiece.Trigger();
@@ -108,7 +108,7 @@ namespace Board
 
         private bool IsPieceDropUnavailable()
         {
-            return _meta.IsUpdateLocked() || _meta.State().Equals(EState.WaitForActivePiece) ||
+            return _info.IsUpdateLocked() || _info.State().Equals(EState.WaitForActivePiece) ||
                    _timerOfDrop.IsInProgress();
         }
 
@@ -122,7 +122,7 @@ namespace Board
 
         private bool IsPieceSpawnUnavailable()
         {
-            return _meta.IsUpdateLocked() || !_meta.State().Equals(EState.WaitForActivePiece);
+            return _info.IsUpdateLocked() || !_info.State().Equals(EState.WaitForActivePiece);
         }
 
         public void SetNewGame()

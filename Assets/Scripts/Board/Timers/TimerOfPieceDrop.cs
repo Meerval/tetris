@@ -12,7 +12,7 @@ namespace Board.Timers
         private void Start()
         {
             _initDelay = delay;
-            delay = TetrisMeta.Instance.PieceDropDelay();
+            delay = TetrisInfo.Instance.PieceDropDelay();
         }
 
         public void OnEnable()
@@ -27,7 +27,7 @@ namespace Board.Timers
 
         private void UpdateDelay()
         {
-            delay = TetrisMeta.Instance.PieceDropDelay();
+            delay = TetrisInfo.Instance.PieceDropDelay();
             Debug.Log($"Delay of piece drop timer updated\n{this}");
         }
 

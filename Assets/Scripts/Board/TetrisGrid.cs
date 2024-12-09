@@ -16,7 +16,7 @@ namespace Board
     {
         [SerializeField] private TileBase projectionTile;
         [SerializeField] private TilemapController tilemapPrefab;
-        [SerializeField] private PieceSpawning pieceSpawning;
+        [SerializeField] private PiecePrefabs piecePrefabs;
 
         private ITilemapController _activeTilemap;
         private ITilemapController _projectedTilemap;
@@ -55,7 +55,7 @@ namespace Board
         public bool SpawnNewPiece()
         {
             _activePiece?.Destroy();
-            _activePiece = pieceSpawning.Execute().Dequeue();
+            _activePiece = piecePrefabs.Execute().Dequeue();
             if (!IsAvailablePosition(_spawnPosition)) return false;
             _activePiecePosition = _spawnPosition;
             SetPiece(_activePiecePosition);

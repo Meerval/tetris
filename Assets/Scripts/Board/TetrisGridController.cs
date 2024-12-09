@@ -23,14 +23,14 @@ namespace Board
         public bool PieceRotateLeft()
         {
             if (!Rotate(Direction.Left)) return false;
-            Debug.Log($"{TetrisMeta.Instance.ActivePiece()} rotated left");
+            Debug.Log($"{TetrisInfo.Instance.ActivePiece()} rotated left");
             return true;
         }
 
         public bool PieceRotateRight()
         {
             if (!Rotate(Direction.Right)) return false;
-            Debug.Log($"{TetrisMeta.Instance.ActivePiece()} rotated right");
+            Debug.Log($"{TetrisInfo.Instance.ActivePiece()} rotated right");
             return true;
         }
 
@@ -42,21 +42,21 @@ namespace Board
         public bool PieceShiftLeft()
         {
             if (!_grid.ShiftPiece(currentPosition => new ShiftLeft(currentPosition))) return false;
-            Debug.Log($"{TetrisMeta.Instance.ActivePiece()} shifted left");
+            Debug.Log($"{TetrisInfo.Instance.ActivePiece()} shifted left");
             return true;
         }
 
         public bool PieceShiftRight()
         {
             if (!_grid.ShiftPiece(currentPosition => new ShiftRight(currentPosition))) return false;
-            Debug.Log($"{TetrisMeta.Instance.ActivePiece()} shifted right");
+            Debug.Log($"{TetrisInfo.Instance.ActivePiece()} shifted right");
             return true;
         }
 
         public bool PieceShiftDown()
         {
             if (!_grid.ShiftPiece(currentPosition => new ShiftDown(currentPosition))) return false;
-            Debug.Log($"{TetrisMeta.Instance.ActivePiece()} shifted down");
+            Debug.Log($"{TetrisInfo.Instance.ActivePiece()} shifted down");
             return true;
         }
     

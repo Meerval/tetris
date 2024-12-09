@@ -36,8 +36,8 @@ namespace Board
 
         private void GameOver(EGameOverReason reason)
         {
-            Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisMeta.Instance.Level()}, " +
-                      $"score: {TetrisMeta.Instance.Score()}");
+            Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisInfo.Instance.Level()}, " +
+                      $"score: {TetrisInfo.Instance.Score()}");
             _controller.SetNewGame();
         }
     }

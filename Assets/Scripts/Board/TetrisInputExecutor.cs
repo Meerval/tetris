@@ -10,14 +10,14 @@ namespace Board
 {
     public class TetrisInputExecutor : MonoBehaviour, IInputExecutor
     {
-        private TetrisMeta _meta;
+        private TetrisInfo _info;
         private ITimer _timerOfMove;
         private ITimer _timerOfClick;
         private bool _isShifted;
 
         private void Awake()
         {
-            _meta = FindObjectOfType<TetrisMeta>();
+            _info = FindObjectOfType<TetrisInfo>();
             _timerOfMove = FindObjectOfType<TimerOfPieceMove>();
             _timerOfClick = FindObjectOfType<TimerOfSingleClick>();
             Debug.Log("TetrisInputExecutor awoke");
@@ -60,7 +60,7 @@ namespace Board
 
         private bool IsRotationKeyDown(KeyCode keyCode, Func<bool> action, out bool isRotated)
         {
-            if (_meta.IsUpdateLocked() || !_meta.State().Equals(EState.PieceInProgress) ||
+            if (_info.IsUpdateLocked() || !_info.State().Equals(EState.PieceInProgress) ||
                 !Input.GetKeyDown(keyCode))
             {
                 isRotated = false;
@@ -74,7 +74,7 @@ namespace Board
 
         private bool IsShiftKey(KeyCode keyCode, Func<bool> action, out bool isShifted)
         {
-            if (_meta.IsUpdateLocked() || !_meta.State().Equals(EState.PieceInProgress) ||
+            if (_info.IsUpdateLocked() || !_info.State().Equals(EState.PieceInProgress) ||
                 !Input.GetKey(keyCode))
             {
                 isShifted = false;

@@ -8,12 +8,13 @@ using UnityEngine;
 
 namespace Board.Data
 {
-    public class TetrisMeta : MonoBehaviourSingleton<TetrisMeta>
+    public class TetrisInfo : MonoBehaviourSingleton<TetrisInfo>
     {
         private ITetrisData<EState> _state;
         private ITetrisData<bool> _updateLock;
         private ITetrisData<float> _pieceDropDelay;
         private ITetrisData<List<(int, IPiece)>> _spawnPieces;
+        private ITetrisData<Queue<IPiece>> _pieceQueue;
         private IPiece _activePiece;
         private ITetrisData<int> _level;
         private ITetrisData<long> _score;
@@ -25,6 +26,7 @@ namespace Board.Data
             _updateLock = gameObject.AddComponent<UpdateLock>();
             _pieceDropDelay = gameObject.AddComponent<PieceDropDelay>();
             _spawnPieces = gameObject.AddComponent<SpawnedPieces>();
+            _pieceQueue = gameObject.AddComponent<PieceQueue>();
             _level = GetComponentInChildren<Level>();
             _score = GetComponentInChildren<Score>();
             _recordScore = GetComponentInChildren<RecordScore>();
@@ -67,6 +69,11 @@ namespace Board.Data
         {
             _activePiece = _spawnPieces.Value().Last().Item2;
             return _spawnPieces.Value();
+        }
+
+        public Queue<IPiece> PieceQueue()
+        {
+            return _pieceQueue.Value();
         }
 
         public IPiece ActivePiece()

@@ -30,8 +30,8 @@ namespace Board.Data.Objects
 
         private void UpdateRecordScore(int _)
         {
-            if (TetrisMeta.Instance.Score() < CurrentValue) return;
-            CurrentValue = TetrisMeta.Instance.Score();
+            if (TetrisInfo.Instance.Score() < CurrentValue) return;
+            CurrentValue = TetrisInfo.Instance.Score();
             _timestamp = Timestamp.Now;
             Debug.Log($"Record Score Updated: {CurrentValue}");
             DisplayCurrentValue();
