@@ -1,7 +1,7 @@
 ﻿using Board.PiecePosition;
 using UnityEngine;
 
-namespace Board.Pieces
+namespace Board.Pieces.Types
 {
     public class PieceI : Piece
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Board.Pieces
+namespace Board.Pieces.Types
 {
     public class PieceT : Piece
     {

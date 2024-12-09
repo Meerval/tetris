@@ -55,7 +55,9 @@ namespace Board
         public bool SpawnNewPiece()
         {
             _activePiece?.Destroy();
-            _activePiece = piecePrefabs.Execute().Dequeue();
+            Piece piece = Instantiate((Piece)TetrisInfo.Instance.PieceQueue().Dequeue(), gameObject.transform);
+            piece.name = piece.ToString();
+            _activePiece = piece;
             if (!IsAvailablePosition(_spawnPosition)) return false;
             _activePiecePosition = _spawnPosition;
             SetPiece(_activePiecePosition);
@@ -161,7 +163,8 @@ namespace Board
             }
 
             _activePiece.SubRotation(direction);
-            Debug.Log($"{_activePiece} rotation returned to {new PrettyArray<Vector2Int>(_activePiece.CurrentShapeMap())}");
+            Debug.Log(
+                $"{_activePiece} rotation returned to {new PrettyArray<Vector2Int>(_activePiece.CurrentShapeMap())}");
             return false;
         }
 

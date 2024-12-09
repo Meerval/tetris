@@ -1,17 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Board.Pieces;
 using Systems.Pretty;
 using Templates.Singleton;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Board.Actions
+namespace Board.Pieces
 {
     public class PiecePrefabs : MonoBehaviourSingleton<PiecePrefabs>
     {
         [SerializeField] private List<Piece> piecePrefabs;
-        private Queue<IPiece> _piecesQueue;
 
         protected override void AfterAwake()
         {
@@ -21,19 +19,6 @@ namespace Board.Actions
             }
 
             Debug.Log($"Available pieces: {new PrettyArray<Piece>(piecePrefabs)}");
-            _piecesQueue = new Queue<IPiece>();
-        }
-
-        public Queue<IPiece> Execute()
-        {
-            while (_piecesQueue.Count < 2)
-            {
-                Piece piece = Instantiate(piecePrefabs[Random.Range(0, piecePrefabs.Count)], gameObject.transform);
-                piece.name = piece.ToString();
-                _piecesQueue.Enqueue(piece);
-            }
-
-            return _piecesQueue;
         }
 
         public IPiece Get(EPiece pieceType)

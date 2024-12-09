@@ -10,7 +10,6 @@ namespace Board.Data.UI
     public class PiecePredictor : MonoBehaviourSingleton<PiecePredictor>, IPredictor
     {
         [SerializeField] private TilemapController tilemapPrefab;
-        [SerializeField] private PiecePrefabs piecePrefabs;
 
         private ITilemapController _tilemap;
 
@@ -34,7 +33,7 @@ namespace Board.Data.UI
                 $"PredictionGrid awoke with size of {_size.ToString()} and bounds {_bounds.ToString()}"
             );
         }
-        
+
         public void OnEnable()
         {
             EventsHub.OnSpawnPiece.AddSubscriber(Predict);
@@ -48,12 +47,15 @@ namespace Board.Data.UI
         public void Predict(IPiece currentPiece)
         {
             Clear();
-            _predictedPiece = (IPredictedPiece) piecePrefabs.Execute().Peek();
+            Piece piece = Instantiate((Piece)TetrisInfo.Instance.PieceQueue().Peek(), gameObject.transform);
+            piece.name = piece.ToString();
+            _predictedPiece = piece;
             SetPiece();
         }
 
         private void Clear()
         {
+            _predictedPiece?.Destroy();
             _tilemap.ClearAll();
         }
 
