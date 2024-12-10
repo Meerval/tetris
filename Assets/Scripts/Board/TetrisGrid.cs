@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Board.Actions;
 using Board.Data;
 using Board.PiecePosition;
 using Board.PiecePosition.RotationMath;
 using Board.Pieces;
-using Systems.Events;
 using Systems.Pretty;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -17,9 +17,9 @@ namespace Board
         [SerializeField] private TileBase projectionTile;
         [SerializeField] private TilemapController tilemapPrefab;
 
-        private ITilemapController _activeTilemap;
-        private ITilemapController _projectedTilemap;
-        private ITilemapController _lockedTilemap;
+        private TilemapController _activeTilemap;
+        private TilemapController _projectedTilemap;
+        private TilemapController _lockedTilemap;
 
         private Vector2Int _size;
         private RectInt _bounds;
@@ -39,9 +39,9 @@ namespace Board
             _projectedTilemap = Instantiate(tilemapPrefab, gameObject.transform);
             _lockedTilemap = Instantiate(tilemapPrefab, gameObject.transform);
 
-            ((TilemapController)_activeTilemap).gameObject.name = "ActiveTilemap";
-            ((TilemapController)_projectedTilemap).gameObject.name = "ProjectedTilemap";
-            ((TilemapController)_lockedTilemap).gameObject.name = "LockedTilemap";
+            _activeTilemap.name = "ActiveTilemap";
+            _projectedTilemap.name = "ProjectedTilemap";
+            _lockedTilemap.name = "LockedTilemap";
 
             _fullLinesRemoving = gameObject.AddComponent<FullLinesRemoving>();
 
@@ -49,6 +49,15 @@ namespace Board
             (
                 $"TetrisGrid awoke with size of {_size.ToString()} and bounds {_bounds.ToString()}"
             );
+        }
+
+        public void Start()
+        {
+            Dictionary<string, string> loadData = TetrisInfo.Instance.TilesPosition();
+
+            _projectedTilemap.Load(loadData[_projectedTilemap.name], _bounds);
+            _activeTilemap.Load(loadData[_activeTilemap.name], _bounds);
+            _lockedTilemap.Load(loadData[_lockedTilemap.name], _bounds);
         }
 
         public bool SpawnNewPiece()
@@ -181,6 +190,9 @@ namespace Board
         public void ClearFullLines()
         {
             _fullLinesRemoving.Execute(_lockedTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_activeTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_lockedTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_projectedTilemap, _bounds);
         }
 
         public void ClearAll()

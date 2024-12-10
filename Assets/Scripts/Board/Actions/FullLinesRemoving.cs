@@ -11,10 +11,10 @@ namespace Board.Actions
 {
     public class FullLinesRemoving : MonoBehaviour, IFullLinesRemoving
     {
-        private ITilemapController _tilemap;
+        private TilemapController _tilemap;
         private RectInt _bounds;
 
-        public void Execute(ITilemapController tilemap, RectInt bounds)
+        public void Execute(TilemapController tilemap, RectInt bounds)
         {
             _tilemap = tilemap;
             _bounds = bounds;

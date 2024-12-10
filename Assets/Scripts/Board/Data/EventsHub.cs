@@ -1,5 +1,6 @@
 ﻿using Board.Pieces;
 using Systems.Events;
+using UnityEngine;
 
 namespace Board.Data
 {
@@ -8,6 +9,10 @@ namespace Board.Data
         public static readonly IEvent OnNewGameStart = new TetrisEvent();
         public static readonly IEvent OnWaitCoroutineStart = new TetrisEvent();
         public static readonly IEvent OnWaitCoroutineEnd = new TetrisEvent();
+
+        public static readonly IEvent<TilemapController, RectInt> OnGridUpdated
+            = new TetrisEvent<TilemapController, RectInt>();
+
         public static readonly IEvent OnWaitForPiece = new TetrisEvent();
         public static readonly IEvent<IPiece> OnSpawnPiece = new TetrisEvent<IPiece>();
         public static readonly IEvent OnLevelUp = new TetrisEvent();

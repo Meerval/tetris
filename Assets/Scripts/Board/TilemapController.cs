@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using Board.Pieces;
 using Systems.Pretty;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.Tilemaps;
 
 namespace Board
 {
-    class TilemapController : MonoBehaviour, ITilemapController
+    public class TilemapController : MonoBehaviour
     {
         private Tilemap _tilemap;
 
@@ -27,7 +28,7 @@ namespace Board
 
         public TileBase Get(Vector2Int position)
         {
-            return _tilemap.GetTile((Vector3Int) position);
+            return _tilemap.GetTile((Vector3Int)position);
         }
 
         public void Clear(Vector2Int position)
@@ -44,18 +45,26 @@ namespace Board
         {
             _tilemap.ClearAllTiles();
         }
-        
-        public ITilemapController Load(string codes, RectInt bounds)
+
+        public void Load(string codes, RectInt bounds)
         {
-            if (codes.Length != bounds.height * bounds.width)
+            string rgx = $"^[0CBOYGPR]{{{bounds.height * bounds.width}}}$";
+            if (string.IsNullOrEmpty(codes))
             {
-                Debug.LogError("Tilemap codes cannot be converted to ITilemapController in right way:\n" +
-                               $"Expected size='{bounds.height * bounds.width}' but actual='{codes.Length}'");
+                Debug.LogError($"{name} codes cannot be converted to TilemapController because its null or empty");
+                ClearAll();
+                return;
+            }
+            
+            if (!Regex.IsMatch(codes, rgx))
+            {
+                Debug.LogError($"{name} codes cannot be converted to TilemapController in right way:\n" +
+                               $"String of codes='{codes}' isn't match to regex '{rgx}'");
             }
 
-            TileBase InitTile(char c)
+            TileBase InitTile(char ch)
             {
-                return TileProvider.Instance.Get(ETileParser.Parse(c));
+                return TileProvider.Instance.Get(ETileParser.Parse(ch));
             }
 
             int charIdx = 0;
@@ -68,14 +77,12 @@ namespace Board
                     charIdx++;
                 }
             }
-
-            return this;
         }
 
         public string ToStorableString(RectInt bounds)
         {
             List<char> map = new List<char>();
-            
+
             char GetTileCode(int x, int y)
             {
                 TileBase tile = Get(new Vector2Int(x, y));

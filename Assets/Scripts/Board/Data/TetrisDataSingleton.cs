@@ -8,7 +8,7 @@ namespace Board.Data
         IStorableDataProvider
         where T2 : MonoBehaviour
     {
-        protected T1 CurrentValue;
+        protected virtual T1 CurrentValue { get; set; }
 
         public void OnEnable()
         {
@@ -35,11 +35,6 @@ namespace Board.Data
         public T1 Value()
         {
             return CurrentValue;
-        }
-
-        public override string ToString()
-        {
-            return CurrentValue.ToString();
         }
 
         public void Store(IStorable storable)

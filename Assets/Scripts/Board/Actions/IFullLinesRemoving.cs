@@ -4,6 +4,6 @@ namespace Board.Actions
 {
     public interface IFullLinesRemoving
     {
-        void Execute(ITilemapController tilemap, RectInt bounds);
+        void Execute(TilemapController tilemap, RectInt bounds);
     }
 }

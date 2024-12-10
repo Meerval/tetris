@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Board.Data;
-using Board.Data.UI;
 using Board.Pieces;
 using Templates.Singleton;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace Board
     {
         [SerializeField] private TilemapController tilemapPrefab;
 
-        private ITilemapController _tilemap;
+        private TilemapController _tilemap;
 
         private Vector2Int _size;
         private RectInt _bounds;
@@ -27,11 +26,12 @@ namespace Board
 
             _tilemap = Instantiate(tilemapPrefab, gameObject.transform);
 
-            ((TilemapController)_tilemap).gameObject.name = "Tilemap";
+            _tilemap.gameObject.name = "PredictedTilemap";
+            _tilemap.Load(TetrisInfo.Instance.TilesPosition()[_tilemap.gameObject.name], _bounds);
 
             Debug.Log
             (
-                $"PredictionGrid awoke with size of {_size.ToString()} and bounds {_bounds.ToString()}"
+                $"PiecePredictor started with size of {_size.ToString()} and bounds {_bounds.ToString()}"
             );
         }
 
@@ -52,6 +52,8 @@ namespace Board
             piece.name = piece.ToString();
             _predictedPiece = piece;
             SetPiece();
+
+            EventsHub.OnGridUpdated.Trigger(_tilemap, _bounds);
         }
 
         private void Clear()

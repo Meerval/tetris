@@ -7,11 +7,11 @@ namespace Board.Pieces
     {
         C,
         B,
-        O,
-        Y,
         G,
+        O,
         P,
         R,
+        Y,
         Null
     }
 
@@ -19,7 +19,7 @@ namespace Board.Pieces
     {
         public static ETile Parse(char code)
         {
-            if (code == 0)
+            if (code == '0')
             {
                 return ETile.Null;
             }
