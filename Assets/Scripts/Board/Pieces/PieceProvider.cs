@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Board.Pieces
 {
-    public class PiecePrefabs : MonoBehaviourSingleton<PiecePrefabs>
+    public class PieceProvider : MonoBehaviourSingleton<PieceProvider>
     {
         [SerializeField] private List<Piece> piecePrefabs;
 

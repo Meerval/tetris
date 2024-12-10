@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Systems.Pretty;
+﻿using System.Collections.Generic;
 using Templates.Singleton;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Random = UnityEngine.Random;
 
 namespace Board.Pieces
 {
@@ -15,8 +12,8 @@ namespace Board.Pieces
         [SerializeField] private TileBase green; 
         [SerializeField] private TileBase orange; 
         [SerializeField] private TileBase purple; 
-        [SerializeField] private TileBase yellow; 
         [SerializeField] private TileBase red;
+        [SerializeField] private TileBase yellow; 
         public Dictionary<ETile, TileBase> Tiles { get; set; }
 
         protected override void AfterAwake()

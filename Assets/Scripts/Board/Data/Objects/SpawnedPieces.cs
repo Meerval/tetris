@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Board.Actions;
 using Board.Pieces;
 using Systems.Parsers.Object;
 using Systems.Pretty;
@@ -55,7 +54,7 @@ namespace Board.Data.Objects
                 
                 IPiece CreateIPiece(char c)
                 {
-                    IPiece piece = PiecePrefabs.Instance.Get(EPieceParser.Parse(c));
+                    IPiece piece = PieceProvider.Instance.Get(EPieceParser.Parse(c));
                     return piece;
                 }
                 

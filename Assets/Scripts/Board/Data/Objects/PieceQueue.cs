@@ -2,10 +2,8 @@
 using System.Linq;
 using Board.Pieces;
 using Systems.Parsers.Object;
-using Systems.Pretty;
 using Systems.Storage;
 using Systems.Storage.POCO;
-using UnityEngine;
 
 namespace Board.Data.Objects
 {
@@ -34,7 +32,7 @@ namespace Board.Data.Objects
             CurrentValue ??= InitialData.RandomQueue;
             while (CurrentValue.Count < 2)
             {
-                CurrentValue.Enqueue(PiecePrefabs.Instance.GetRandom());
+                CurrentValue.Enqueue(PieceProvider.Instance.GetRandom());
             }
         }
 
@@ -58,7 +56,7 @@ namespace Board.Data.Objects
 
                 IPiece CreateIPiece(char c)
                 {
-                    IPiece piece = PiecePrefabs.Instance.Get(EPieceParser.Parse(c));
+                    IPiece piece = PieceProvider.Instance.Get(EPieceParser.Parse(c));
                     return piece;
                 }
 
@@ -89,7 +87,7 @@ namespace Board.Data.Objects
                 Queue<IPiece> queue = new();
                 while (queue.Count < count)
                 {
-                    queue.Enqueue(PiecePrefabs.Instance.GetRandom());
+                    queue.Enqueue(PieceProvider.Instance.GetRandom());
                 }
 
                 return queue;

@@ -16,7 +16,7 @@ namespace Board.Data
         private ITetrisData<float> _pieceDropDelay;
         private ITetrisData<List<(int, IPiece)>> _spawnPieces;
         private ITetrisData<Queue<IPiece>> _pieceQueue;
-        private ITetrisData<List<List<TileBase>>> _tilesPosition;
+        private ITetrisData<string> _tilesPosition;
         private IPiece _activePiece;
         private ITetrisData<int> _level;
         private ITetrisData<long> _score;
@@ -79,7 +79,7 @@ namespace Board.Data
             return _pieceQueue.Value();
         }
 
-        public List<List<TileBase>> TilesPosition()
+        public string TilesPosition()
         {
             return _tilesPosition.Value();
         }
