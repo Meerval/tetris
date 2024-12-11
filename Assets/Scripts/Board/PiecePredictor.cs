@@ -37,12 +37,12 @@ namespace Board
 
         public void OnEnable()
         {
-            EventsHub.OnSpawnPiece.AddSubscriber(Predict);
+            EventsHub.OnPieceSpawn.AddSubscriber(Predict);
         }
 
         public void OnDisable()
         {
-            EventsHub.OnSpawnPiece.RemoveSubscriber(Predict);
+            EventsHub.OnPieceSpawn.RemoveSubscriber(Predict);
         }
 
         public void Predict(IPiece currentPiece)

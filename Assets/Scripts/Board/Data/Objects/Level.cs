@@ -16,12 +16,12 @@ namespace Board.Data.Objects
 
         protected override void SubscribeDisplayableDataAction()
         {
-            EventsHub.OnSpawnPiece.AddSubscriber(StepUp, 1);
+            EventsHub.OnPieceSpawn.AddSubscriber(StepUp, 1);
         }
 
         protected override void UnsubscribeDisplayableDataAction()
         {
-            EventsHub.OnSpawnPiece.RemoveSubscriber(StepUp);
+            EventsHub.OnPieceSpawn.RemoveSubscriber(StepUp);
         }
 
         private void StepUp(IPiece _)

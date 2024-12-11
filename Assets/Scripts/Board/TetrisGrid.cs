@@ -69,7 +69,7 @@ namespace Board
             if (!IsAvailablePosition(_spawnPosition)) return false;
             _activePiecePosition = _spawnPosition;
             SetPiece(_activePiecePosition);
-            EventsHub.OnSpawnPiece.Trigger(_activePiece);
+            EventsHub.OnPieceSpawn.Trigger(_activePiece);
             return true;
         }
 

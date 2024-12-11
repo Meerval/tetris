@@ -19,12 +19,12 @@ namespace Board.Data.Objects
 
         protected override void SubscribeDataAction()
         {
-            EventsHub.OnSpawnPiece.AddSubscriber(UpdateQueue);
+            EventsHub.OnPieceSpawn.AddSubscriber(UpdateQueue);
         }
 
         protected override void UnsubscribeDataAction()
         {
-            EventsHub.OnSpawnPiece.RemoveSubscriber(UpdateQueue);
+            EventsHub.OnPieceSpawn.RemoveSubscriber(UpdateQueue);
         }
 
         private void UpdateQueue(IPiece _)

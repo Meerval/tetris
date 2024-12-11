@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Board.Data.Objects;
 using Board.Pieces;
 using Systems.Storage;
 using Templates.Singleton;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Board.Data
 {
@@ -17,7 +15,7 @@ namespace Board.Data
         private ITetrisData<List<(int, IPiece)>> _spawnPieces;
         private ITetrisData<Queue<IPiece>> _pieceQueue;
         private ITetrisData<Dictionary<string, string>> _tilesPosition;
-        private IPiece _activePiece;
+        private ITetrisData<IPiece> _activePiece;
         private ITetrisData<int> _level;
         private ITetrisData<long> _score;
         private ITetrisData<long> _recordScore;
@@ -30,6 +28,7 @@ namespace Board.Data
             _spawnPieces = gameObject.AddComponent<SpawnedPieces>();
             _pieceQueue = gameObject.AddComponent<PieceQueue>();
             _tilesPosition = gameObject.AddComponent<TilesPosition>();
+            _activePiece = gameObject.AddComponent<ActivePiece>();
             _level = GetComponentInChildren<Level>();
             _score = GetComponentInChildren<Score>();
             _recordScore = GetComponentInChildren<RecordScore>();
@@ -70,7 +69,6 @@ namespace Board.Data
 
         public List<(int, IPiece)> SpawnPieces()
         {
-            _activePiece = _spawnPieces.Value().Last().Item2;
             return _spawnPieces.Value();
         }
 
@@ -86,7 +84,7 @@ namespace Board.Data
 
         public IPiece ActivePiece()
         {
-            return _activePiece;
+            return _activePiece.Value();
         }
     }
 }

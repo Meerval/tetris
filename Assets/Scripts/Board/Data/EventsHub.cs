@@ -14,7 +14,9 @@ namespace Board.Data
             = new TetrisEvent<TilemapController, RectInt>();
 
         public static readonly IEvent OnWaitForPiece = new TetrisEvent();
-        public static readonly IEvent<IPiece> OnSpawnPiece = new TetrisEvent<IPiece>();
+        public static readonly IEvent<IPiece> OnPieceSpawn = new TetrisEvent<IPiece>();
+        public static readonly IEvent<Vector2Int> OnPieceMove = new TetrisEvent<Vector2Int>();
+        public static readonly IEvent<Vector2Int[]> OnPieceRotate = new TetrisEvent<Vector2Int[]>();
         public static readonly IEvent OnLevelUp = new TetrisEvent();
         public static readonly IEvent<int> OnScoreUp = new TetrisEvent<int>();
         public static readonly IEvent<EGameOverReason> OnGameOver = new TetrisEvent<EGameOverReason>();

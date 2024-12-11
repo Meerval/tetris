@@ -16,12 +16,12 @@ namespace Board.Data.Objects
 
         protected override void SubscribeDataAction()
         {
-            EventsHub.OnSpawnPiece.AddSubscriber(AddPieceToSpawnedPieces, 1);
+            EventsHub.OnPieceSpawn.AddSubscriber(AddPieceToSpawnedPieces, 1);
         }
 
         protected override void UnsubscribeDataAction()
         {
-            EventsHub.OnSpawnPiece.RemoveSubscriber(AddPieceToSpawnedPieces);
+            EventsHub.OnPieceSpawn.RemoveSubscriber(AddPieceToSpawnedPieces);
         }
 
         private void AddPieceToSpawnedPieces(IPiece piece)

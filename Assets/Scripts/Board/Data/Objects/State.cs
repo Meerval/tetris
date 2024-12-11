@@ -16,14 +16,14 @@ namespace Board.Data.Objects
         protected override void SubscribeDataAction()
         {
             EventsHub.OnWaitForPiece.AddSubscriber(WaitForActivePiece);
-            EventsHub.OnSpawnPiece.AddSubscriber(PieceInProgress);
+            EventsHub.OnPieceSpawn.AddSubscriber(PieceInProgress);
             EventsHub.OnGameOver.AddSubscriber(SetOverGame);
         }
 
         protected override void UnsubscribeDataAction()
         {
             EventsHub.OnWaitForPiece.RemoveSubscriber(WaitForActivePiece);
-            EventsHub.OnSpawnPiece.RemoveSubscriber(PieceInProgress);
+            EventsHub.OnPieceSpawn.RemoveSubscriber(PieceInProgress);
             EventsHub.OnGameOver.RemoveSubscriber(SetOverGame);
         }
 
