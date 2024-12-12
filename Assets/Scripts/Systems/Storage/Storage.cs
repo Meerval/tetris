@@ -45,7 +45,7 @@ namespace Systems.Storage
                     data => Debug.LogWarning
                     (
                         $"Can't restore data for object with id='{data.Id}':\n" +
-                        $"there is no id='{data.Id}' in id-type map='{new PrettyDictionary<string, IStorable>(_idMap)}'"
+                        $"there is no id='{data.Id}' within id-type map keys ='{new PrettyArray<string>(_idMap.Keys.ToList())}'"
                     )
                 );
 

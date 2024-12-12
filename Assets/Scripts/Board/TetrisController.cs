@@ -115,7 +115,6 @@ namespace Board
         public void SpawnPieceAsWill()
         {
             if (IsPieceSpawnUnavailable()) return;
-            Storage.Instance.SaveGame();
             if (!_tetrisGrid.PieceSpawnRandom()) EventsHub.OnGameOver.Trigger(EGameOverReason.GridFilled);
             else _timerOfDrop.UpdateTimeout();
         }

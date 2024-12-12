@@ -30,6 +30,8 @@ namespace Board.Data.Objects
             if (_currentStep < _stepCount)
             {
                 Debug.Log($"Step updated: {_currentStep}/{_stepCount}");
+
+                Storage.Instance.SaveGame();
                 return;
             }
 
@@ -39,6 +41,8 @@ namespace Board.Data.Objects
             Debug.Log($"Level updated: {CurrentValue}");
             EventsHub.OnLevelUp.Trigger();
             DisplayCurrentValue();
+
+            Storage.Instance.SaveGame();
         }
 
         private class LevelStorable : IStorable
@@ -48,8 +52,8 @@ namespace Board.Data.Objects
 
             public StorableData StorableData => new(Id, new Dictionary<string, object>
                 {
-                    { Key.Level, _level.CurrentValue }, 
-                    { Key.Step, _level._currentStep }, 
+                    { Key.Level, _level.CurrentValue },
+                    { Key.Step, _level._currentStep },
                     { Key.StepCount, _level._stepCount },
                 }
             );

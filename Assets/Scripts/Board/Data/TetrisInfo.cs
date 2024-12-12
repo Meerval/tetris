@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Board.Data.Objects;
 using Board.Pieces;
 using Systems.Storage;
@@ -15,7 +16,8 @@ namespace Board.Data
         private ITetrisData<List<(int, IPiece)>> _spawnPieces;
         private ITetrisData<Queue<IPiece>> _pieceQueue;
         private ITetrisData<Dictionary<string, string>> _tilesPosition;
-        private ITetrisData<IPiece> _activePiece;
+        private ITetrisData<Vector2Int> _activePiecePosition;
+        private ITetrisData<Vector2Int[]> _activePieceShape;
         private ITetrisData<int> _level;
         private ITetrisData<long> _score;
         private ITetrisData<long> _recordScore;
@@ -28,7 +30,8 @@ namespace Board.Data
             _spawnPieces = gameObject.AddComponent<SpawnedPieces>();
             _pieceQueue = gameObject.AddComponent<PieceQueue>();
             _tilesPosition = gameObject.AddComponent<TilesPosition>();
-            _activePiece = gameObject.AddComponent<ActivePiece>();
+            _activePiecePosition = gameObject.AddComponent<ActivePiecePosition>();
+            _activePieceShape = gameObject.AddComponent<ActivePieceShape>();
             _level = GetComponentInChildren<Level>();
             _score = GetComponentInChildren<Score>();
             _recordScore = GetComponentInChildren<RecordScore>();
@@ -84,7 +87,17 @@ namespace Board.Data
 
         public IPiece ActivePiece()
         {
-            return _activePiece.Value();
+            return _spawnPieces.Value().Last().Item2;
+        }
+
+        public Vector2Int ActivePiecePosition()
+        {
+            return _activePiecePosition.Value();
+        }
+
+        public Vector2Int[] ActivePieceShape()
+        {
+            return _activePieceShape.Value();
         }
     }
 }

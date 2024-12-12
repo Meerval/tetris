@@ -58,6 +58,25 @@ namespace Board
             _projectedTilemap.Load(loadData[_projectedTilemap.name], _bounds);
             _activeTilemap.Load(loadData[_activeTilemap.name], _bounds);
             _lockedTilemap.Load(loadData[_lockedTilemap.name], _bounds);
+
+            if (TetrisInfo.Instance.ActivePiece() != null)
+            {
+                Piece piece = Instantiate((Piece)TetrisInfo.Instance.ActivePiece(), gameObject.transform);
+                piece.name = piece.ToString();
+                _activePiece = piece;
+                _activePiecePosition = TetrisInfo.Instance.ActivePiecePosition();
+                SetPiece(_activePiecePosition);
+                var shape = TetrisInfo.Instance.ActivePieceShape().ToArray();
+                int iterCount = 4;
+                Func<bool> predicate = () => _activePiece.CurrentShapeMap().SequenceEqual(shape);
+                while (iterCount > 0 && !predicate.Invoke())
+                {
+                    RotatePiece(Direction.Left);
+                    iterCount--;
+                }
+                EventsHub.OnPieceSpawn.Trigger(_activePiece);
+                EventsHub.OnPieceShift.Trigger(_activePiecePosition);
+            }
         }
 
         public bool SpawnNewPiece()
@@ -70,6 +89,7 @@ namespace Board
             _activePiecePosition = _spawnPosition;
             SetPiece(_activePiecePosition);
             EventsHub.OnPieceSpawn.Trigger(_activePiece);
+            EventsHub.OnPieceShift.Trigger(_activePiecePosition);
             return true;
         }
 
@@ -127,6 +147,7 @@ namespace Board
                 _activeTilemap.ClearAll();
                 _projectedTilemap.ClearAll();
                 SetPiece(newPosition);
+                EventsHub.OnPieceShift.Trigger(_activePiecePosition);
                 return true;
             }
 
@@ -167,6 +188,7 @@ namespace Board
                 _activeTilemap.ClearAll();
                 _projectedTilemap.ClearAll();
                 SetPiece(_activePiecePosition);
+                EventsHub.OnPieceRotate.Trigger(_activePiece.CurrentShapeMap());
                 return true;
             }
 

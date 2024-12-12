@@ -34,6 +34,8 @@ namespace Board.Data.Objects
             {
                 CurrentValue.Enqueue(PieceProvider.Instance.GetRandom());
             }
+            
+            Storage.Instance.SaveGame();
         }
 
         private class PieceQueueStorable : IStorable

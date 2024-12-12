@@ -9,14 +9,10 @@ namespace Board.Data.Objects
 {
     public class RecordScore : DisplayableTetrisDataSingleton<long, RecordScore>
     {
-        private Timestamp _timestamp;
+        private Timestamp _timestamp = Timestamp.Empty;
 
         protected override IStorable StorableTetrisData => new RecordScoreStorable();
         protected override bool IsResettableByNewGame => false;
-
-        protected override void InitForNewGame()
-        {
-        }
 
         protected override void SubscribeDisplayableDataAction()
         {
@@ -30,11 +26,18 @@ namespace Board.Data.Objects
 
         private void UpdateRecordScore(int _)
         {
-            if (TetrisInfo.Instance.Score() < CurrentValue) return;
+            if (TetrisInfo.Instance.Score() < CurrentValue)
+            {
+                
+                Storage.Instance.SaveGame();
+                return;
+            }
             CurrentValue = TetrisInfo.Instance.Score();
             _timestamp = Timestamp.Now;
             Debug.Log($"Record Score Updated: {CurrentValue}");
             DisplayCurrentValue();
+            
+            Storage.Instance.SaveGame();
         }
 
         private class RecordScoreStorable : IStorable

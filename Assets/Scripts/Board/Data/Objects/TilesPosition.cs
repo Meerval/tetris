@@ -37,6 +37,8 @@ namespace Board.Data.Objects
         private void UpdateTileCodes(TilemapController tilemapController, RectInt bounds)
         {
             CurrentValue[tilemapController.name] = tilemapController.ToStorableString(bounds);
+            
+            Storage.Instance.SaveGame();
         }
 
         private class TilesPositionStorable : IStorable
