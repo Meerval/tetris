@@ -205,7 +205,9 @@ namespace Board
             {
                 LockTile(tilePosition, _activePiece.Tile());
             }
-
+            EventsHub.OnGridUpdated.Trigger(_activeTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_lockedTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_projectedTilemap, _bounds);
             Debug.Log($"{_activePiece} locked on position {new PrettyArray<Vector2Int>(tilesPosition).Prettify()}");
         }
 
@@ -222,6 +224,9 @@ namespace Board
             _activeTilemap.ClearAll();
             _projectedTilemap.ClearAll();
             _lockedTilemap.ClearAll();
+            EventsHub.OnGridUpdated.Trigger(_activeTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_lockedTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_projectedTilemap, _bounds);
             Debug.Log("Whole grid cleared");
         }
 
