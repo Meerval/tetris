@@ -11,6 +11,20 @@ namespace Board.Data.Objects
     {
         protected override IStorable StorableTetrisData => new PieceQueueStorable();
         protected override bool IsResettableByNewGame => true;
+        
+        protected override Queue<IPiece> CurrentValue
+        {
+            get
+            {
+                base.CurrentValue ??= InitialData.RandomQueue;
+                while (base.CurrentValue.Count < 1)
+                {
+                    base.CurrentValue.Enqueue(PieceProvider.Instance.GetRandom());
+                }
+                return base.CurrentValue;
+            }
+            set => base.CurrentValue = value;
+        }
 
         protected override void InitForNewGame()
         {
