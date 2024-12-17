@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using Systems.Storage.POCO;
+using Templates.POCO;
 using UnityEngine;
 
 namespace Systems.FileAccess
 {
-    public abstract class FileAccessible : IFileAccessible
+    public abstract class FileAccessible<T> : IFileAccessible<T> where T : Poco, new()
     {
         private readonly string _baseDirectory;
         private readonly string _filePath;
@@ -105,7 +105,7 @@ namespace Systems.FileAccess
             Debug.LogWarning($"File {_filePath} cannot be deleted: file not found");
         }
 
-        public void Overwrite(StorableDataset data)
+        public void Overwrite(T data)
         {
             try
             {
@@ -122,26 +122,26 @@ namespace Systems.FileAccess
             }
         }
 
-        public StorableDataset Read()
+        public T Read()
         {
             try
             {
                 using (StreamReader reader = new(_filePath, Encoding.UTF8))
                 {
-                    StorableDataset data = ReadToEnd(reader);
+                    T data = ReadToEnd(reader);
                     Debug.Log($"Data loaded from file: {_filePath}\nData: {data}");
-                    return data ?? new StorableDataset();
+                    return data ?? new T();
                 }
             }
             catch (Exception e)
             {
                 Debug.LogError($"Failed to load file: {_filePath}, Error: {e.Message}");
-                return new StorableDataset();
+                return new T();
             }
         }
 
-        protected abstract void Overwrite(StorableDataset data, StreamWriter writer);
+        protected abstract void Overwrite(T data, StreamWriter writer);
 
-        protected abstract StorableDataset ReadToEnd(StreamReader reader);
+        protected abstract T ReadToEnd(StreamReader reader);
     }
 }

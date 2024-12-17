@@ -1,0 +1,34 @@
+﻿{
+  "KeyRotateLeft": {
+    "Code": 113,
+    "Key": "Q"
+  },
+  "KeyRotateRight": {
+    "Code": 101,
+    "Key": "E"
+  },
+  "KeyShiftLeft": {
+    "Code": 97,
+    "Key": "A"
+  },
+  "KeyShiftRight": {
+    "Code": 100,
+    "Key": "D"
+  },
+  "KeyShiftDown": {
+    "Code": 115,
+    "Key": "S"
+  },
+  "KeyNewGame": {
+    "Code": 110,
+    "Key": "N"
+  },
+  "KeyPause": {
+    "Code": 112,
+    "Key": "P"
+  },
+  "KeyUnpause": {
+    "Code": 111,
+    "Key": "O"
+  }
+}

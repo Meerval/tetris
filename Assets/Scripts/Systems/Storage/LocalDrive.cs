@@ -12,7 +12,7 @@ namespace Systems.Storage
         private const string SaveFolderName = "Saves";
         private const string SaveFileName = "Saves.json";
 
-        private readonly IFileAccessible _file = new JsonFile(SaveFileName,
+        private readonly IFileAccessible<StorableDataset> _file = new JsonFile<StorableDataset>(SaveFileName,
             Path.Combine(Application.persistentDataPath, SaveFolderName));
 
         public void Save(IEnumerable<IStorable> objectsToSave)

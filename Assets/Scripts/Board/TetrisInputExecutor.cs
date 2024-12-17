@@ -24,52 +24,52 @@ namespace Board
 
         public bool OnRotationLeft(Func<bool> action, out bool isRotated)
         {
-            bool isActed = OnRotationKeyDown(KeyCode.Q, action, out bool rotated);
+            bool isActed = OnRotationKeyDown(KeyMap.KeyRotateLeft, action, out bool rotated);
             isRotated = rotated;
             return isActed;
         }
 
         public bool OnRotationRight(Func<bool> action, out bool isRotated)
         {
-            bool isActed = OnRotationKeyDown(KeyCode.E, action, out bool rotated);
+            bool isActed = OnRotationKeyDown(KeyMap.KeyRotateRight, action, out bool rotated);
             isRotated = rotated;
             return isActed;
         }
 
         public bool OnShiftLeft(Func<bool> action, out bool isShifted)
         {
-            bool isActed = OnShiftKey(KeyCode.A, action, out bool shifted);
+            bool isActed = OnShiftKey(KeyMap.KeyShiftLeft, action, out bool shifted);
             isShifted = shifted;
             return isActed;
         }
 
         public bool OnShiftRight(Func<bool> action, out bool isShifted)
         {
-            bool isActed = OnShiftKey(KeyCode.D, action, out bool shifted);
+            bool isActed = OnShiftKey(KeyMap.KeyShiftRight, action, out bool shifted);
             isShifted = shifted;
             return isActed;
         }
 
         public bool OnShiftDown(Func<bool> action, out bool isShifted)
         {
-            bool isActed = OnShiftKey(KeyCode.S, action, out bool shifted);
+            bool isActed = OnShiftKey(KeyMap.KeyShiftDown, action, out bool shifted);
             isShifted = shifted;
             return isActed;
         }
 
         public bool OnNewGame(Action action)
         {
-            return OnKey(KeyCode.N, action);
+            return OnKey(KeyMap.KeyNewGame, action);
         }
 
         public bool OnPause(Action action)
         {
-            return OnKey(KeyCode.P, action);
+            return OnKey(KeyMap.KeyPause, action);
         }
 
         public bool OnUnpause(Action action)
         {
-            return OnKey(KeyCode.O, action);
+            return OnKey(KeyMap.KeyUnpause, action);
         }
 
         private bool OnRotationKeyDown(KeyCode keyCode, Func<bool> action, out bool isRotated)
@@ -107,6 +107,7 @@ namespace Board
             {
                 return false;
             }
+
             Debug.Log($"[KEY PRESS] {keyCode}");
             action.Invoke();
             return true;

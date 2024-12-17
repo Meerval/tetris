@@ -1,12 +1,12 @@
-﻿using Systems.Storage.POCO;
+﻿using Templates.POCO;
 
 namespace Systems.FileAccess
 {
-    public interface IFileAccessible
+    public interface IFileAccessible<T> where T : Poco
     {
         public void Create();
         public void Delete();
-        public void Overwrite(StorableDataset data);
-        public StorableDataset Read();
+        public void Overwrite(T data);
+        public T Read();
     }
 }
