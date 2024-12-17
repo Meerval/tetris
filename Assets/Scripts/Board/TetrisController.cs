@@ -90,7 +90,6 @@ namespace Board
                 _failedShiftRight.Reset();
             }
         }
-        
 
         public void DetectAndExecuteNewGame()
         {
@@ -100,13 +99,29 @@ namespace Board
             }
         }
 
+        public void DetectAndExecutePause()
+        {
+            if (_inputExecutor.OnPause(() => EventsHub.OnLockBoard.Trigger()))
+            {
+                Debug.LogWarning("Game paused by keyboard");
+            }
+        }
+
+        public void DetectAndExecuteUnpause()
+        {
+            if (_inputExecutor.OnUnpause(() => EventsHub.OnUnlockBoard.Trigger()))
+            {
+                Debug.LogWarning("Game unpaused by keyboard");
+            }
+        }
+        
         public void DropPieceAsTimeout()
         {
             if (IsPieceDropUnavailable()) return;
             if (_tetrisGrid.PieceShiftDown()) _timerOfDrop.UpdateTimeout();
             else
             {
-                if (_info.IsUpdateLocked() || _timerOfLock.IsInProgress()) return;
+                if (_info.IsBoardLocked() || _timerOfLock.IsInProgress()) return;
                 _tetrisGrid.PieceLock();
                 _tetrisGrid.ClearFullLines();
                 EventsHub.OnWaitForPiece.Trigger();
@@ -115,7 +130,7 @@ namespace Board
 
         private bool IsPieceDropUnavailable()
         {
-            return _info.IsUpdateLocked() || _info.State().Equals(EState.WaitForActivePiece) ||
+            return _info.IsBoardLocked() || _info.State().Equals(EState.WaitForActivePiece) ||
                    _timerOfDrop.IsInProgress();
         }
 
@@ -128,7 +143,7 @@ namespace Board
 
         private bool IsPieceSpawnUnavailable()
         {
-            return _info.IsUpdateLocked() || !_info.State().Equals(EState.WaitForActivePiece);
+            return _info.IsBoardLocked() || !_info.State().Equals(EState.WaitForActivePiece);
         }
 
         public void SetNewGame()

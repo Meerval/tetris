@@ -12,14 +12,14 @@ namespace Board.Data.Objects
 
         protected override void SubscribeDataAction()
         {
-            EventsHub.OnWaitCoroutineStart.AddSubscriber(Lock);
-            EventsHub.OnWaitCoroutineEnd.AddSubscriber(Unlock);
+            EventsHub.OnLockBoard.AddSubscriber(Lock);
+            EventsHub.OnUnlockBoard.AddSubscriber(Unlock);
         }
 
         protected override void UnsubscribeDataAction()
         {
-            EventsHub.OnWaitCoroutineStart.RemoveSubscriber(Lock);
-            EventsHub.OnWaitCoroutineEnd.RemoveSubscriber(Unlock);
+            EventsHub.OnLockBoard.RemoveSubscriber(Lock);
+            EventsHub.OnUnlockBoard.RemoveSubscriber(Unlock);
         }
 
         private void Lock()

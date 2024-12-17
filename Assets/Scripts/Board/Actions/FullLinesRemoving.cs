@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Board.Data;
 using Board.Timers;
-using Systems.Events;
 using Systems.Pretty;
 using UnityEngine;
 
@@ -23,7 +22,7 @@ namespace Board.Actions
 
         private IEnumerator Coroutine()
         {
-            EventsHub.OnWaitCoroutineStart.Trigger();
+            EventsHub.OnLockBoard.Trigger();
             List<int> fullLines = new List<int>();
 
             for (int line = _bounds.yMin; line < _bounds.yMax;)
@@ -63,7 +62,7 @@ namespace Board.Actions
                 EventsHub.OnScoreUp.Trigger(fullLines.Count);
             }
 
-            EventsHub.OnWaitCoroutineEnd.Trigger();
+            EventsHub.OnUnlockBoard.Trigger();
         }
         
         private bool IsLineFull(int y)

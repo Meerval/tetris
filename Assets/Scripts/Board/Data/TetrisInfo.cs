@@ -45,7 +45,7 @@ namespace Board.Data
             return _state.Value();
         }
 
-        public bool IsUpdateLocked()
+        public bool IsBoardLocked()
         {
             return _updateLock.Value();
         }

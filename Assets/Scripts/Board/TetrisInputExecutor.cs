@@ -3,7 +3,6 @@ using System.Collections;
 using Board.Data;
 using Board.Timers;
 using Systems.Chrono.Timer;
-using Systems.Events;
 using UnityEngine;
 
 namespace Board
@@ -63,9 +62,19 @@ namespace Board
             return OnKey(KeyCode.N, action);
         }
 
+        public bool OnPause(Action action)
+        {
+            return OnKey(KeyCode.P, action);
+        }
+
+        public bool OnUnpause(Action action)
+        {
+            return OnKey(KeyCode.O, action);
+        }
+
         private bool OnRotationKeyDown(KeyCode keyCode, Func<bool> action, out bool isRotated)
         {
-            if (_info.IsUpdateLocked() || !_info.State().Equals(EState.PieceInProgress) ||
+            if (_info.IsBoardLocked() || !_info.State().Equals(EState.PieceInProgress) ||
                 !Input.GetKeyDown(keyCode))
             {
                 isRotated = false;
@@ -79,7 +88,7 @@ namespace Board
 
         private bool OnShiftKey(KeyCode keyCode, Func<bool> action, out bool isShifted)
         {
-            if (_info.IsUpdateLocked() || !_info.State().Equals(EState.PieceInProgress) ||
+            if (_info.IsBoardLocked() || !_info.State().Equals(EState.PieceInProgress) ||
                 !Input.GetKey(keyCode))
             {
                 isShifted = false;
@@ -105,7 +114,7 @@ namespace Board
 
         private IEnumerator WhileKeyPressedCoroutine(KeyCode keyCode, Func<bool> action)
         {
-            EventsHub.OnWaitCoroutineStart.Trigger();
+            EventsHub.OnLockBoard.Trigger();
             _timerOfClick.UpdateTimeout();
             _isShifted = false;
             while (Input.GetKey(keyCode) && action.Invoke())
@@ -122,7 +131,7 @@ namespace Board
             }
 
             _timerOfMove.ResetTimer();
-            EventsHub.OnWaitCoroutineEnd.Trigger();
+            EventsHub.OnUnlockBoard.Trigger();
         }
     }
 }

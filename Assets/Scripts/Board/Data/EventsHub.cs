@@ -7,8 +7,8 @@ namespace Board.Data
     public static class EventsHub
     {
         public static readonly IEvent OnNewGameStart = new TetrisEvent();
-        public static readonly IEvent OnWaitCoroutineStart = new TetrisEvent();
-        public static readonly IEvent OnWaitCoroutineEnd = new TetrisEvent();
+        public static readonly IEvent OnLockBoard = new TetrisEvent();
+        public static readonly IEvent OnUnlockBoard = new TetrisEvent();
 
         public static readonly IEvent<TilemapController, RectInt> OnGridUpdated
             = new TetrisEvent<TilemapController, RectInt>();
