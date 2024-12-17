@@ -9,5 +9,6 @@ namespace Board
         bool OnShiftLeft(Func<bool> action, out bool isShifted);
         bool OnShiftRight(Func<bool> action, out bool isShifted);
         bool OnShiftDown(Func<bool> action, out bool isShifted);
+        bool OnNewGame(Action action);
     }
 }

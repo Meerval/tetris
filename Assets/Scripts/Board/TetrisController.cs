@@ -2,13 +2,11 @@
 using Board.Timers;
 using Systems.Accumulator;
 using Systems.Chrono.Timer;
-using Systems.Events;
-using Systems.Storage;
 using UnityEngine;
 
 namespace Board
 {
-    public class TetrisController : MonoBehaviour, IController
+    public class TetrisController : MonoBehaviour
     {
         private IGridController _tetrisGrid;
         private IInputExecutor _inputExecutor;
@@ -90,6 +88,15 @@ namespace Board
                 _failedShiftDown.Reset();
                 _failedShiftLeft.Reset();
                 _failedShiftRight.Reset();
+            }
+        }
+        
+
+        public void DetectAndExecuteNewGame()
+        {
+            if (_inputExecutor.OnNewGame(SetNewGame))
+            {
+                Debug.Log("New game started by keyboard");
             }
         }
 

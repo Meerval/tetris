@@ -25,40 +25,45 @@ namespace Board
 
         public bool OnRotationLeft(Func<bool> action, out bool isRotated)
         {
-            bool isActed = IsRotationKeyDown(KeyCode.Q, action, out bool rotated);
+            bool isActed = OnRotationKeyDown(KeyCode.Q, action, out bool rotated);
             isRotated = rotated;
             return isActed;
         }
 
         public bool OnRotationRight(Func<bool> action, out bool isRotated)
         {
-            bool isActed = IsRotationKeyDown(KeyCode.E, action, out bool rotated);
+            bool isActed = OnRotationKeyDown(KeyCode.E, action, out bool rotated);
             isRotated = rotated;
             return isActed;
         }
 
         public bool OnShiftLeft(Func<bool> action, out bool isShifted)
         {
-            bool isActed = IsShiftKey(KeyCode.A, action, out bool shifted);
+            bool isActed = OnShiftKey(KeyCode.A, action, out bool shifted);
             isShifted = shifted;
             return isActed;
         }
 
         public bool OnShiftRight(Func<bool> action, out bool isShifted)
         {
-            bool isActed = IsShiftKey(KeyCode.D, action, out bool shifted);
+            bool isActed = OnShiftKey(KeyCode.D, action, out bool shifted);
             isShifted = shifted;
             return isActed;
         }
 
         public bool OnShiftDown(Func<bool> action, out bool isShifted)
         {
-            bool isActed = IsShiftKey(KeyCode.S, action, out bool shifted);
+            bool isActed = OnShiftKey(KeyCode.S, action, out bool shifted);
             isShifted = shifted;
             return isActed;
         }
 
-        private bool IsRotationKeyDown(KeyCode keyCode, Func<bool> action, out bool isRotated)
+        public bool OnNewGame(Action action)
+        {
+            return OnKey(KeyCode.N, action);
+        }
+
+        private bool OnRotationKeyDown(KeyCode keyCode, Func<bool> action, out bool isRotated)
         {
             if (_info.IsUpdateLocked() || !_info.State().Equals(EState.PieceInProgress) ||
                 !Input.GetKeyDown(keyCode))
@@ -72,7 +77,7 @@ namespace Board
             return true;
         }
 
-        private bool IsShiftKey(KeyCode keyCode, Func<bool> action, out bool isShifted)
+        private bool OnShiftKey(KeyCode keyCode, Func<bool> action, out bool isShifted)
         {
             if (_info.IsUpdateLocked() || !_info.State().Equals(EState.PieceInProgress) ||
                 !Input.GetKey(keyCode))
@@ -84,6 +89,17 @@ namespace Board
             StartCoroutine(WhileKeyPressedCoroutine(keyCode, action));
             Debug.Log($"[KEY PRESS] {keyCode}");
             isShifted = _isShifted;
+            return true;
+        }
+
+        private bool OnKey(KeyCode keyCode, Action action)
+        {
+            if (!Input.GetKey(keyCode))
+            {
+                return false;
+            }
+            Debug.Log($"[KEY PRESS] {keyCode}");
+            action.Invoke();
             return true;
         }
 

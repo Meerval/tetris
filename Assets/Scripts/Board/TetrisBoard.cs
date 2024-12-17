@@ -7,23 +7,12 @@ namespace Board
 {
     public class TetrisBoard : MonoBehaviour
     {
-        private IController _controller;
+        private TetrisController _controller;
 
         public void Start()
         {
             _controller = GetComponentInChildren<TetrisController>();
-            Debug.Log("TetrisBoard started");
-        }
-
-        private void OnEnable()
-        {
-            EventsHub.OnGameOver.AddSubscriber(GameOver, 1);
-        }
-
-
-        private void OnDisable()
-        {
-            EventsHub.OnGameOver.RemoveSubscriber(GameOver);
+            Debug.Log("TetrisBoard class started");
         }
 
         public void Update()
@@ -32,13 +21,6 @@ namespace Board
             _controller.DetectAndExecutePieceShift();
             _controller.DropPieceAsTimeout();
             _controller.SpawnPieceAsWill();
-        }
-
-        private void GameOver(EGameOverReason reason)
-        {
-            Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisInfo.Instance.Level()}, " +
-                      $"score: {TetrisInfo.Instance.Score()}");
-            _controller.SetNewGame();
         }
     }
 }
