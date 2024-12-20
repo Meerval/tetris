@@ -93,35 +93,34 @@ namespace Board
 
         public void DetectAndExecuteNewGame()
         {
-            if (_inputExecutor.OnNewGame(SetNewGame))
+            _inputExecutor.OnNewGame(() =>
             {
+                SetNewGame();
                 Debug.Log("New game started by keyboard");
-            }
+            });
         }
 
         public void DetectAndExecutePause()
         {
-            bool Action()
+            _inputExecutor.OnPauseGame(() =>
             {
-                if (_info.TetrisStage() == ETetrisStage.OnPauseMenu)
-                {
-                    EventsHub.OnUnlockBoard.Trigger();
-                    EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
-                    return true;
-                } 
                 if (_info.TetrisStage() == ETetrisStage.OnGame)
                 {
                     EventsHub.OnLockBoard.Trigger();
                     EventsHub.OnStageChanged.Trigger(ETetrisStage.OnPauseMenu);
-                    return true;
+                    Debug.Log("Game paused by keyboard");
                 }
-                return false;
-            }
-
-            if (_inputExecutor.OnPauseGame(Action, out bool isActed))
-            {
-                if (isActed) Debug.LogWarning("Game paused by keyboard");
-            }
+                else if (_info.TetrisStage() == ETetrisStage.OnPauseMenu)
+                {
+                    EventsHub.OnUnlockBoard.Trigger();
+                    EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
+                    Debug.Log("Game continued by keyboard");
+                }
+                else
+                {
+                    Debug.LogWarning("There is no game to pause or continue");
+                }
+            });
         }
 
         public void DropPieceAsTimeout()

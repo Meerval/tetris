@@ -57,16 +57,14 @@ namespace Board
             return isActed;
         }
 
-        public bool OnNewGame(Action action)
+        public void OnNewGame(Action action)
         {
-            return OnKeyDown(KeyMap.KeyNewGame, action);
+            OnKeyDown(KeyMap.KeyNewGame, action);
         }
 
-        public bool OnPauseGame(Func<bool> action, out bool isActed)
+        public void OnPauseGame(Action action)
         {
-            bool isPaused = OnKeyDown(KeyMap.KeyPause, action, out bool acted);
-            isActed = acted;
-            return isPaused;
+            OnKeyDown(KeyMap.KeyPause, action);
         }
 
         private bool OnRotationKeyDown(KeyCode keyCode, Func<bool> action, out bool isRotated)
@@ -98,29 +96,13 @@ namespace Board
             return true;
         }
 
-        private bool OnKeyDown(KeyCode keyCode, Action action)
+        private void OnKeyDown(KeyCode keyCode, Action action)
         {
-            if (!Input.GetKeyDown(keyCode))
+            if (Input.GetKeyDown(keyCode))
             {
-                return false;
+                Debug.Log($"[KEY PRESS] {keyCode}");
+                action.Invoke();
             }
-
-            Debug.Log($"[KEY PRESS] {keyCode}");
-            action.Invoke();
-            return true;
-        }
-
-        private bool OnKeyDown(KeyCode keyCode, Func<bool> action, out bool isActed)
-        {
-            if (!Input.GetKeyDown(keyCode))
-            {
-                isActed = false;
-                return false;
-            }
-
-            Debug.Log($"[KEY PRESS] {keyCode}");
-            isActed = action.Invoke();
-            return true;
         }
 
         private IEnumerator WhileKeyPressedCoroutine(KeyCode keyCode, Func<bool> action)
