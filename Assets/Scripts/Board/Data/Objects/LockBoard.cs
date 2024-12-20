@@ -41,7 +41,7 @@ namespace Board.Data.Objects
 
             public StorableData StorableData => new(Id, new Dictionary<string, object>
                 {
-                    { Key.IsLocked, _lockBoard.CurrentValue.ToString() }
+                    { Key.IsLocked, "False" }
                 }
             );
 

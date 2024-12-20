@@ -3,6 +3,7 @@ using Board.Timers;
 using Systems.Accumulator;
 using Systems.Chrono.Timer;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Board
 {
@@ -104,22 +105,9 @@ namespace Board
         {
             _inputExecutor.OnPauseGame(() =>
             {
-                if (_info.TetrisStage() == ETetrisStage.OnGame)
-                {
-                    EventsHub.OnLockBoard.Trigger();
-                    EventsHub.OnStageChanged.Trigger(ETetrisStage.OnPauseMenu);
-                    Debug.Log("Game paused by keyboard");
-                }
-                else if (_info.TetrisStage() == ETetrisStage.OnPauseMenu)
-                {
-                    EventsHub.OnUnlockBoard.Trigger();
-                    EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
-                    Debug.Log("Game continued by keyboard");
-                }
-                else
-                {
-                    Debug.LogWarning("There is no game to pause or continue");
-                }
+                EventsHub.OnStageChanged.Trigger(ETetrisStage.OnPauseMenu);
+                SceneManager.LoadScene("MainMenu");
+                Debug.Log("Game paused by keyboard");
             });
         }
 

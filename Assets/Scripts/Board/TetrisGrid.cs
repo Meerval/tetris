@@ -61,7 +61,7 @@ namespace Board
 
             if (TetrisInfo.Instance.ActivePiece() != null)
             {
-                Piece piece = Instantiate((Piece)TetrisInfo.Instance.ActivePiece(), gameObject.transform);
+                Piece piece = Instantiate((Piece) PieceProvider.Instance.Get(TetrisInfo.Instance.ActivePiece().PieceType), gameObject.transform);
                 piece.name = piece.ToString();
                 _activePiece = piece;
                 _activePiecePosition = TetrisInfo.Instance.ActivePiecePosition();
