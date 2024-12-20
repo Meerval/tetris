@@ -6,6 +6,7 @@ namespace Board.Data
 {
     public static class EventsHub
     {
+        public static readonly IEvent<ETetrisStage> OnStageChanged = new TetrisEvent<ETetrisStage>();
         public static readonly IEvent OnNewGameStart = new TetrisEvent();
         public static readonly IEvent OnLockBoard = new TetrisEvent();
         public static readonly IEvent OnUnlockBoard = new TetrisEvent();

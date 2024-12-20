@@ -59,22 +59,19 @@ namespace Board
 
         public bool OnNewGame(Action action)
         {
-            return OnKey(KeyMap.KeyNewGame, action);
+            return OnKeyDown(KeyMap.KeyNewGame, action);
         }
 
-        public bool OnPause(Action action)
+        public bool OnPauseGame(Func<bool> action, out bool isActed)
         {
-            return OnKey(KeyMap.KeyPause, action);
-        }
-
-        public bool OnUnpause(Action action)
-        {
-            return OnKey(KeyMap.KeyUnpause, action);
+            bool isPaused = OnKeyDown(KeyMap.KeyPause, action, out bool acted);
+            isActed = acted;
+            return isPaused;
         }
 
         private bool OnRotationKeyDown(KeyCode keyCode, Func<bool> action, out bool isRotated)
         {
-            if (_info.IsBoardLocked() || !_info.State().Equals(EState.PieceInProgress) ||
+            if (_info.IsBoardLocked() || !_info.BoardState().Equals(EBoardState.PieceInProgress) ||
                 !Input.GetKeyDown(keyCode))
             {
                 isRotated = false;
@@ -88,7 +85,7 @@ namespace Board
 
         private bool OnShiftKey(KeyCode keyCode, Func<bool> action, out bool isShifted)
         {
-            if (_info.IsBoardLocked() || !_info.State().Equals(EState.PieceInProgress) ||
+            if (_info.IsBoardLocked() || !_info.BoardState().Equals(EBoardState.PieceInProgress) ||
                 !Input.GetKey(keyCode))
             {
                 isShifted = false;
@@ -101,15 +98,28 @@ namespace Board
             return true;
         }
 
-        private bool OnKey(KeyCode keyCode, Action action)
+        private bool OnKeyDown(KeyCode keyCode, Action action)
         {
-            if (!Input.GetKey(keyCode))
+            if (!Input.GetKeyDown(keyCode))
             {
                 return false;
             }
 
             Debug.Log($"[KEY PRESS] {keyCode}");
             action.Invoke();
+            return true;
+        }
+
+        private bool OnKeyDown(KeyCode keyCode, Func<bool> action, out bool isActed)
+        {
+            if (!Input.GetKeyDown(keyCode))
+            {
+                isActed = false;
+                return false;
+            }
+
+            Debug.Log($"[KEY PRESS] {keyCode}");
+            isActed = action.Invoke();
             return true;
         }
 

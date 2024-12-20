@@ -8,23 +8,21 @@ using UnityEngine;
 
 namespace Board.Data.Objects
 {
-    public class State : TetrisDataSingleton<EState, State>
+    public class BoardState : TetrisDataSingleton<EBoardState, BoardState>
     {
-        protected override IStorable StorableTetrisData => new StateStorable();
+        protected override IStorable StorableTetrisData => new BoardStateStorable();
         protected override bool IsResettableByNewGame => true;
 
         protected override void SubscribeDataAction()
         {
             EventsHub.OnWaitForPiece.AddSubscriber(WaitForActivePiece);
             EventsHub.OnPieceSpawn.AddSubscriber(PieceInProgress);
-            EventsHub.OnGameOver.AddSubscriber(SetOverGame);
         }
 
         protected override void UnsubscribeDataAction()
         {
             EventsHub.OnWaitForPiece.RemoveSubscriber(WaitForActivePiece);
             EventsHub.OnPieceSpawn.RemoveSubscriber(PieceInProgress);
-            EventsHub.OnGameOver.RemoveSubscriber(SetOverGame);
         }
 
         private void WaitForActivePiece()
@@ -37,23 +35,15 @@ namespace Board.Data.Objects
 
         private void PieceInProgress(IPiece activePiece)
         {
-            CurrentValue = EState.PieceInProgress;
+            CurrentValue = EBoardState.PieceInProgress;
             Debug.Log($"[STATE UPDATE: {CurrentValue}] {activePiece} in progress");
             
             Storage.Instance.SaveGame();
         }
 
-        private void SetOverGame(EGameOverReason _)
+        private class BoardStateStorable : IStorable
         {
-            CurrentValue = EState.GameOver;
-            Debug.Log($"[STATE UPDATE: {CurrentValue}] Game Over!");
-            
-            Storage.Instance.SaveGame();
-        }
-
-        private class StateStorable : IStorable
-        {
-            private readonly State _state = Instance;
+            private readonly BoardState _state = Instance;
             public string Id => Key.Id;
 
             public StorableData StorableData => new(Id, new Dictionary<string, object>
@@ -65,7 +55,7 @@ namespace Board.Data.Objects
             public void Load(StorableData data)
             {
                 string stateName = ObjectToString.TryParse(data.Data[Key.State]).OrElse(InitialData.State.ToString());
-                _state.CurrentValue = Enum.TryParse(stateName, out EState state) ? state : InitialData.State;
+                _state.CurrentValue = Enum.TryParse(stateName, out EBoardState state) ? state : InitialData.State;
             }
 
             public void LoadInitial()
@@ -76,14 +66,14 @@ namespace Board.Data.Objects
 
             private struct Key
             {
-                public const string Id = "State";
+                public const string Id = "BoardState";
                 public const string State = "State";
             }
         }
 
         private struct InitialData
         {
-            public const EState State = EState.WaitForActivePiece;
+            public const EBoardState State = EBoardState.WaitForActivePiece;
         }
     }
 }

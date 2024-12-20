@@ -24,11 +24,11 @@
     "Key": "N"
   },
   "KeyPause": {
-    "Code": 112,
-    "Key": "P"
+    "Code": 27,
+    "Key": "Escape"
   },
-  "KeyUnpause": {
-    "Code": 111,
-    "Key": "O"
+  "KeyContinue": {
+    "Code": 27,
+    "Key": "Escape"
   }
 }

@@ -101,20 +101,29 @@ namespace Board
 
         public void DetectAndExecutePause()
         {
-            if (_inputExecutor.OnPause(() => EventsHub.OnLockBoard.Trigger()))
+            bool Action()
             {
-                Debug.LogWarning("Game paused by keyboard");
+                if (_info.TetrisStage() == ETetrisStage.OnPauseMenu)
+                {
+                    EventsHub.OnUnlockBoard.Trigger();
+                    EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
+                    return true;
+                } 
+                if (_info.TetrisStage() == ETetrisStage.OnGame)
+                {
+                    EventsHub.OnLockBoard.Trigger();
+                    EventsHub.OnStageChanged.Trigger(ETetrisStage.OnPauseMenu);
+                    return true;
+                }
+                return false;
+            }
+
+            if (_inputExecutor.OnPauseGame(Action, out bool isActed))
+            {
+                if (isActed) Debug.LogWarning("Game paused by keyboard");
             }
         }
 
-        public void DetectAndExecuteUnpause()
-        {
-            if (_inputExecutor.OnUnpause(() => EventsHub.OnUnlockBoard.Trigger()))
-            {
-                Debug.LogWarning("Game unpaused by keyboard");
-            }
-        }
-        
         public void DropPieceAsTimeout()
         {
             if (IsPieceDropUnavailable()) return;
@@ -130,7 +139,7 @@ namespace Board
 
         private bool IsPieceDropUnavailable()
         {
-            return _info.IsBoardLocked() || _info.State().Equals(EState.WaitForActivePiece) ||
+            return _info.IsBoardLocked() || _info.BoardState().Equals(EBoardState.WaitForActivePiece) ||
                    _timerOfDrop.IsInProgress();
         }
 
@@ -143,7 +152,7 @@ namespace Board
 
         private bool IsPieceSpawnUnavailable()
         {
-            return _info.IsBoardLocked() || !_info.State().Equals(EState.WaitForActivePiece);
+            return _info.IsBoardLocked() || !_info.BoardState().Equals(EBoardState.WaitForActivePiece);
         }
 
         public void SetNewGame()
@@ -151,6 +160,7 @@ namespace Board
             EventsHub.OnNewGameStart.Trigger();
             _timerOfDrop.ResetTimer();
             _tetrisGrid.ClearAll();
+            EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
         }
     }
 }

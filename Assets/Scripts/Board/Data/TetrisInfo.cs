@@ -10,7 +10,8 @@ namespace Board.Data
 {
     public class TetrisInfo : MonoBehaviourSingleton<TetrisInfo>
     {
-        private ITetrisData<EState> _state;
+        private ITetrisData<EBoardState> _boardState;
+        private ITetrisData<ETetrisStage> _tetrisStage;
         private ITetrisData<bool> _updateLock;
         private ITetrisData<float> _pieceDropDelay;
         private ITetrisData<List<(int, IPiece)>> _spawnPieces;
@@ -24,8 +25,9 @@ namespace Board.Data
 
         public void Start()
         {
-            _state = gameObject.AddComponent<State>();
-            _updateLock = gameObject.AddComponent<UpdateLock>();
+            _boardState = gameObject.AddComponent<BoardState>();
+            _tetrisStage = gameObject.AddComponent<TetrisStage>();
+            _updateLock = gameObject.AddComponent<LockBoard>();
             _pieceDropDelay = gameObject.AddComponent<PieceDropDelay>();
             _spawnPieces = gameObject.AddComponent<SpawnedPieces>();
             _pieceQueue = gameObject.AddComponent<PieceQueue>();
@@ -40,9 +42,14 @@ namespace Board.Data
             Debug.Log("TetrisMeta started");
         }
 
-        public EState State()
+        public EBoardState BoardState()
         {
-            return _state.Value();
+            return _boardState.Value();
+        }
+
+        public ETetrisStage TetrisStage()
+        {
+            return _tetrisStage.Value();
         }
 
         public bool IsBoardLocked()

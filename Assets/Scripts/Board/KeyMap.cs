@@ -16,7 +16,7 @@ namespace Board
         public static KeyCode KeyShiftDown = (KeyCode) _keyConfig.KeyShiftDown.Code;
         public static KeyCode KeyNewGame = (KeyCode) _keyConfig.KeyNewGame.Code;
         public static KeyCode KeyPause = (KeyCode) _keyConfig.KeyPause.Code;
-        public static KeyCode KeyUnpause = (KeyCode) _keyConfig.KeyUnpause.Code;
+        public static KeyCode KeyContinue = (KeyCode) _keyConfig.KeyContinue.Code;
         
         private static KeyConfig KeyConfig()
         {
@@ -41,7 +41,7 @@ namespace Board
         public KeyAction KeyShiftDown { get; set; }
         public KeyAction KeyNewGame { get; set; }
         public KeyAction KeyPause { get; set; }
-        public KeyAction KeyUnpause { get; set; }
+        public KeyAction KeyContinue { get; set; }
     }
 
     public class KeyAction : Poco

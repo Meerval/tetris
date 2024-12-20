@@ -15,7 +15,6 @@ namespace Board
         private void Update()
         {
             _controller.DetectAndExecutePause();
-            _controller.DetectAndExecuteUnpause();
         }
     }
 }

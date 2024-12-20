@@ -1,9 +1,8 @@
 ﻿namespace Board.Data
 {
-    public enum EState
+    public enum EBoardState
     {
         WaitForActivePiece,
-        PieceInProgress,
-        GameOver
+        PieceInProgress
     }
 }
