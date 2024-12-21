@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Systems.Storage.POCO;
 using Systems.Pretty;
+using Systems.Storage.POCO;
 using Templates.Singleton;
 using UnityEngine;
 
@@ -59,6 +59,7 @@ namespace Systems.Storage
             if (data.Count == 1)
             {
                 _idMap[key].Load(data[0]);
+                Debug.Log($"Object with id='{key}' was loaded from File");
             }
             else
             {

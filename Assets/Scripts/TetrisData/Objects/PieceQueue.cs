@@ -94,7 +94,7 @@ namespace TetrisData.Objects
         private struct InitialData
         {
             public const string EmptyQueueStr = "";
-            public static readonly Queue<IPiece> RandomQueue = CreateQueue(2);
+            public static Queue<IPiece> RandomQueue => CreateQueue(2);
 
             private static Queue<IPiece> CreateQueue(int count)
             {

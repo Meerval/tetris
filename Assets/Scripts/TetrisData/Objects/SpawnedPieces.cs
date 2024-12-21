@@ -49,7 +49,6 @@ namespace TetrisData.Objects
 
             public void Load(StorableData data)
             {
-                LoadInitial();
                 string charList = ObjectToString.TryParse(data.Data[Key.Pieces]).OrElse(InitialData.EmptyListStr);
                 
                 IPiece CreateIPiece(char c)
@@ -78,7 +77,7 @@ namespace TetrisData.Objects
         private struct InitialData
         {
             public const string EmptyListStr = "";
-            public static readonly List<(int, IPiece)> EmptyList = new();
+            public static List<(int, IPiece)> EmptyList => new();
         }
     }
 }

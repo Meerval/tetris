@@ -14,27 +14,36 @@ namespace Menu
 
         private void Start()
         {
-            // if (_info.TetrisStage() != ETetrisStage.OnPauseMenu) return;
-            if (continueButtonPrefab == null || canvasTransform == null)
+            if (TetrisInfo.Instance.TetrisStage() == ETetrisStage.OnPauseMenu)
             {
-                Debug.LogError("Button prefab or canvasTransform not set!");
-                return;
+                if (continueButtonPrefab == null || canvasTransform == null)
+                {
+                    Debug.LogError("Button prefab or canvasTransform not set!");
+                    return;
+                }
+
+                GameObject newButton = Instantiate(continueButtonPrefab, canvasTransform);
+                Button buttonComponent = newButton.GetComponent<Button>();
+
+                if (buttonComponent == null) Debug.LogError("Button component not found on prefab!");
+
+                buttonComponent.onClick.RemoveAllListeners();
+                buttonComponent.onClick.AddListener(Continue);
             }
-
-            GameObject newButton = Instantiate(continueButtonPrefab, canvasTransform);
-            Button buttonComponent = newButton.GetComponent<Button>();
-
-            if (buttonComponent == null) Debug.LogError("Button component not found on prefab!");
-
-            buttonComponent.onClick.RemoveAllListeners();
-            buttonComponent.onClick.AddListener(Continue);
+            else if (TetrisInfo.Instance.TetrisStage() == ETetrisStage.OnGameOverMenu)
+            {
+                if (gameOverTxtPrefab == null || canvasTransform == null)
+                    Debug.LogError("Button prefab or canvasTransform not set!");
+                else 
+                    Instantiate(gameOverTxtPrefab, canvasTransform);
+            }
         }
 
         public void StartNewGame()
         {
             SceneManager.LoadScene("Tetris");
             EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
-            EventsHub.OnGameOver.Trigger(EGameOverReason.AsWill);
+            // EventsHub.OnGameOver.Trigger(EGameOverReason.AsWill);
             Debug.Log("Scene 'Tetris' loaded with New Game");
         }
 
@@ -58,7 +67,7 @@ namespace Menu
 
         private void Update()
         {
-            // if (_info.TetrisStage() != ETetrisStage.OnPauseMenu) return;
+            if (TetrisInfo.Instance.TetrisStage() != ETetrisStage.OnPauseMenu) return;
             if (!Input.GetKeyDown(KeyMap.KeyContinue)) return;
             Debug.Log($"[KEY PRESS] {KeyMap.KeyContinue.ToString()}");
             EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);

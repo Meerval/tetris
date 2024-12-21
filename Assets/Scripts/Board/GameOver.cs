@@ -1,4 +1,3 @@
-using Systems.Storage;
 using TetrisData;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,9 +26,8 @@ namespace Board
 
         private void StartNewGame(EGameOverReason reason)
         {
-            Storage.Instance.SaveGame();
-            Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisInfo.Instance.Level()}, " +
-                      $"score: {TetrisInfo.Instance.Score()}");
+            Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {BoardInfo.Instance.Level()}, " +
+                      $"score: {BoardInfo.Instance.Score()}");
             _controller.SetNewGame();
             if (reason == EGameOverReason.GridFilled)
             {

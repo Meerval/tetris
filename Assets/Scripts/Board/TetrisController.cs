@@ -13,7 +13,7 @@ namespace Board
         private IGridController _tetrisGrid;
         private IInputExecutor _inputExecutor;
 
-        private TetrisInfo _info;
+        private BoardInfo _info;
         private ITimer _timerOfDrop;
         private ITimer _timerOfLock;
 
@@ -26,7 +26,7 @@ namespace Board
             _tetrisGrid = GetComponent<TetrisGridController>();
             _inputExecutor = GetComponent<TetrisInputExecutor>();
 
-            _info = FindObjectOfType<TetrisInfo>();
+            _info = FindObjectOfType<BoardInfo>();
             _timerOfDrop = FindObjectOfType<TimerOfPieceDrop>();
             _timerOfLock = FindObjectOfType<TimerOfPieceLock>();
             Debug.Log("TetrisController awoke");
@@ -150,10 +150,11 @@ namespace Board
 
         public void SetNewGame()
         {
-            EventsHub.OnNewGameStart.Trigger();
             _timerOfDrop.ResetTimer();
             _tetrisGrid.ClearAll();
+            EventsHub.OnNewGameStart.Trigger();
             EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
+            Storage.Instance.SaveGame();
         }
     }
 }

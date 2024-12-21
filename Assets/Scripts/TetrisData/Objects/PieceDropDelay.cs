@@ -26,7 +26,7 @@ namespace TetrisData.Objects
 
         private void CountDelay()
         {
-            CurrentValue = InitialData.BaseDelay / (1 + Mathf.Sqrt(DecreaseFactor * TetrisInfo.Instance.Level()));
+            CurrentValue = InitialData.BaseDelay / (1 + Mathf.Sqrt(DecreaseFactor * BoardInfo.Instance.Level()));
             Debug.Log($"Piece drop delay updated: {CurrentValue}");
         }
         

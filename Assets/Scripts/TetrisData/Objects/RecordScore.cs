@@ -26,11 +26,11 @@ namespace TetrisData.Objects
 
         private void UpdateRecordScore(int _)
         {
-            if (TetrisInfo.Instance.Score() < CurrentValue)
+            if (BoardInfo.Instance.Score() < CurrentValue)
             {
                 return;
             }
-            CurrentValue = TetrisInfo.Instance.Score();
+            CurrentValue = BoardInfo.Instance.Score();
             _timestamp = Timestamp.Now;
             Debug.Log($"Record Score Updated: {CurrentValue}");
             DisplayCurrentValue();

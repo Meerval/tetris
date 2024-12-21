@@ -4,6 +4,7 @@
     {
         OnGame,
         OnNewGameMenu,
-        OnPauseMenu
+        OnPauseMenu,
+        OnGameOverMenu,
     }
 }

@@ -53,20 +53,20 @@ namespace Board
 
         public void Start()
         {
-            Dictionary<string, string> loadData = TetrisInfo.Instance.TilesPosition();
+            Dictionary<string, string> loadData = BoardInfo.Instance.TilesPosition();
 
             _projectedTilemap.Load(loadData[_projectedTilemap.name], _bounds);
             _activeTilemap.Load(loadData[_activeTilemap.name], _bounds);
             _lockedTilemap.Load(loadData[_lockedTilemap.name], _bounds);
 
-            if (TetrisInfo.Instance.ActivePiece() != null)
+            if (BoardInfo.Instance.ActivePiece() != null)
             {
-                Piece piece = Instantiate((Piece) PieceProvider.Instance.Get(TetrisInfo.Instance.ActivePiece().PieceType), gameObject.transform);
+                Piece piece = Instantiate((Piece) PieceProvider.Instance.Get(BoardInfo.Instance.ActivePiece().PieceType), gameObject.transform);
                 piece.name = piece.ToString();
                 _activePiece = piece;
-                _activePiecePosition = TetrisInfo.Instance.ActivePiecePosition();
+                _activePiecePosition = BoardInfo.Instance.ActivePiecePosition();
                 SetPiece(_activePiecePosition);
-                var shape = TetrisInfo.Instance.ActivePieceShape().ToArray();
+                var shape = BoardInfo.Instance.ActivePieceShape().ToArray();
                 int iterCount = 4;
                 Func<bool> predicate = () => _activePiece.CurrentShapeMap().SequenceEqual(shape);
                 while (iterCount > 0 && !predicate.Invoke())
@@ -74,15 +74,13 @@ namespace Board
                     RotatePiece(Direction.Left);
                     iterCount--;
                 }
-                EventsHub.OnPieceSpawn.Trigger(_activePiece);
-                EventsHub.OnPieceShift.Trigger(_activePiecePosition);
             }
         }
 
         public bool SpawnNewPiece()
         {
             _activePiece?.Destroy();
-            Piece piece = Instantiate((Piece)TetrisInfo.Instance.PieceQueue().Dequeue(), gameObject.transform);
+            Piece piece = Instantiate((Piece)BoardInfo.Instance.PieceQueue().Dequeue(), gameObject.transform);
             piece.name = piece.ToString();
             _activePiece = piece;
             if (!IsAvailablePosition(_spawnPosition)) return false;

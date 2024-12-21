@@ -9,14 +9,14 @@ namespace Board
 {
     public class TetrisInputExecutor : MonoBehaviour, IInputExecutor
     {
-        private TetrisInfo _info;
+        private BoardInfo _info;
         private ITimer _timerOfMove;
         private ITimer _timerOfClick;
         private bool _isShifted;
 
         private void Awake()
         {
-            _info = FindObjectOfType<TetrisInfo>();
+            _info = FindObjectOfType<BoardInfo>();
             _timerOfMove = FindObjectOfType<TimerOfPieceMove>();
             _timerOfClick = FindObjectOfType<TimerOfSingleClick>();
             Debug.Log("TetrisInputExecutor awoke");

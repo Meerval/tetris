@@ -1,16 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Board.Pieces;
-using Templates.Singleton;
 using TetrisData;
 using UnityEngine;
 
 namespace Board
 {
-    public class PiecePredictor : MonoBehaviourSingleton<PiecePredictor>, IPredictor
+    public class PiecePredictor : MonoBehaviour, IPredictor
     {
         [SerializeField] private TilemapController tilemapPrefab;
-
         private TilemapController _tilemap;
 
         private Vector2Int _size;
@@ -27,7 +25,7 @@ namespace Board
             _tilemap = Instantiate(tilemapPrefab, gameObject.transform);
 
             _tilemap.gameObject.name = "PredictedTilemap";
-            _tilemap.Load(TetrisInfo.Instance.TilesPosition()[_tilemap.gameObject.name], _bounds);
+            _tilemap.Load(BoardInfo.Instance.TilesPosition()[_tilemap.gameObject.name], _bounds);
 
             Debug.Log
             (
@@ -48,7 +46,7 @@ namespace Board
         public void Predict(IPiece currentPiece)
         {
             Clear();
-            Piece piece = Instantiate((Piece)TetrisInfo.Instance.PieceQueue().Peek(), gameObject.transform);
+            Piece piece = Instantiate((Piece)BoardInfo.Instance.PieceQueue().Peek(), gameObject.transform);
             piece.name = piece.ToString();
             _predictedPiece = piece;
             SetPiece();
@@ -59,6 +57,8 @@ namespace Board
         private void Clear()
         {
             _predictedPiece?.Destroy();
+            if (_tilemap == null)
+                Debug.LogWarning($"tilemap is null");
             _tilemap.ClearAll();
         }
 
