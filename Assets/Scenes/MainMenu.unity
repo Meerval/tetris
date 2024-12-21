@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -452.22226}
+  m_AnchoredPosition: {x: 0, y: -800}
   m_SizeDelta: {x: 480.305, y: 99.144}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &94222742
@@ -204,7 +204,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 94222743}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2096654912}
+        m_TargetAssemblyTypeName: Menu.MainMenuController, Assembly-CSharp
+        m_MethodName: OpenSettings
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &94222743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,7 +291,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -333}
+  m_AnchoredPosition: {x: -550, y: -800}
   m_SizeDelta: {x: 480.305, y: 97.588}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &506759647
@@ -328,7 +340,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2096654912}
         m_TargetAssemblyTypeName: Menu.MainMenuController, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: StartNewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -952,7 +964,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -671}
+  m_AnchoredPosition: {x: 550, y: -800}
   m_SizeDelta: {x: 480.305, y: 97.588}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1833319392
@@ -998,7 +1010,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1833319393}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2096654912}
+        m_TargetAssemblyTypeName: Menu.MainMenuController, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1833319393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1268,6 +1292,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557efe178ff1482da3acfa171beb32eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  continueButtonPrefab: {fileID: 8913262573766282651, guid: bbf888e5ea521b3479608d1b3b216aaf, type: 3}
+  canvasTransform: {fileID: 1562849554}
 --- !u!4 &2096654913
 Transform:
   m_ObjectHideFlags: 0
