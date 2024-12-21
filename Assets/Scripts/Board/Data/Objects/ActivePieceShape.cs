@@ -34,13 +34,11 @@ namespace Board.Data.Objects
         private void UpdateShape(IPiece piece)
         {
             CurrentValue = piece.CurrentShapeMap();
-            Storage.Instance.SaveGame();
         }
         
         private void UpdateShape(Vector2Int[] position)
         {
             CurrentValue = position;
-            Storage.Instance.SaveGame();
         }
 
         private class ActivePieceShapeStorable : IStorable

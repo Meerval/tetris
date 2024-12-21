@@ -29,16 +29,12 @@ namespace Board.Data.Objects
         {
             CurrentValue = InitialData.State;
             Debug.Log($"[STATE UPDATE: {CurrentValue}] Wait for active piece");
-            
-            Storage.Instance.SaveGame();
         }
 
         private void PieceInProgress(IPiece activePiece)
         {
             CurrentValue = EBoardState.PieceInProgress;
             Debug.Log($"[STATE UPDATE: {CurrentValue}] {activePiece} in progress");
-            
-            Storage.Instance.SaveGame();
         }
 
         private class BoardStateStorable : IStorable

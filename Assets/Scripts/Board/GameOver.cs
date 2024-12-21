@@ -1,5 +1,7 @@
 using Board.Data;
+using Systems.Storage;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Board
 {
@@ -17,7 +19,7 @@ namespace Board
         {
             EventsHub.OnGameOver.AddSubscriber(StartNewGame, 1);
         }
-        
+
         private void OnDisable()
         {
             EventsHub.OnGameOver.RemoveSubscriber(StartNewGame);
@@ -25,9 +27,14 @@ namespace Board
 
         private void StartNewGame(EGameOverReason reason)
         {
+            Storage.Instance.SaveGame();
             Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {TetrisInfo.Instance.Level()}, " +
                       $"score: {TetrisInfo.Instance.Score()}");
             _controller.SetNewGame();
+            if (reason == EGameOverReason.GridFilled)
+            {
+                SceneManager.LoadScene("MainMenu");
+            }
         }
 
         private void Update()

@@ -30,8 +30,6 @@ namespace Board.Data.Objects
             if (_currentStep < _stepCount)
             {
                 Debug.Log($"Step updated: {_currentStep}/{_stepCount}");
-
-                Storage.Instance.SaveGame();
                 return;
             }
 
@@ -41,8 +39,6 @@ namespace Board.Data.Objects
             Debug.Log($"Level updated: {CurrentValue}");
             EventsHub.OnLevelUp.Trigger();
             DisplayCurrentValue();
-
-            Storage.Instance.SaveGame();
         }
 
         private class LevelStorable : IStorable

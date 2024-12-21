@@ -2,6 +2,7 @@
 {
     public enum EGameOverReason
     { 
-        GridFilled
+        GridFilled,
+        AsWill
     }
 }

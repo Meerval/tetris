@@ -8,12 +8,13 @@ namespace Menu
 {
     public class MainMenuController : MonoBehaviour
     {
+        [SerializeField] private GameObject gameOverTxtPrefab;
         [SerializeField] private GameObject continueButtonPrefab;
         [SerializeField] private Transform canvasTransform;
 
         private void Start()
         {
-            // if (TetrisInfo.Instance.TetrisStage() != ETetrisStage.OnPauseMenu) return;
+            // if (_info.TetrisStage() != ETetrisStage.OnPauseMenu) return;
             if (continueButtonPrefab == null || canvasTransform == null)
             {
                 Debug.LogError("Button prefab or canvasTransform not set!");
@@ -33,7 +34,8 @@ namespace Menu
         {
             SceneManager.LoadScene("Tetris");
             EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
-            Debug.Log("Scene 'Tetris' loaded");
+            EventsHub.OnGameOver.Trigger(EGameOverReason.AsWill);
+            Debug.Log("Scene 'Tetris' loaded with New Game");
         }
 
         public void Continue()
@@ -56,7 +58,7 @@ namespace Menu
 
         private void Update()
         {
-            // if (TetrisInfo.Instance.TetrisStage() != ETetrisStage.OnPauseMenu) return;
+            // if (_info.TetrisStage() != ETetrisStage.OnPauseMenu) return;
             if (!Input.GetKeyDown(KeyMap.KeyContinue)) return;
             Debug.Log($"[KEY PRESS] {KeyMap.KeyContinue.ToString()}");
             EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);

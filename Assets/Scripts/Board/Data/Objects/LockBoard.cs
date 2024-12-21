@@ -25,13 +25,11 @@ namespace Board.Data.Objects
         private void Lock()
         {
             CurrentValue = true;
-            Storage.Instance.SaveGame();
         }
 
         private void Unlock()
         {
             CurrentValue = false;
-            Storage.Instance.SaveGame();
         }
 
         private class UpdateLockStorable : IStorable

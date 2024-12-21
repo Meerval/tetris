@@ -28,8 +28,6 @@ namespace Board.Data.Objects
         {
             CurrentValue = InitialData.BaseDelay / (1 + Mathf.Sqrt(DecreaseFactor * TetrisInfo.Instance.Level()));
             Debug.Log($"Piece drop delay updated: {CurrentValue}");
-            
-            Storage.Instance.SaveGame();
         }
         
         private class PieceDropDelayStorable : IStorable

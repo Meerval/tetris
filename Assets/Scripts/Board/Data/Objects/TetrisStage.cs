@@ -13,26 +13,17 @@ namespace Board.Data.Objects
 
         protected override void SubscribeDataAction()
         {
-            EventsHub.OnGameOver.AddSubscriber(SetOverGame);
             EventsHub.OnStageChanged.AddSubscriber(UpdateStage);
         }
 
         protected override void UnsubscribeDataAction()
         {
-            EventsHub.OnGameOver.RemoveSubscriber(SetOverGame);
             EventsHub.OnStageChanged.RemoveSubscriber(UpdateStage);
         }
-
-        private void SetOverGame(EGameOverReason _)
-        {
-            CurrentValue = ETetrisStage.OnNewGameMenu;
-            Storage.Instance.SaveGame();
-        }
-
+        
         private void UpdateStage(ETetrisStage stage)
         {
             CurrentValue = stage;
-            Storage.Instance.SaveGame();
         }
 
         private class StateStorable : IStorable

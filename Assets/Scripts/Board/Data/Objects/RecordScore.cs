@@ -28,16 +28,12 @@ namespace Board.Data.Objects
         {
             if (TetrisInfo.Instance.Score() < CurrentValue)
             {
-                
-                Storage.Instance.SaveGame();
                 return;
             }
             CurrentValue = TetrisInfo.Instance.Score();
             _timestamp = Timestamp.Now;
             Debug.Log($"Record Score Updated: {CurrentValue}");
             DisplayCurrentValue();
-            
-            Storage.Instance.SaveGame();
         }
 
         private class RecordScoreStorable : IStorable

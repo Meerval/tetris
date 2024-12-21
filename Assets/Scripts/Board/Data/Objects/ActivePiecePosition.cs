@@ -30,7 +30,6 @@ namespace Board.Data.Objects
         private void UpdatePosition(Vector2Int position)
         {
             CurrentValue = position;
-            Storage.Instance.SaveGame();
         }
 
         private class ActivePiecePositionStorable : IStorable

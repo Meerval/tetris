@@ -2,6 +2,7 @@
 using Board.Timers;
 using Systems.Accumulator;
 using Systems.Chrono.Timer;
+using Systems.Storage;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -106,6 +107,7 @@ namespace Board
             _inputExecutor.OnPauseGame(() =>
             {
                 EventsHub.OnStageChanged.Trigger(ETetrisStage.OnPauseMenu);
+                Storage.Instance.SaveGame();
                 SceneManager.LoadScene("MainMenu");
                 Debug.Log("Game paused by keyboard");
             });
@@ -133,7 +135,11 @@ namespace Board
         public void SpawnPieceAsWill()
         {
             if (IsPieceSpawnUnavailable()) return;
-            if (!_tetrisGrid.PieceSpawnRandom()) EventsHub.OnGameOver.Trigger(EGameOverReason.GridFilled);
+            if (!_tetrisGrid.PieceSpawnRandom())
+            {
+                EventsHub.OnGameOver.Trigger(EGameOverReason.GridFilled);
+                EventsHub.OnStageChanged.Trigger(ETetrisStage.OnNewGameMenu);
+            }
             else _timerOfDrop.UpdateTimeout();
         }
 
