@@ -1429,6 +1429,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557efe178ff1482da3acfa171beb32eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameOverTxtPrefab: {fileID: 6969209438350714774, guid: b8cc569e062f29a40af0b1cd72465884, type: 3}
   continueButtonPrefab: {fileID: 8913262573766282651, guid: bbf888e5ea521b3479608d1b3b216aaf, type: 3}
   canvasTransform: {fileID: 1562849554}
 --- !u!4 &2096654913
