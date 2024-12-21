@@ -1,4 +1,4 @@
-﻿namespace Board.Data.UI
+﻿namespace TetrisData.UI
 {
     public interface ITextField
     {

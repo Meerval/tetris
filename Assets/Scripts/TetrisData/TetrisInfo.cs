@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Board.Data.Objects;
 using Board.Pieces;
 using Systems.Storage;
 using Templates.Singleton;
+using TetrisData.Objects;
 using UnityEngine;
 
-namespace Board.Data
+namespace TetrisData
 {
     public class TetrisInfo : MonoBehaviourSingleton<TetrisInfo>
     {

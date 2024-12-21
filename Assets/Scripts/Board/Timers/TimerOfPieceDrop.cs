@@ -1,6 +1,5 @@
-﻿using Board.Data;
-using Systems.Chrono.Timer;
-using Systems.Events;
+﻿using Systems.Chrono.Timer;
+using TetrisData;
 using UnityEngine;
 
 namespace Board.Timers

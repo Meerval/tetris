@@ -1,7 +1,7 @@
-﻿using Board.Data.UI;
+﻿using TetrisData.UI;
 using UnityEngine;
 
-namespace Board.Data
+namespace TetrisData
 {
     public abstract class DisplayableTetrisDataSingleton<T1, T2> : TetrisDataSingleton<T1, T2>, IDisplayable
         where T2 : MonoBehaviour

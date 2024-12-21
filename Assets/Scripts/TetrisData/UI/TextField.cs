@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Board.Data.UI
+namespace TetrisData.UI
 {
     public class TextField : MonoBehaviour, ITextField
     {

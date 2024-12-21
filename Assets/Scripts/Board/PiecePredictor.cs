@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Board.Data;
 using Board.Pieces;
 using Templates.Singleton;
+using TetrisData;
 using UnityEngine;
 
 namespace Board

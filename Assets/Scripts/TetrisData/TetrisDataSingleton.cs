@@ -2,7 +2,7 @@
 using Templates.Singleton;
 using UnityEngine;
 
-namespace Board.Data
+namespace TetrisData
 {
     public abstract class TetrisDataSingleton<T1, T2> : MonoBehaviourSingleton<T2>, ITetrisData<T1>,
         IStorableDataProvider

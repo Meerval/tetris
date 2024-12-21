@@ -1,8 +1,9 @@
-﻿using Board.Pieces;
+﻿using Board;
+using Board.Pieces;
 using Systems.Events;
 using UnityEngine;
 
-namespace Board.Data
+namespace TetrisData
 {
     public static class EventsHub
     {

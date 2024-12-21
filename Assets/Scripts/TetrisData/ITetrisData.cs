@@ -1,4 +1,4 @@
-﻿namespace Board.Data
+﻿namespace TetrisData
 {
     public interface ITetrisData<out T>
     {

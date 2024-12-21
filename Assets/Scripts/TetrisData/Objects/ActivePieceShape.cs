@@ -7,7 +7,7 @@ using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace Board.Data.Objects
+namespace TetrisData.Objects
 {
     public class ActivePieceShape : TetrisDataSingleton<Vector2Int[], ActivePieceShape>
     {

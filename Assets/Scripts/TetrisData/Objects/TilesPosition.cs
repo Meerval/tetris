@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Board;
 using Systems.Parsers.Object;
 using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace Board.Data.Objects
+namespace TetrisData.Objects
 {
     public class TilesPosition : TetrisDataSingleton<Dictionary<string, string>, TilesPosition>
     {

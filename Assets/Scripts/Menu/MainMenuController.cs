@@ -1,5 +1,5 @@
 ﻿using Board;
-using Board.Data;
+using TetrisData;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;

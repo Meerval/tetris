@@ -1,6 +1,6 @@
-﻿using Board.Data;
-using Board.PiecePosition;
+﻿using Board.PiecePosition;
 using Board.PiecePosition.RotationMath;
+using TetrisData;
 using UnityEngine;
 
 namespace Board

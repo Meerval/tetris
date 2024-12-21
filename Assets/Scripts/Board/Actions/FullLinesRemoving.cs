@@ -1,9 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Board.Data;
 using Board.Timers;
 using Systems.Pretty;
+using TetrisData;
 using UnityEngine;
 
 namespace Board.Actions

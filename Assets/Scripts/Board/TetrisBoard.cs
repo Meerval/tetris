@@ -1,6 +1,3 @@
-using Board.Data;
-using Systems.Events;
-using Systems.Storage;
 using UnityEngine;
 
 namespace Board
