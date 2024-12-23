@@ -75,6 +75,8 @@ namespace Board
                     iterCount--;
                 }
             }
+
+            Debug.Log("TetrisGrid started");
         }
 
         public bool SpawnNewPiece()
@@ -88,6 +90,10 @@ namespace Board
             SetPiece(_activePiecePosition);
             EventsHub.OnPieceSpawn.Trigger(_activePiece);
             EventsHub.OnPieceShift.Trigger(_activePiecePosition);
+            
+            EventsHub.OnGridUpdated.Trigger(_activeTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_lockedTilemap, _bounds);
+            EventsHub.OnGridUpdated.Trigger(_projectedTilemap, _bounds);
             return true;
         }
 
@@ -203,6 +209,7 @@ namespace Board
             {
                 LockTile(tilePosition, _activePiece.Tile());
             }
+
             EventsHub.OnGridUpdated.Trigger(_activeTilemap, _bounds);
             EventsHub.OnGridUpdated.Trigger(_lockedTilemap, _bounds);
             EventsHub.OnGridUpdated.Trigger(_projectedTilemap, _bounds);

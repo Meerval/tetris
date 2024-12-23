@@ -14,6 +14,7 @@ namespace Menu
 
         private void Start()
         {
+            EventsHub.OnLockBoard.Trigger();
             if (BoardInfo.Instance.TetrisStage() == ETetrisStage.OnPauseMenu)
             {
                 if (continueButtonPrefab == null || canvasTransform == null)
@@ -42,6 +43,7 @@ namespace Menu
         public void StartNewGame()
         {
             SceneManager.LoadScene("Tetris");
+            EventsHub.OnUnlockBoard.Trigger();
             EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
             // EventsHub.OnGameOver.Trigger(EGameOverReason.AsWill);
             Debug.Log("Scene 'Tetris' loaded with New Game");
@@ -50,6 +52,7 @@ namespace Menu
         public void Continue()
         {
             SceneManager.LoadScene("Tetris");
+            EventsHub.OnUnlockBoard.Trigger();
             EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
             Debug.Log("Scene 'Tetris' loaded");
         }
@@ -70,8 +73,7 @@ namespace Menu
             if (BoardInfo.Instance.TetrisStage() != ETetrisStage.OnPauseMenu) return;
             if (!Input.GetKeyDown(KeyMap.KeyContinue)) return;
             Debug.Log($"[KEY PRESS] {KeyMap.KeyContinue.ToString()}");
-            EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
-            SceneManager.LoadScene("Tetris");
+            Continue();
             Debug.Log("Game continued by keyboard");
         }
     }
