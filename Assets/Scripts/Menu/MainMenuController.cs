@@ -14,7 +14,7 @@ namespace Menu
 
         private void Start()
         {
-            if (TetrisInfo.Instance.TetrisStage() == ETetrisStage.OnPauseMenu)
+            if (BoardInfo.Instance.TetrisStage() == ETetrisStage.OnPauseMenu)
             {
                 if (continueButtonPrefab == null || canvasTransform == null)
                 {
@@ -30,7 +30,7 @@ namespace Menu
                 buttonComponent.onClick.RemoveAllListeners();
                 buttonComponent.onClick.AddListener(Continue);
             }
-            else if (TetrisInfo.Instance.TetrisStage() == ETetrisStage.OnGameOverMenu)
+            else if (BoardInfo.Instance.TetrisStage() == ETetrisStage.OnGameOverMenu)
             {
                 if (gameOverTxtPrefab == null || canvasTransform == null)
                     Debug.LogError("Button prefab or canvasTransform not set!");
@@ -67,7 +67,7 @@ namespace Menu
 
         private void Update()
         {
-            if (TetrisInfo.Instance.TetrisStage() != ETetrisStage.OnPauseMenu) return;
+            if (BoardInfo.Instance.TetrisStage() != ETetrisStage.OnPauseMenu) return;
             if (!Input.GetKeyDown(KeyMap.KeyContinue)) return;
             Debug.Log($"[KEY PRESS] {KeyMap.KeyContinue.ToString()}");
             EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
