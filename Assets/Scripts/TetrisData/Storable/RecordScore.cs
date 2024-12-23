@@ -5,21 +5,21 @@ using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace TetrisData.Storable.Displayable
+namespace TetrisData.Storable
 {
-    public class RecordScore : DisplayableTetrisDataSingleton<long, RecordScore>
+    public class RecordScore : TetrisDataSingleton<long, RecordScore>
     {
         private Timestamp _timestamp = Timestamp.Empty;
 
         protected override IStorable StorableTetrisData => new RecordScoreStorable();
         protected override bool IsResettableByNewGame => false;
 
-        protected override void SubscribeDisplayableDataAction()
+        protected override void SubscribeDataAction()
         {
             EventsHub.OnScoreUp.AddSubscriber(UpdateRecordScore, 1);
         }
 
-        protected override void UnsubscribeDisplayableDataAction()
+        protected override void UnsubscribeDataAction()
         {
             EventsHub.OnScoreUp.RemoveSubscriber(UpdateRecordScore);
         }
@@ -33,7 +33,6 @@ namespace TetrisData.Storable.Displayable
             CurrentValue = BoardInfo.Instance.Score();
             _timestamp = Timestamp.Now;
             Debug.Log($"Record Score Updated: {CurrentValue}");
-            DisplayCurrentValue();
         }
 
         private class RecordScoreStorable : IStorable

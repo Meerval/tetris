@@ -4,9 +4,9 @@ using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace TetrisData.Storable.Displayable
+namespace TetrisData.Storable
 {
-    public class Score : DisplayableTetrisDataSingleton<long, Score>
+    public class Score : TetrisDataSingleton<long, Score>
     {
         private const int ScoreCoefficient = 100;
         
@@ -18,12 +18,12 @@ namespace TetrisData.Storable.Displayable
             CurrentValue = InitialData.Score;
         }
 
-        protected override void SubscribeDisplayableDataAction()
+        protected override void SubscribeDataAction()
         {
             EventsHub.OnScoreUp.AddSubscriber(UpdateScore);
         }
 
-        protected override void UnsubscribeDisplayableDataAction()
+        protected override void UnsubscribeDataAction()
         {
             EventsHub.OnScoreUp.RemoveSubscriber(UpdateScore);
         }
@@ -33,7 +33,6 @@ namespace TetrisData.Storable.Displayable
             if (removedLines == 0) return;
             CurrentValue += ScoreCoefficient * removedLines * Bonus(removedLines);
             Debug.Log($"Score Updated: {CurrentValue}");
-            DisplayCurrentValue();
         }
 
         private int Bonus(int removedLinesCount)

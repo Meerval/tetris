@@ -4,7 +4,6 @@ using Board.Pieces;
 using Systems.Storage;
 using Templates.Singleton;
 using TetrisData.Storable;
-using TetrisData.Storable.Displayable;
 using UnityEngine;
 
 namespace TetrisData
@@ -35,9 +34,9 @@ namespace TetrisData
             _tilesPosition = gameObject.AddComponent<TilesPosition>();
             _activePiecePosition = gameObject.AddComponent<ActivePiecePosition>();
             _activePieceShape = gameObject.AddComponent<ActivePieceShape>();
-            _level = GetComponentInChildren<Level>();
-            _score = GetComponentInChildren<Score>();
-            _recordScore = GetComponentInChildren<RecordScore>();
+            _level = gameObject.AddComponent<Level>();
+            _score = gameObject.AddComponent<Score>();
+            _recordScore = gameObject.AddComponent<RecordScore>();
 
             Storage.Instance.LoadGame();
             Debug.Log("BoardInfo started");

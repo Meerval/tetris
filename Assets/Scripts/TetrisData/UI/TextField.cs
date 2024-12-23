@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace TetrisData.UI
 {
-    public class TextField : MonoBehaviour, ITextField
+    public abstract class TextField<T> : MonoBehaviour, ITextField
     {
         private TextMeshProUGUI _textMesh;
-        [SerializeField] private string fieldName; 
+        [SerializeField] private string fieldName;
 
         private void Awake()
         {
@@ -14,10 +14,20 @@ namespace TetrisData.UI
             if (_textMesh == null) Debug.LogError("TextMeshProUGUI is null");
         }
 
-        public void Show(string value)
+        private void Start()
         {
-            _textMesh.text = $"{fieldName}: {value}";
+            Show();
         }
 
+        private void Update()
+        {
+            Show();
+        }
+
+        public void Show()
+        {
+            _textMesh.text = $"{fieldName}: {Data.Value().ToString()}";
+        }
+        protected abstract ITetrisData<T> Data { get; }
     }
 }

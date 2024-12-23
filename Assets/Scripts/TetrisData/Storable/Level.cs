@@ -5,21 +5,21 @@ using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace TetrisData.Storable.Displayable
+namespace TetrisData.Storable
 {
-    public class Level : DisplayableTetrisDataSingleton<int, Level>
+    public class Level : TetrisDataSingleton<int, Level>
     {
         private int _currentStep;
         private int _stepCount;
         protected override IStorable StorableTetrisData => new LevelStorable();
         protected override bool IsResettableByNewGame => true;
 
-        protected override void SubscribeDisplayableDataAction()
+        protected override void SubscribeDataAction()
         {
             EventsHub.OnPieceSpawn.AddSubscriber(StepUp, 1);
         }
 
-        protected override void UnsubscribeDisplayableDataAction()
+        protected override void UnsubscribeDataAction()
         {
             EventsHub.OnPieceSpawn.RemoveSubscriber(StepUp);
         }
@@ -38,7 +38,6 @@ namespace TetrisData.Storable.Displayable
             _stepCount += 2;
             Debug.Log($"Level updated: {CurrentValue}");
             EventsHub.OnLevelUp.Trigger();
-            DisplayCurrentValue();
         }
 
         private class LevelStorable : IStorable

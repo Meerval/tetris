@@ -2,6 +2,6 @@
 {
     public interface ITextField
     {
-        void Show(string value);
+        void Show();
     }
 }
