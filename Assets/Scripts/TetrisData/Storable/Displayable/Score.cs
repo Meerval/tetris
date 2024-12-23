@@ -4,7 +4,7 @@ using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace TetrisData.Objects
+namespace TetrisData.Storable.Displayable
 {
     public class Score : DisplayableTetrisDataSingleton<long, Score>
     {

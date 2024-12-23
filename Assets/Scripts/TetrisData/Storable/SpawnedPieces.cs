@@ -7,7 +7,7 @@ using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace TetrisData.Objects
+namespace TetrisData.Storable
 {
     public class SpawnedPieces : TetrisDataSingleton<List<(int, IPiece)>, SpawnedPieces>
     {

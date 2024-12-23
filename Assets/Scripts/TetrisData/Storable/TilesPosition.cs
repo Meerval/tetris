@@ -6,7 +6,7 @@ using Systems.Storage;
 using Systems.Storage.POCO;
 using UnityEngine;
 
-namespace TetrisData.Objects
+namespace TetrisData.Storable
 {
     public class TilesPosition : TetrisDataSingleton<Dictionary<string, string>, TilesPosition>
     {

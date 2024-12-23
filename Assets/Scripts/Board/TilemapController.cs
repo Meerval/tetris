@@ -51,15 +51,15 @@ namespace Board
             string rgx = $"^[0CBOYGPR]{{{bounds.height * bounds.width}}}$";
             if (string.IsNullOrEmpty(codes))
             {
-                Debug.LogError($"{name} codes cannot be converted to TilemapController because its null or empty");
+                Debug.LogWarning($"{name} codes cannot be converted to TilemapController because its null or empty");
                 ClearAll();
                 return;
             }
             
             if (!Regex.IsMatch(codes, rgx))
             {
-                Debug.LogError($"{name} codes cannot be converted to TilemapController in right way:\n" +
-                               $"String of codes='{codes}' isn't match to regex '{rgx}'");
+                Debug.LogWarning($"{name} codes cannot be converted to TilemapController in right way:\n" +
+                                 $"String of codes='{codes}' isn't match to regex '{rgx}'");
             }
 
             TileBase InitTile(char ch)

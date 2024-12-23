@@ -3,7 +3,8 @@ using System.Linq;
 using Board.Pieces;
 using Systems.Storage;
 using Templates.Singleton;
-using TetrisData.Objects;
+using TetrisData.Storable;
+using TetrisData.Storable.Displayable;
 using UnityEngine;
 
 namespace TetrisData

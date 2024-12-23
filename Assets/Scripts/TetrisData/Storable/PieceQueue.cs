@@ -5,7 +5,7 @@ using Systems.Parsers.Object;
 using Systems.Storage;
 using Systems.Storage.POCO;
 
-namespace TetrisData.Objects
+namespace TetrisData.Storable
 {
     public class PieceQueue : TetrisDataSingleton<Queue<IPiece>, PieceQueue>
     {
