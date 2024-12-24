@@ -6,7 +6,7 @@ using Systems.Storage.POCO;
 
 namespace TetrisData.Storable
 {
-    public class TetrisStage : TetrisDataSingleton<ETetrisStage, TetrisStage>
+    public class TetrisStage : TetrisDataSingleton<ETetrisScene, TetrisStage>
     {
         protected override IStorable StorableTetrisData => new StateStorable();
         protected override bool IsResettableByNewGame => true;
@@ -21,9 +21,9 @@ namespace TetrisData.Storable
             EventsHub.OnStageChanged.RemoveSubscriber(UpdateStage);
         }
         
-        private void UpdateStage(ETetrisStage stage)
+        private void UpdateStage(ETetrisScene scene)
         {
-            CurrentValue = stage;
+            CurrentValue = scene;
         }
 
         private class StateStorable : IStorable
@@ -40,7 +40,7 @@ namespace TetrisData.Storable
             public void Load(StorableData data)
             {
                 string stageName = ObjectToString.TryParse(data.Data[Key.Stage]).OrElse(InitialData.Stage.ToString());
-                _tetrisStage.CurrentValue = Enum.TryParse(stageName, out ETetrisStage stage) ? stage : InitialData.Stage;
+                _tetrisStage.CurrentValue = Enum.TryParse(stageName, out ETetrisScene stage) ? stage : InitialData.Stage;
             }
 
             public void LoadInitial()
@@ -57,7 +57,7 @@ namespace TetrisData.Storable
 
         private struct InitialData
         {
-            public const ETetrisStage Stage = ETetrisStage.OnGame;
+            public const ETetrisScene Stage = ETetrisScene.OnMenuOfFirstEnter;
         }
     }
 }

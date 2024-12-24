@@ -11,7 +11,7 @@ namespace TetrisData
     public class BoardInfo : MonoBehaviourSingleton<BoardInfo>
     {
         private ITetrisData<EBoardState> _boardState;
-        private ITetrisData<ETetrisStage> _tetrisStage;
+        private ITetrisData<ETetrisScene> _tetrisStage;
         private ITetrisData<bool> _updateLock;
         private ITetrisData<float> _pieceDropDelay;
         private ITetrisData<List<(int, IPiece)>> _spawnPieces;
@@ -47,7 +47,7 @@ namespace TetrisData
             return _boardState.Value();
         }
         
-        public ETetrisStage TetrisStage()
+        public ETetrisScene TetrisStage()
         {
             return _tetrisStage.Value();
         }

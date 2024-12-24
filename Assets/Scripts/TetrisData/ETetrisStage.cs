@@ -1,10 +1,11 @@
 ﻿namespace TetrisData
 {
-    public enum ETetrisStage
+    public enum ETetrisScene
     {
-        OnGame,
-        OnNewGameMenu,
-        OnPauseMenu,
-        OnGameOverMenu,
+        OnBoard,
+        OnBoardOfNewGame,
+        OnMenuOfFirstEnter,
+        OnMenuOfPause,
+        OnMenuOfGameOver,
     }
 }

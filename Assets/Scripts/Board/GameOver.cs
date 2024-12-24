@@ -16,27 +16,33 @@ namespace Board
 
         private void OnEnable()
         {
-            EventsHub.OnGameOver.AddSubscriber(StartNewGame, 1);
+            EventsHub.OnGameOver.AddSubscriber(Init, 1);
         }
 
         private void OnDisable()
         {
-            EventsHub.OnGameOver.RemoveSubscriber(StartNewGame);
+            EventsHub.OnGameOver.RemoveSubscriber(Init);
         }
 
-        private void StartNewGame(EGameOverReason reason)
+        private void Init(EGameOverReason reason)
         {
-            Debug.Log($"Game Over!\nreason: \"{reason}\"\nlevel: {BoardInfo.Instance.Level()}, " +
-                      $"score: {BoardInfo.Instance.Score()}");
-            _controller.SetNewGame();
-            if (reason == EGameOverReason.GridFilled)
+            switch (reason)
             {
-                SceneManager.LoadScene("MainMenu");
+                case EGameOverReason.GridFilled:
+                    EventsHub.OnStageChanged.Trigger(ETetrisScene.OnMenuOfGameOver);
+                    SceneManager.LoadScene("MainMenu");
+                    break;
+                case EGameOverReason.AsWill:
+                    _controller.SetNewGame();
+                    Debug.Log("New game started by keyboard");
+                    break;
             }
         }
 
         private void Update()
         {
+            
+            // TODO: doesn't work correctly
             _controller.DetectAndExecuteNewGame();
         }
     }

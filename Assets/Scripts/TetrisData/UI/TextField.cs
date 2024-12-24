@@ -28,6 +28,17 @@ namespace TetrisData.UI
         {
             _textMesh.text = $"{fieldName}: {Data.Value().ToString()}";
         }
+
+        public void UpdateName(string newFieldName)
+        {
+            fieldName = newFieldName;
+        }
+
+        public void Destroy()
+        {
+            Destroy(gameObject);
+        }
+
         protected abstract ITetrisData<T> Data { get; }
     }
 }

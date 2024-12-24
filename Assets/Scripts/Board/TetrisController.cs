@@ -34,6 +34,7 @@ namespace Board
 
         private void Start()
         {
+            if (_info.TetrisStage() == ETetrisScene.OnBoardOfNewGame) SetNewGame();
             Debug.Log("TetrisController started");
         }
 
@@ -106,10 +107,13 @@ namespace Board
         {
             _inputExecutor.OnPauseGame(() =>
             {
-                EventsHub.OnStageChanged.Trigger(ETetrisStage.OnPauseMenu);
-                Storage.Instance.SaveGame();
-                SceneManager.LoadScene("MainMenu");
-                Debug.Log("Game paused by keyboard");
+                if (_info.TetrisStage() == ETetrisScene.OnBoard || _info.TetrisStage() == ETetrisScene.OnBoardOfNewGame)
+                {
+                    EventsHub.OnStageChanged.Trigger(ETetrisScene.OnMenuOfPause);
+                    Storage.Instance.SaveGame();
+                    SceneManager.LoadScene("MainMenu");
+                    Debug.Log("Game paused by keyboard");
+                }
             });
         }
 
@@ -138,7 +142,6 @@ namespace Board
             if (!_tetrisGrid.PieceSpawnRandom())
             {
                 EventsHub.OnGameOver.Trigger(EGameOverReason.GridFilled);
-                EventsHub.OnStageChanged.Trigger(ETetrisStage.OnNewGameMenu);
             }
             else _timerOfDrop.UpdateTimeout();
         }
@@ -153,7 +156,7 @@ namespace Board
             _timerOfDrop.ResetTimer();
             _tetrisGrid.ClearAll();
             EventsHub.OnNewGameStart.Trigger();
-            EventsHub.OnStageChanged.Trigger(ETetrisStage.OnGame);
+            EventsHub.OnStageChanged.Trigger(ETetrisScene.OnBoard);
             Storage.Instance.SaveGame();
         }
     }

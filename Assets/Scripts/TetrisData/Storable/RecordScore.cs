@@ -33,6 +33,7 @@ namespace TetrisData.Storable
             CurrentValue = BoardInfo.Instance.Score();
             _timestamp = Timestamp.Now;
             Debug.Log($"Record Score Updated: {CurrentValue}");
+            Storage.Instance.SaveGame();
         }
 
         private class RecordScoreStorable : IStorable
