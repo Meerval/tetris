@@ -2,7 +2,7 @@
 using TetrisData;
 using UnityEngine;
 
-namespace Menu.Scenes
+namespace Menu.MainMenuScenes
 {
     public class SceneOfGameOverMenu : SceneOfMenu
     {

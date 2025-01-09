@@ -1,7 +1,7 @@
 ﻿using TetrisData;
 using TetrisData.Storable.Displayable;
 
-namespace Menu.Scenes
+namespace Menu.MainMenuScenes
 {
     public class SceneOfFirstEnterMenu : SceneOfMenu
     {

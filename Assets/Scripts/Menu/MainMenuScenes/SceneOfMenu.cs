@@ -4,15 +4,14 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace Menu.Scenes
+namespace Menu.MainMenuScenes
 {
     public abstract class SceneOfMenu : MonoBehaviour
     {
         [SerializeField] protected GameObject startNewGameButtonPrefab;
         [SerializeField] protected GameObject settingsButtonPrefab;
         [SerializeField] protected GameObject exitButtonPrefab;
-
-
+        
         private void Start()
         {
             InitButton(startNewGameButtonPrefab, StartNewGame);
@@ -58,6 +57,7 @@ namespace Menu.Scenes
 
         private void OpenSettings()
         {
+            SceneManager.LoadScene("SettingsMenu");
             Debug.Log("Settings Button Pressed");
         }
 

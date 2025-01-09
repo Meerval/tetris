@@ -1,4 +1,4 @@
-﻿using Menu.Scenes;
+﻿using Menu.MainMenuScenes;
 using TetrisData;
 using UnityEngine;
 
