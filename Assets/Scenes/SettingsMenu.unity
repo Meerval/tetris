@@ -474,6 +474,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 828252446}
+  - component: {fileID: 828252450}
   - component: {fileID: 828252449}
   - component: {fileID: 828252448}
   - component: {fileID: 828252447}
@@ -598,6 +599,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828252445}
   m_CullTransparentMesh: 1
+--- !u!114 &828252450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828252445}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb6c359ac70488b916c0a2ced7e2a83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &867692367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1138,7 +1151,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click on the motion key setting  you want to replace
+  m_text: Click on the motion key setting you want to replace
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -1334,6 +1347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1645873080}
+  - component: {fileID: 1645873084}
   - component: {fileID: 1645873083}
   - component: {fileID: 1645873082}
   - component: {fileID: 1645873081}
@@ -1458,6 +1472,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1645873079}
   m_CullTransparentMesh: 1
+--- !u!114 &1645873084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1645873079}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40ff1b1ead984a82b47e09a7cc4b401c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1672219967
 GameObject:
   m_ObjectHideFlags: 0
@@ -1603,9 +1629,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1689694367}
+  - component: {fileID: 1689694372}
   - component: {fileID: 1689694370}
   - component: {fileID: 1689694369}
   - component: {fileID: 1689694368}
+  - component: {fileID: 1689694371}
   m_Layer: 5
   m_Name: Shift Right
   m_TagString: Untagged
@@ -1727,6 +1755,30 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689694366}
   m_CullTransparentMesh: 1
+--- !u!114 &1689694371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689694366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b346f4d174da48970dfe23ddf105f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1689694372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689694366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e8b346f4d174da48970dfe23ddf105f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1735433410
 GameObject:
   m_ObjectHideFlags: 0
@@ -1870,6 +1922,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1866322253}
+  - component: {fileID: 1866322257}
   - component: {fileID: 1866322256}
   - component: {fileID: 1866322255}
   - component: {fileID: 1866322254}
@@ -1994,6 +2047,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1866322252}
   m_CullTransparentMesh: 1
+--- !u!114 &1866322257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1866322252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a611e5ea07b745068ee337089e809ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1891514125
 GameObject:
   m_ObjectHideFlags: 0
@@ -2003,6 +2068,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1891514126}
+  - component: {fileID: 1891514130}
   - component: {fileID: 1891514129}
   - component: {fileID: 1891514128}
   - component: {fileID: 1891514127}
@@ -2127,6 +2193,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891514125}
   m_CullTransparentMesh: 1
+--- !u!114 &1891514130
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891514125}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3434c6984cbb4563a59f6003422b4a75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1983156867
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,11 +2451,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f218d202bf46599d46e50d9d35e901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shiftLeft: {fileID: 1891514125}
-  shiftRight: {fileID: 1689694366}
-  shiftDown: {fileID: 1645873079}
-  rotateLeft: {fileID: 828252445}
-  rotateRight: {fileID: 1866322252}
 --- !u!114 &1108354038477421762
 MonoBehaviour:
   m_ObjectHideFlags: 0
