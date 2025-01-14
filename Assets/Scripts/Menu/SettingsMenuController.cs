@@ -14,6 +14,7 @@ namespace Menu
 
         private void Update()
         {
+            // TODO: написать проверку на нажатость всех клавишь
             if (!Input.GetKeyDown(KeyMap.KeyContinue)) return;
             Debug.Log($"[KEY PRESS] {KeyMap.KeyContinue.ToString()}");
             LoadMainMenu();

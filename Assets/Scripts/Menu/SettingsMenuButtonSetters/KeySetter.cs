@@ -51,11 +51,23 @@ namespace Menu.SettingsMenuButtonSetters
             if (!KeyMap.IsKeyDefault(KeyInfo.Action)) _info.text += "\nPress 'Backspace' to return default key";
             Debug.Log("Key Setter is Listening");
         }
+        private void OnDestroy()
+        {
+            _button.onClick.RemoveListener(OnPressButton);
+        }
 
         private void Update()
         {
             if (!_isListening) return;
-
+            
+            _button.interactable = false;
+            
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                TurnButtonOff();
+                return;
+            }
+            
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 Debug.Log($"Key for action '{KeyInfo.Action}' resetted to default");
@@ -86,7 +98,7 @@ namespace Menu.SettingsMenuButtonSetters
 
         private void TurnButtonOff()
         {
-            _button.OnSubmit(null);
+            _button.interactable = true;
             _isListening = false;
             _info.text = "";
         }

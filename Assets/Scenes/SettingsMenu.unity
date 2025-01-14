@@ -1688,7 +1688,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click on the motion key setting you want to replace
+  m_text: 'Select the key you want to change
+
+    Press ESC to cancel
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -1697,8 +1701,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4282795624
-  m_fontColor: {r: 0.40700805, g: 0.27371562, b: 0.27371562, a: 1}
+    rgba: 4289309116
+  m_fontColor: {r: 0.7372549, g: 0.6627451, b: 0.6627451, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
