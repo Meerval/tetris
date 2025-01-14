@@ -4,6 +4,6 @@ namespace Menu.SettingsMenuButtonSetters
 {
     public class KeyRotateLeftSetter : KeySetter
     {
-        protected override KeyInfo KeyInfo => KeyMap.KeyInfoOf(KeyMap.CurrentConfig, KeyActions.KeyRotateLeft);
+        protected override KeyInfo KeyInfo => KeyMap.KeyInfoOf(KeyMap.CurrentConfig, KeyAction.KeyRotateLeft);
     }
 }

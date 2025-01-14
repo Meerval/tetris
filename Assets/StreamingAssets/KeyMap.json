@@ -12,12 +12,12 @@
     },
     {
       "Action": "KeyShiftLeft",
-      "Code": 102,
+      "Code": 97,
       "Key": "A"
     },
     {
       "Action": "KeyShiftRight",
-      "Code": 102,
+      "Code": 100,
       "Key": "D"
     },
     {
