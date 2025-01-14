@@ -559,7 +559,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0.00012207031, y: 372}
-  m_SizeDelta: {x: -1468.4, y: -929.236}
+  m_SizeDelta: {x: -1068.764, y: -998.92}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &568150982
 MonoBehaviour:
@@ -614,7 +614,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1690,7 +1690,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Select the key you want to change
 
-    Press ESC to cancel
+    Press <b>ESC</b> to cancel
 
 '
   m_isRightToLeft: 0
@@ -2175,7 +2175,6 @@ GameObject:
   - component: {fileID: 1689694370}
   - component: {fileID: 1689694369}
   - component: {fileID: 1689694368}
-  - component: {fileID: 1689694371}
   m_Layer: 5
   m_Name: Shift Right
   m_TagString: Untagged
@@ -2298,18 +2297,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1689694366}
   m_CullTransparentMesh: 1
---- !u!114 &1689694371
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689694366}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b346f4d174da48970dfe23ddf105f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1689694372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3130,6 +3117,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f218d202bf46599d46e50d9d35e901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keySetters:
+  - {fileID: 1891514130}
+  - {fileID: 1689694372}
+  - {fileID: 1645873084}
+  - {fileID: 828252450}
+  - {fileID: 1866322257}
 --- !u!114 &1108354038477421762
 MonoBehaviour:
   m_ObjectHideFlags: 0

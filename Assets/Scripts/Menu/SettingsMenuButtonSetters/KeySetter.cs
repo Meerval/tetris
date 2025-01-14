@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Board;
@@ -12,10 +13,12 @@ namespace Menu.SettingsMenuButtonSetters
     {
         private bool _isListening;
         protected abstract KeyInfo KeyInfo { get; }
+        protected abstract List<KeySetter> OtherKeySetters { get; }
 
         private Button _button;
         private TextMeshProUGUI _text;
         private TextMeshProUGUI _info;
+
 
         private void Start()
         {
@@ -46,11 +49,13 @@ namespace Menu.SettingsMenuButtonSetters
 
         private void OnPressButton()
         {
+            OtherKeySetters.ForEach(ks => { ks.TerminateButtonAction(); });
             _isListening = true;
+            _button.interactable = false;
             _info.text = "Press a new key for this action";
-            if (!KeyMap.IsKeyDefault(KeyInfo.Action)) _info.text += "\nPress 'Backspace' to return default key";
-            Debug.Log("Key Setter is Listening");
+            if (!KeyMap.IsKeyDefault(KeyInfo.Action)) _info.text += "\nPress <b>Backspace</b> to return default key";
         }
+
         private void OnDestroy()
         {
             _button.onClick.RemoveListener(OnPressButton);
@@ -59,21 +64,19 @@ namespace Menu.SettingsMenuButtonSetters
         private void Update()
         {
             if (!_isListening) return;
-            
-            _button.interactable = false;
-            
+
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                TurnButtonOff();
+                TerminateButtonAction();
                 return;
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Backspace))
             {
                 Debug.Log($"Key for action '{KeyInfo.Action}' resetted to default");
                 KeyCode defaultKeyCode = KeyMap.ResetKey(KeyInfo.Action);
                 ReplaceText(defaultKeyCode.ToString());
-                TurnButtonOff();
+                TerminateButtonAction();
                 return;
             }
 
@@ -83,20 +86,19 @@ namespace Menu.SettingsMenuButtonSetters
                 if (!IsKeyboardKey(keyCode)) continue;
                 if (KeyMap.CurrentConfig.Keys.Any(key => key.Code == (int)keyCode))
                 {
-                    _info.text = $"Key {keyCode} is already taken!\nPress another key for this action";
-                    Debug.Log($"Key {keyCode} is already taken!");
+                    _info.text = $"Key <b>{keyCode}</b> is already taken!\nPress another key for this action";
                     continue;
                 }
 
                 Debug.Log($"Selected key: {keyCode}");
                 KeyMap.UpdateKey(KeyInfo.Action, keyCode);
                 ReplaceText(keyCode.ToString());
-                TurnButtonOff();
+                TerminateButtonAction();
                 return;
             }
         }
 
-        private void TurnButtonOff()
+        private void TerminateButtonAction()
         {
             _button.interactable = true;
             _isListening = false;
@@ -111,6 +113,11 @@ namespace Menu.SettingsMenuButtonSetters
                 >= KeyCode.F1 and <= KeyCode.F12 or
                 KeyCode.UpArrow or KeyCode.DownArrow or KeyCode.LeftArrow or KeyCode.RightArrow or
                 KeyCode.Space or KeyCode.LeftShift or KeyCode.RightShift;
+        }
+
+        public bool IsListening()
+        {
+            return _isListening;
         }
     }
 }
