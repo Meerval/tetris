@@ -10,7 +10,7 @@ namespace Board.Timers
         [SerializeField] private float accelerationFactor;
         [SerializeField] private float minDelay;
 
-        private void Start()
+        protected override void AfterAwake()
         {
             _initDelay = delay;
             _updateCount = 0;

@@ -7,10 +7,14 @@ namespace Board.Timers
     public class TimerOfPieceDrop : TimerSingleton<TimerOfPieceDrop>
     {
         private float _initDelay;
+        
+        protected override void AfterAwake()
+        {
+            _initDelay = delay;
+        }
 
         private void Start()
         {
-            _initDelay = delay;
             delay = BoardInfo.Instance.PieceDropDelay();
         }
 
